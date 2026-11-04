@@ -1,0 +1,117 @@
+{
+  "examId": "AZ-900",
+  "questions": [
+    {
+      "id": "AZ900-001",
+      "domain": "Conceptos de nube",
+      "type": "multiple",
+      "question": "¿Cuál es una característica habitual de la computación en la nube?",
+      "options": [
+        "Pago por uso",
+        "Compra obligatoria de servidores propios",
+        "Capacidad fija e invariable",
+        "Acceso únicamente desde una red local"
+      ],
+      "answer": "Pago por uso",
+      "explanation": "Los servicios en la nube suelen permitir pagar por los recursos consumidos, según el modelo de precios."
+    },
+    {
+      "id": "AZ900-002",
+      "domain": "Arquitectura de Azure",
+      "type": "boolean",
+      "question": "Una región de Azure está formada por uno o varios centros de datos conectados mediante una red de baja latencia.",
+      "answer": true,
+      "explanation": "Una región es un área geográfica que contiene uno o más centros de datos conectados mediante una red dedicada de baja latencia."
+    },
+    {
+      "id": "AZ900-003",
+      "domain": "Identidad",
+      "type": "picklist",
+      "question": "¿Qué servicio permite administrar identidades y controlar el acceso a recursos?",
+      "options": [
+        "Microsoft Entra ID",
+        "Azure Blob Storage",
+        "Azure Monitor",
+        "Azure Virtual Network"
+      ],
+      "answer": "Microsoft Entra ID",
+      "explanation": "Microsoft Entra ID es el servicio de administración de identidades y acceso de Microsoft."
+    },
+    {
+      "id": "AZ900-004",
+      "domain": "Modelos de servicio cloud",
+      "type": "drag",
+      "question": "Relaciona cada modelo de servicio con la responsabilidad principal del cliente.",
+      "pairs": [
+        {
+          "left": "IaaS",
+          "right": "Administrar sistema operativo y aplicaciones"
+        },
+        {
+          "left": "PaaS",
+          "right": "Administrar aplicaciones y datos"
+        },
+        {
+          "left": "SaaS",
+          "right": "Usar y configurar la aplicación"
+        }
+      ],
+      "explanation": "En IaaS el cliente administra más componentes; en PaaS se centra en aplicaciones y datos; en SaaS consume una aplicación administrada por el proveedor."
+    },
+    {
+      "id": "AZ900-005",
+      "domain": "Arquitectura de Azure",
+      "type": "hotspot",
+      "question": "Selecciona en el esquema la zona que representa una región de Azure.",
+      "diagram": {
+        "labels": [
+          "Región de Azure",
+          "Centro de datos",
+          "Servicio"
+        ]
+      },
+      "zones": [
+        {
+          "id": "region",
+          "label": "Región de Azure",
+          "x": 4,
+          "y": 18,
+          "w": 92,
+          "h": 66
+        },
+        {
+          "id": "datacenter",
+          "label": "Centro de datos",
+          "x": 12,
+          "y": 34,
+          "w": 22,
+          "h": 30
+        },
+        {
+          "id": "service",
+          "label": "Servicio",
+          "x": 70,
+          "y": 34,
+          "w": 22,
+          "h": 30
+        }
+      ],
+      "answer": "region",
+      "explanation": "Una región de Azure es un área geográfica que contiene uno o más centros de datos."
+    },
+    {
+      "id": "AZ900-006",
+      "domain": "Costos y gobernanza",
+      "type": "multiple",
+      "question": "¿Qué herramienta permite estimar el costo de productos y servicios de Azure antes de implementarlos?",
+      "options": [
+        "Calculadora de precios de Azure",
+        "Azure Service Health",
+        "Azure Advisor",
+        "Microsoft Entra ID"
+      ],
+      "answer": "Calculadora de precios de Azure",
+      "explanation": "La calculadora de precios permite estimar costos a partir de servicios, configuraciones y patrones de uso previstos."
+    }
+  ]
+}

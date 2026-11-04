@@ -1,0 +1,117 @@
+{
+  "examId": "DP-700",
+  "questions": [
+    {
+      "id": "DP700-001",
+      "domain": "Lakehouse",
+      "type": "multiple",
+      "question": "En Microsoft Fabric, ¿qué elemento proporciona almacenamiento analítico basado en Delta Lake y permite trabajar con datos mediante Spark y SQL?",
+      "options": [
+        "Lakehouse",
+        "Data pipeline",
+        "Eventstream",
+        "Data Activator"
+      ],
+      "answer": "Lakehouse",
+      "explanation": "Un Lakehouse combina capacidades de data lake con funcionalidades analíticas. Sus tablas utilizan Delta Lake."
+    },
+    {
+      "id": "DP700-002",
+      "domain": "Warehouse",
+      "type": "boolean",
+      "question": "Un Warehouse de Fabric está orientado a análisis relacional mediante SQL sobre datos estructurados.",
+      "answer": true,
+      "explanation": "Warehouse ofrece una experiencia de almacenamiento analítico relacional y consulta mediante T-SQL."
+    },
+    {
+      "id": "DP700-003",
+      "domain": "Data Factory",
+      "type": "picklist",
+      "question": "¿Qué experiencia de Fabric permite orquestar actividades de movimiento y transformación de datos mediante flujos visuales?",
+      "options": [
+        "Data Factory",
+        "Real-Time Intelligence",
+        "Power BI",
+        "Data Activator"
+      ],
+      "answer": "Data Factory",
+      "explanation": "Data Factory incluye pipelines y Dataflows Gen2 para integrar, mover y transformar datos."
+    },
+    {
+      "id": "DP700-004",
+      "domain": "Arquitectura",
+      "type": "drag",
+      "question": "Relaciona cada componente con su función principal.",
+      "pairs": [
+        {
+          "left": "OneLake",
+          "right": "Almacenamiento lógico unificado"
+        },
+        {
+          "left": "Eventstream",
+          "right": "Ingesta de eventos en tiempo real"
+        },
+        {
+          "left": "Power BI",
+          "right": "Visualización y análisis"
+        }
+      ],
+      "explanation": "OneLake proporciona almacenamiento unificado; Eventstream permite trabajar con eventos en tiempo real; Power BI permite analizar y visualizar datos."
+    },
+    {
+      "id": "DP700-005",
+      "domain": "Lakehouse",
+      "type": "hotspot",
+      "question": "Selecciona el componente que representa el almacenamiento centralizado de Microsoft Fabric.",
+      "diagram": {
+        "labels": [
+          "Origen",
+          "OneLake",
+          "Consumo"
+        ]
+      },
+      "zones": [
+        {
+          "id": "source",
+          "label": "Origen",
+          "x": 4,
+          "y": 32,
+          "w": 26,
+          "h": 42
+        },
+        {
+          "id": "lake",
+          "label": "OneLake",
+          "x": 37,
+          "y": 32,
+          "w": 26,
+          "h": 42
+        },
+        {
+          "id": "consume",
+          "label": "Consumo",
+          "x": 70,
+          "y": 32,
+          "w": 26,
+          "h": 42
+        }
+      ],
+      "answer": "lake",
+      "explanation": "OneLake es el lago de datos lógico unificado de Microsoft Fabric."
+    },
+    {
+      "id": "DP700-006",
+      "domain": "Data Factory",
+      "type": "multiple",
+      "question": "¿Qué característica describe mejor un pipeline de Data Factory en Fabric?",
+      "options": [
+        "Orquestar actividades y dependencias",
+        "Reemplazar el motor de almacenamiento Delta",
+        "Administrar identidades de Entra ID",
+        "Crear únicamente informes paginados"
+      ],
+      "answer": "Orquestar actividades y dependencias",
+      "explanation": "Los pipelines permiten coordinar actividades, establecer dependencias y programar ejecuciones."
+    }
+  ]
+}

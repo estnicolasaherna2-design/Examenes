@@ -1,0 +1,24 @@
+{
+  "title": "Exam Lab",
+  "description": "Simulador local de certificaciones Microsoft",
+  "exams": [
+    {
+      "id": "DP-700",
+      "name": "Fabric Data Engineer Associate",
+      "description": "Ingeniería de datos en Microsoft Fabric",
+      "level": "Associate",
+      "active": true,
+      "questionFile": "data/exams/DP-700/questions.json",
+      "metadataFile": "data/exams/DP-700/metadata.json"
+    },
+    {
+      "id": "AZ-900",
+      "name": "Azure Fundamentals",
+      "description": "Conceptos fundamentales de Microsoft Azure",
+      "level": "Fundamentals",
+      "active": true,
+      "questionFile": "data/exams/AZ-900/questions.json",
+      "metadataFile": "data/exams/AZ-900/metadata.json"
+    }
+  ]
+}
