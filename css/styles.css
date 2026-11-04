@@ -1,4 +1,4 @@
-
+```css
 :root {
     --bg: #f4f6fb;
     --surface: #ffffff;
@@ -15,10 +15,6 @@
     --radius: 14px;
     --shadow: 0 5px 20px #1b29400a;
 }
-
-/* ==============================
-   RESET Y CONFIGURACIÓN GENERAL
-================================= */
 
 * {
     box-sizing: border-box;
@@ -51,7 +47,7 @@ button {
     border-radius: 9px;
     padding: 10px 15px;
     background: var(--brand);
-    color: #ffffff;
+    color: #fff;
     font-weight: 650;
     transition: background .2s ease, transform .15s ease;
 }
@@ -104,9 +100,11 @@ a {
     outline-offset: 3px;
 }
 
-/* ==============================
-   ESTRUCTURA PRINCIPAL
-================================= */
+.hidden {
+    display: none !important;
+}
+
+/* ESTRUCTURA PRINCIPAL */
 
 .app {
     display: grid;
@@ -120,7 +118,7 @@ a {
     height: 100vh;
     overflow-y: auto;
     background: var(--sidebar);
-    color: #ffffff;
+    color: #fff;
     padding: 24px 16px;
     display: flex;
     flex-direction: column;
@@ -133,9 +131,7 @@ a {
     flex-direction: column;
 }
 
-/* ==============================
-   MARCA Y NAVEGACIÓN
-================================= */
+/* MARCA Y NAVEGACIÓN */
 
 .brand {
     display: flex;
@@ -182,7 +178,7 @@ a {
 .nav:hover,
 .nav.active {
     background: var(--sidebar-hover);
-    color: #ffffff;
+    color: #fff;
 }
 
 .nav .ico {
@@ -199,9 +195,7 @@ a {
     border-top: 1px solid #2a3857;
 }
 
-/* ==============================
-   BARRA SUPERIOR
-================================= */
+/* BARRA SUPERIOR */
 
 .topbar {
     min-height: 72px;
@@ -238,9 +232,7 @@ a {
     font-weight: 800;
 }
 
-/* ==============================
-   CONTENIDO Y PÁGINAS
-================================= */
+/* CONTENIDO */
 
 .content {
     width: 100%;
@@ -276,13 +268,7 @@ a {
     color: var(--muted);
 }
 
-.hidden {
-    display: none !important;
-}
-
-/* ==============================
-   GRIDS Y TARJETAS
-================================= */
+/* GRIDS Y TARJETAS */
 
 .grid {
     display: grid;
@@ -396,9 +382,7 @@ a {
     font-weight: 700;
 }
 
-/* ==============================
-   FORMULARIOS
-================================= */
+/* FORMULARIOS */
 
 .two-col {
     grid-template-columns: 1.3fr 1fr;
@@ -423,7 +407,7 @@ a {
     padding: 11px;
     border: 1px solid #ccd4e2;
     border-radius: 9px;
-    background: #ffffff;
+    background: #fff;
     color: var(--ink);
 }
 
@@ -446,9 +430,7 @@ a {
     gap: 14px;
 }
 
-/* ==============================
-   TABLAS E HISTORIAL
-================================= */
+/* TABLAS */
 
 .table-wrap {
     width: 100%;
@@ -487,12 +469,11 @@ th {
     color: var(--muted);
 }
 
-/* ==============================
-   SIMULADOR DE EXAMEN
-================================= */
+/* PANTALLA DEL EXAMEN */
 
 #exam-screen {
     width: 100%;
+    min-height: 100vh;
 }
 
 .quiz-card {
@@ -579,9 +560,7 @@ th {
     min-width: 110px;
 }
 
-/* ==============================
-   OPCIONES DE RESPUESTA
-================================= */
+/* OPCIONES */
 
 .option {
     display: flex;
@@ -592,7 +571,7 @@ th {
     padding: 13px;
     margin: 9px 0;
     cursor: pointer;
-    background: #ffffff;
+    background: #fff;
     transition: border-color .2s ease, background .2s ease;
     overflow-wrap: anywhere;
 }
@@ -620,9 +599,47 @@ th {
     cursor: pointer;
 }
 
-/* ==============================
-   PREGUNTAS DE RELACIÓN / MATCH
-================================= */
+/* TRUE OR FALSE */
+
+.true-false-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 18px 0;
+}
+
+.true-false-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 65px;
+    padding: 15px;
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--ink);
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color .2s ease, background .2s ease;
+}
+
+.true-false-option:hover {
+    border-color: var(--brand);
+    background: var(--soft);
+}
+
+.true-false-option:has(input:checked) {
+    border-color: var(--brand);
+    background: var(--soft);
+    color: var(--brand);
+}
+
+.true-false-option input {
+    margin-right: 10px;
+    accent-color: var(--brand);
+}
+
+/* MATCH Y DRAG AND DROP */
 
 .match-grid {
     display: grid;
@@ -635,7 +652,7 @@ th {
     border: 1px solid var(--line);
     padding: 12px;
     border-radius: 9px;
-    background: #ffffff;
+    background: #fff;
 }
 
 .match-item select,
@@ -645,14 +662,132 @@ th {
     padding: 10px;
     border: 1px solid #ccd4e2;
     border-radius: 8px;
-    background: #ffffff;
+    background: #fff;
     margin-top: 8px;
     color: var(--ink);
 }
 
-/* ==============================
-   PREGUNTAS TIPO MATRIZ
-================================= */
+.dragdrop-container {
+    display: grid;
+    gap: 18px;
+    margin: 18px 0;
+}
+
+.dragdrop-source,
+.dragdrop-targets {
+    display: grid;
+    gap: 12px;
+}
+
+.dragdrop-source {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    padding: 15px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #f8faff;
+}
+
+.dragdrop-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px;
+    border: 1px solid #cbd5e8;
+    border-radius: 9px;
+    background: #fff;
+    color: var(--ink);
+    cursor: grab;
+    user-select: none;
+    touch-action: manipulation;
+    transition: border-color .2s ease, background .2s ease, opacity .2s ease;
+}
+
+.dragdrop-item:hover {
+    border-color: var(--brand);
+    background: var(--soft);
+}
+
+.dragdrop-item:active {
+    cursor: grabbing;
+}
+
+.dragdrop-item.dragging {
+    opacity: .4;
+}
+
+.dragdrop-targets {
+    grid-template-columns: 1fr;
+}
+
+.dragdrop-target {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-height: 75px;
+    padding: 12px;
+    border: 2px dashed #b9c5df;
+    border-radius: 9px;
+    background: #f8faff;
+    transition: border-color .2s ease, background .2s ease;
+}
+
+.dragdrop-target.drag-over {
+    border-color: var(--brand);
+    background: var(--soft);
+}
+
+.dragdrop-target-label {
+    font-weight: 700;
+}
+
+.dragdrop-target-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 32px;
+}
+
+.dragdrop-target .dragdrop-item {
+    width: fit-content;
+    min-height: 38px;
+    padding: 8px 12px;
+}
+
+.dragdrop-placeholder {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.dragdrop-code-container {
+    display: grid;
+    gap: 14px;
+}
+
+.dragdrop-code-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: #fff;
+}
+
+.dragdrop-code-slot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    min-height: 38px;
+    padding: 7px 12px;
+    border: 2px dashed #b9c5df;
+    border-radius: 7px;
+    background: #f8faff;
+}
+
+/* MATRICES */
 
 .matrix-table {
     width: 100%;
@@ -680,19 +815,17 @@ th {
     padding: 8px;
     border: 1px solid #ccd4e2;
     border-radius: 7px;
-    background: #ffffff;
+    background: #fff;
 }
 
-/* ==============================
-   PREGUNTAS TIPO DROPDOWN
-================================= */
+/* DROPDOWN Y PICKLIST */
 
 .dropdown-item {
     margin: 14px 0;
     padding: 13px;
     border: 1px solid var(--line);
     border-radius: 10px;
-    background: #ffffff;
+    background: #fff;
 }
 
 .dropdown-item select {
@@ -702,12 +835,38 @@ th {
     padding: 9px;
     border: 1px solid #ccd4e2;
     border-radius: 8px;
-    background: #ffffff;
+    background: #fff;
 }
 
-/* ==============================
-   PREGUNTAS CON CÓDIGO
-================================= */
+.picklist-container {
+    display: grid;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.picklist-item {
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+}
+
+.picklist-item label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.picklist-item select {
+    width: 100%;
+    min-height: 43px;
+    padding: 10px;
+    border: 1px solid #ccd4e2;
+    border-radius: 8px;
+    background: #fff;
+}
+
+/* CÓDIGO */
 
 pre,
 code {
@@ -736,43 +895,15 @@ code {
     overflow-x: auto;
 }
 
-/* ==============================
-   PREGUNTAS DRAG AND DROP
-================================= */
-
-.dragdrop-container {
-    display: grid;
-    gap: 14px;
+.code-template {
+    margin-top: 18px;
 }
 
-.dragdrop-item {
-    padding: 12px;
-    border: 1px solid var(--line);
-    border-radius: 9px;
-    background: #ffffff;
-    cursor: grab;
+.code-template h4 {
+    margin-bottom: 8px;
 }
 
-.dragdrop-item:active {
-    cursor: grabbing;
-}
-
-.dragdrop-target {
-    min-height: 48px;
-    padding: 12px;
-    border: 2px dashed #b9c5df;
-    border-radius: 9px;
-    background: #f8faff;
-}
-
-.dragdrop-target.drag-over {
-    border-color: var(--brand);
-    background: var(--soft);
-}
-
-/* ==============================
-   CASOS DE ESTUDIO
-================================= */
+/* CASOS DE ESTUDIO */
 
 .case-study {
     min-width: 0;
@@ -832,9 +963,7 @@ code {
     border: 1px solid var(--line);
 }
 
-/* ==============================
-   RESULTADOS Y RETROALIMENTACIÓN
-================================= */
+/* RESULTADOS */
 
 .review {
     border: 1px solid var(--line);
@@ -849,378 +978,4 @@ code {
 }
 
 .review.bad {
-    border-left: 5px solid var(--red);
-}
-
-.explain {
-    background: #f5f7fb;
-    padding: 12px;
-    border-radius: 8px;
-    margin-top: 10px;
-    color: var(--ink);
-}
-
-#result-score {
-    font-size: 36px;
-    font-weight: 850;
-    color: var(--brand);
-}
-
-/* ==============================
-   CONFIGURACIÓN
-================================= */
-
-.settings-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 15px 0;
-    border-bottom: 1px solid var(--line);
-}
-
-.settings-row:last-child {
-    border: 0;
-}
-
-.settings-row p {
-    margin: 3px 0;
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.settings-row input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--brand);
-}
-
-/* ==============================
-   MODAL DE CONFIGURACIÓN DE EXAMEN
-================================= */
-
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: #101a30a6;
-    overflow-y: auto;
-}
-
-.modal-content {
-    width: 100%;
-    max-width: 480px;
-    max-height: calc(100vh - 40px);
-    overflow-y: auto;
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 20px 60px #00000030;
-}
-
-.modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.modal-header h2 {
-    margin: 0;
-    font-size: 21px;
-}
-
-#modal-close {
-    min-width: 40px;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    background: #edf0f6;
-    color: var(--ink);
-    font-size: 20px;
-}
-
-.modal-help {
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 22px;
-}
-
-/* ==============================
-   MENSAJES DE ERROR
-================================= */
-
-#app-error {
-    margin: 16px 20px;
-    padding: 14px;
-    border: 1px solid #f1b9b5;
-    border-radius: 9px;
-    background: #fff1f0;
-    color: #9c2f26;
-    overflow-wrap: anywhere;
-}
-
-/* ==============================
-   TABLETS
-================================= */
-
-@media (max-width: 1024px) {
-    .app {
-        grid-template-columns: 76px minmax(0, 1fr);
-    }
-
-    .sidebar {
-        padding: 18px 9px;
-    }
-
-    .brand {
-        justify-content: center;
-        padding: 4px 0 25px;
-    }
-
-    .brand-name,
-    .nav-text,
-    .nav-label,
-    .side-bottom {
-        display: none;
-    }
-
-    .nav {
-        justify-content: center;
-        padding: 13px 4px;
-    }
-
-    .stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .content {
-        padding: 24px 20px;
-    }
-
-    .topbar {
-        padding: 0 20px;
-    }
-}
-
-/* ==============================
-   MÓVILES
-================================= */
-
-@media (max-width: 620px) {
-    .app {
-        grid-template-columns: 1fr;
-    }
-
-    .sidebar {
-        position: sticky;
-        top: 0;
-        width: 100%;
-        height: auto;
-        min-height: 58px;
-        padding: 6px 8px;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-around;
-        overflow: visible;
-    }
-
-    .brand,
-    .side-bottom,
-    .nav-label {
-        display: none;
-    }
-
-    .sidebar nav {
-        display: flex;
-        width: 100%;
-        justify-content: space-around;
-        gap: 4px;
-    }
-
-    .nav {
-        flex: 1;
-        justify-content: center;
-        min-width: 0;
-        min-height: 44px;
-        margin: 0;
-        padding: 10px 4px;
-    }
-
-    .nav .ico {
-        width: auto;
-        font-size: 17px;
-    }
-
-    .nav-text,
-    .brand-name {
-        display: none;
-    }
-
-    .topbar {
-        min-height: 58px;
-        padding: 0 14px;
-    }
-
-    .user-chip {
-        font-size: 12px;
-    }
-
-    .content {
-        padding: 20px 14px 35px;
-    }
-
-    .page-head {
-        display: block;
-    }
-
-    .page-head h1 {
-        font-size: 23px;
-    }
-
-    .page-head button {
-        margin-top: 12px;
-    }
-
-    .stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-    }
-
-    .card {
-        padding: 15px;
-    }
-
-    .stat-value {
-        font-size: 23px;
-    }
-
-    .exam-grid,
-    .two-col,
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-
-    .match-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .quiz-card {
-        padding: 15px;
-    }
-
-    .quiz-header {
-        align-items: flex-start;
-    }
-
-    .quiz-header h2 {
-        font-size: 17px;
-    }
-
-    .question {
-        font-size: 18px;
-    }
-
-    .quiz-actions {
-        position: sticky;
-        bottom: 0;
-        padding: 12px 0;
-        background: var(--bg);
-    }
-
-    .quiz-actions button {
-        min-width: 0;
-        flex: 1;
-    }
-
-    .settings-row {
-        gap: 12px;
-    }
-
-    .modal-overlay {
-        padding: 10px;
-        align-items: flex-end;
-    }
-
-    .modal-content {
-        max-height: 90vh;
-        padding: 19px;
-        border-radius: 16px 16px 10px 10px;
-    }
-
-    .modal-actions {
-        flex-direction: column-reverse;
-    }
-
-    .modal-actions button {
-        width: 100%;
-    }
-
-    .table-wrap {
-        margin: 0 -2px;
-    }
-}
-
-/* ==============================
-   MÓVILES PEQUEÑOS
-================================= */
-
-@media (max-width: 380px) {
-    .content {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-    .stats {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-    }
-
-    .card {
-        padding: 12px;
-    }
-
-    .stat-value {
-        font-size: 21px;
-    }
-
-    .quiz-actions {
-        gap: 8px;
-    }
-
-    .quiz-actions button {
-        padding: 10px 8px;
-        font-size: 13px;
-    }
-
-    .option {
-        padding: 11px;
-    }
-}
-
-/* ==============================
-   PREFERENCIAS DE MOVIMIENTO
-================================= */
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        transition-duration: .01ms !important;
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-    }
-}
+    border-left: 5px solid var(--red

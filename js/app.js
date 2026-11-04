@@ -3,15 +3,17 @@
 
 /* ============================================================
    EXAM LAB
-   Motor principal del simulador DP-600
+   Motor principal del simulador
 
-   Tipos soportados:
+   Tipos:
    - multiple
+   - true-false
    - multiple-select
    - dropdown-group
    - matrix
    - dragdrop
    - dragdrop-code
+   - picklist
    ============================================================ */
 
 /* ============================================================
@@ -27,6 +29,7 @@ let answers = {};
 let examStartedAt = null;
 let timerInterval = null;
 let examFinished = false;
+let examMode = false;
 
 const $ = id => document.getElementById(id);
 
@@ -45,11 +48,13 @@ const defaultSettings = {
 
 const QUESTION_TYPE_LABELS = {
     multiple: "Selección única",
+    "true-false": "Verdadero o falso",
     "multiple-select": "Selección múltiple",
     "dropdown-group": "Selección por grupos",
     matrix: "Matriz de respuestas",
-    dragdrop: "Relacionar elementos",
-    "dragdrop-code": "Completar código"
+    dragdrop: "Arrastrar y soltar",
+    "dragdrop-code": "Completar código",
+    picklist: "Lista de selección"
 };
 
 /* ============================================================
@@ -58,8 +63,7 @@ const QUESTION_TYPE_LABELS = {
 
 function readStore(key, fallback) {
     try {
-        const value = JSON.parse(localStorage.getItem(key));
-        return value ?? fallback;
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
     } catch (error) {
         console.warn(`No se pudo leer ${key}:`, error);
         return fallback;
@@ -105,12 +109,12 @@ function shuffleArray(array) {
     return result;
 }
 
-function normalizeText(value) {
-    return String(value ?? "").trim();
-}
-
 function normalizeComparable(value) {
     if (value === null || value === undefined) return "";
+
+    if (typeof value === "boolean") {
+        return value ? "true" : "false";
+    }
 
     return String(value)
         .trim()
@@ -120,7 +124,12 @@ function normalizeComparable(value) {
 
 function getOptionValue(option) {
     if (option && typeof option === "object") {
-        return option.value ?? option.id ?? option.label ?? option.text ?? "";
+        return option.value ??
+            option.id ??
+            option.label ??
+            option.text ??
+            option.name ??
+            "";
     }
 
     return option;
@@ -128,7 +137,12 @@ function getOptionValue(option) {
 
 function getOptionLabel(option) {
     if (option && typeof option === "object") {
-        return option.label ?? option.text ?? option.value ?? option.id ?? "";
+        return option.label ??
+            option.text ??
+            option.name ??
+            option.value ??
+            option.id ??
+            "";
     }
 
     return option;
@@ -136,7 +150,13 @@ function getOptionLabel(option) {
 
 function getItemLabel(item) {
     if (item && typeof item === "object") {
-        return item.label ?? item.name ?? item.value ?? item.id ?? "";
+        return item.label ??
+            item.name ??
+            item.statement ??
+            item.text ??
+            item.value ??
+            item.id ??
+            "";
     }
 
     return item;
@@ -147,9 +167,7 @@ function getQuestionAnswer(question) {
 }
 
 function getQuestionItems(question) {
-    return Array.isArray(question.items)
-        ? question.items
-        : [];
+    return Array.isArray(question.items) ? question.items : [];
 }
 
 function isEmptyAnswer(value) {
@@ -170,11 +188,9 @@ function isEmptyAnswer(value) {
 
 function formatDuration(seconds) {
     const safeSeconds = Math.max(0, Math.floor(seconds || 0));
-
     const hours = Math.floor(safeSeconds / 3600);
     const minutes = Math.floor((safeSeconds % 3600) / 60);
     const remainingSeconds = safeSeconds % 60;
-
     const pad = value => String(value).padStart(2, "0");
 
     return hours > 0
@@ -183,9 +199,7 @@ function formatDuration(seconds) {
 }
 
 async function loadJson(path) {
-    const response = await fetch(path, {
-        cache: "no-cache"
-    });
+    const response = await fetch(path, { cache: "no-cache" });
 
     if (!response.ok) {
         throw new Error(
@@ -220,34 +234,26 @@ function hideAppError() {
 
 function setText(id, value) {
     const element = $(id);
-
-    if (element) {
-        element.textContent = value ?? "";
-    }
+    if (element) element.textContent = value ?? "";
 }
 
 function setValue(id, value) {
     const element = $(id);
-
-    if (element) {
-        element.value = value ?? "";
-    }
+    if (element) element.value = value ?? "";
 }
 
 function setChecked(id, value) {
     const element = $(id);
-
-    if (element) {
-        element.checked = Boolean(value);
-    }
+    if (element) element.checked = Boolean(value);
 }
 
 function setVisible(id, visible) {
     const element = $(id);
+    if (element) element.classList.toggle("hidden", !visible);
+}
 
-    if (element) {
-        element.classList.toggle("hidden", !visible);
-    }
+function getUrlParams() {
+    return new URLSearchParams(window.location.search);
 }
 
 /* ============================================================
@@ -261,6 +267,15 @@ async function init() {
         await loadCaseStudies();
         await loadCatalog();
 
+        const params = getUrlParams();
+
+        examMode = params.get("mode") === "exam";
+
+        if (examMode) {
+            await initExamWindow(params);
+            return;
+        }
+
         renderDashboard();
         navigate("dashboard");
 
@@ -268,7 +283,7 @@ async function init() {
         console.error("Error al inicializar Exam Lab:", error);
 
         showAppError(
-            `${error.message}. Verifica los archivos JSON y ejecuta la aplicación mediante un servidor local. No abras index.html directamente con file://.`
+            `${error.message}. Verifica los archivos JSON y ejecuta la aplicación mediante un servidor local.`
         );
     }
 }
@@ -277,24 +292,15 @@ async function loadCaseStudies() {
     try {
         const data = await loadJson("data/case-studies.json");
 
-        if (Array.isArray(data)) {
-            caseStudies = data;
-        } else if (Array.isArray(data.caseStudies)) {
-            caseStudies = data.caseStudies;
-        } else {
-            caseStudies = [];
-            console.warn(
-                "El archivo de casos de estudio no contiene un arreglo reconocido."
-            );
-        }
+        caseStudies = Array.isArray(data)
+            ? data
+            : Array.isArray(data.caseStudies)
+                ? data.caseStudies
+                : [];
 
     } catch (error) {
         caseStudies = [];
-
-        console.warn(
-            "No fue posible cargar los casos de estudio:",
-            error.message
-        );
+        console.warn("No se pudieron cargar los casos de estudio:", error);
     }
 }
 
@@ -317,15 +323,51 @@ function isExamActive(exam) {
 }
 
 /* ============================================================
+   MODO EXAMEN EN NUEVA PESTAÑA
+   ============================================================ */
+
+async function initExamWindow(params) {
+    document.body.classList.add("exam-mode");
+
+    document.querySelectorAll(".sidebar, .nav, .page").forEach(element => {
+        element.classList.add("hidden");
+    });
+
+    const examId = params.get("examId");
+    const count = Number(params.get("count"));
+
+    if (!examId) {
+        throw new Error("No se recibió el identificador del examen.");
+    }
+
+    activeExam = catalog.find(
+        exam => String(exam.id) === String(examId)
+    );
+
+    if (!activeExam) {
+        throw new Error("No se encontró el examen solicitado.");
+    }
+
+    if (!Number.isInteger(count) || count < 1) {
+        throw new Error("La cantidad de preguntas recibida no es válida.");
+    }
+
+    await loadExamQuestions(count);
+
+    setVisible("exam-screen", true);
+    setVisible("result-screen", false);
+
+    startTimer();
+    renderQuestion();
+}
+
+/* ============================================================
    NAVEGACIÓN
    ============================================================ */
 
 function navigate(page) {
     document.querySelectorAll(".nav").forEach(nav => {
-        nav.classList.toggle(
-            "active",
-            nav.dataset.page === page
-        );
+        nav.classList.toggle("active", nav.dataset.page === page);
     });
 
     document.querySelectorAll(".page").forEach(container => {
@@ -352,19 +394,15 @@ function navigate(page) {
         case "dashboard":
             renderDashboard();
             break;
-
         case "certifications":
             renderCertifications();
             break;
-
         case "profile":
             renderProfile();
             break;
-
         case "history":
             renderHistory();
             break;
-
         case "settings":
             renderSettings();
             break;
@@ -378,54 +416,37 @@ function navigate(page) {
 function examCard(exam) {
     return `
         <article class="card exam-card">
-
             <div class="exam-top">
-                <span class="exam-code">
-                    ${escapeHtml(exam.id)}
-                </span>
-
-                <span class="pill">
-                    ${escapeHtml(exam.level || "Certificación")}
-                </span>
+                <span class="exam-code">${escapeHtml(exam.id)}</span>
+                <span class="pill">${escapeHtml(exam.level || "Certificación")}</span>
             </div>
 
             <h3>${escapeHtml(exam.name)}</h3>
 
-            <p>
-                ${escapeHtml(
-                    exam.description ||
-                    "Banco de preguntas de práctica."
-                )}
-            </p>
+            <p>${escapeHtml(
+                exam.description || "Banco de preguntas de práctica."
+            )}</p>
 
             <div class="exam-meta">
                 Banco de preguntas JSON · Idioma español
             </div>
 
             <div class="exam-actions">
-
                 <button data-start="${escapeHtml(exam.id)}">
                     Comenzar examen
                 </button>
 
-                <button
-                    class="secondary"
-                    data-info="${escapeHtml(exam.id)}"
-                >
+                <button class="secondary" data-info="${escapeHtml(exam.id)}">
                     Detalles
                 </button>
-
             </div>
-
         </article>
     `;
 }
 
 function bindExamButtons() {
     document.querySelectorAll("[data-start]").forEach(button => {
-        button.onclick = () => {
-            configureExam(button.dataset.start);
-        };
+        button.onclick = () => configureExam(button.dataset.start);
     });
 
     document.querySelectorAll("[data-info]").forEach(button => {
@@ -436,9 +457,7 @@ function bindExamButtons() {
 
             if (!exam) return;
 
-            alert(
-                `${exam.id} · ${exam.name}\n${exam.description || ""}`
-            );
+            alert(`${exam.id} · ${exam.name}\n${exam.description || ""}`);
         };
     });
 }
@@ -461,11 +480,7 @@ function renderDashboard() {
         : 0;
 
     setText("stat-best", best + "%");
-
-    setText(
-        "stat-available",
-        catalog.filter(isExamActive).length
-    );
+    setText("stat-available", catalog.filter(isExamActive).length);
 
     const dashboardExams = $("dashboard-exams");
 
@@ -479,11 +494,11 @@ function renderDashboard() {
         bindExamButtons();
     }
 
-    const recent = history.slice(-4).reverse();
-
     const dashboardHistory = $("dashboard-history");
 
     if (dashboardHistory) {
+        const recent = history.slice(-4).reverse();
+
         dashboardHistory.innerHTML = recent.length
             ? recent.map(item => `
                 <tr>
@@ -505,7 +520,6 @@ function renderDashboard() {
 
 function renderCertifications() {
     const container = $("certification-list");
-
     if (!container) return;
 
     const activeCatalog = catalog.filter(isExamActive);
@@ -522,19 +536,15 @@ function renderCertifications() {
    ============================================================ */
 
 function renderProfile() {
-    const profile = readStore(
-        STORE.profile,
-        {
-            name: "Estudiante",
-            email: ""
-        }
-    );
+    const profile = readStore(STORE.profile, {
+        name: "Estudiante",
+        email: ""
+    });
 
     const history = readStore(STORE.history, []);
 
     setValue("profile-name", profile.name || "");
     setValue("profile-email", profile.email || "");
-
     setText("profile-total", history.length);
 
     const average = history.length
@@ -553,7 +563,6 @@ function renderProfile() {
 
 function renderHistory() {
     const container = $("history-rows");
-
     if (!container) return;
 
     const history = readStore(STORE.history, []).slice().reverse();
@@ -598,7 +607,7 @@ function renderSettings() {
 }
 
 /* ============================================================
-   CONFIGURACIÓN DEL EXAMEN
+   CONFIGURAR E INICIAR EXAMEN
    ============================================================ */
 
 function configureExam(id) {
@@ -613,124 +622,118 @@ function configureExam(id) {
 
     setText("modal-title", `Configurar ${activeExam.id}`);
     setText("modal-description", activeExam.name);
-
     setValue("exam-count", settings().defaultCount);
-
     setVisible("exam-modal", true);
 
     const launchButton = $("launch-exam");
 
-    if (launchButton) {
-        launchButton.disabled = false;
+    if (!launchButton) return;
 
-        launchButton.onclick = () => {
-            const count = Number($("exam-count").value);
+    launchButton.disabled = false;
+    launchButton.onclick = () => {
+        const count = Number($("exam-count")?.value);
 
-            if (!Number.isInteger(count) || count < 1) {
-                alert("Ingresa una cantidad válida de preguntas.");
-                return;
-            }
+        if (!Number.isInteger(count) || count < 1) {
+            alert("Ingresa una cantidad válida de preguntas.");
+            return;
+        }
 
-            launchExam(count);
-        };
+        openExamWindow(count);
+    };
+}
+
+function openExamWindow(count) {
+    if (!activeExam) {
+        alert("No hay un examen seleccionado.");
+        return;
     }
+
+    if (!activeExam.questionFile) {
+        alert("El examen no tiene definido questionFile.");
+        return;
+    }
+
+    const params = new URLSearchParams({
+        mode: "exam",
+        examId: activeExam.id,
+        count: String(count)
+    });
+
+    const examUrl = `${window.location.pathname}?${params.toString()}`;
+
+    // Se abre de forma síncrona desde el clic para evitar bloqueadores.
+    const examWindow = window.open(examUrl, "_blank");
+
+    if (!examWindow) {
+        alert(
+            "El navegador bloqueó la nueva pestaña. Permite las ventanas emergentes para este sitio e inténtalo nuevamente."
+        );
+        return;
+    }
+
+    setVisible("exam-modal", false);
 }
 
 /* ============================================================
-   CARGA DEL BANCO DE PREGUNTAS
+   CARGA DE PREGUNTAS
    ============================================================ */
 
-async function launchExam(count) {
-    const launchButton = $("launch-exam");
-
-    try {
-        if (!activeExam) {
-            throw new Error("No hay una certificación seleccionada.");
-        }
-
-        if (!activeExam.questionFile) {
-            throw new Error(
-                "La certificación no tiene definido questionFile en el catálogo."
-            );
-        }
-
-        if (launchButton) {
-            launchButton.disabled = true;
-            launchButton.textContent = "Cargando...";
-        }
-
-        const data = await loadJson(activeExam.questionFile);
-
-        const bank = Array.isArray(data)
-            ? data
-            : Array.isArray(data.questions)
-                ? data.questions
-                : [];
-
-        if (!bank.length) {
-            throw new Error("El banco de preguntas está vacío.");
-        }
-
-        const supportedTypes = Object.keys(QUESTION_TYPE_LABELS);
-
-        const validBank = bank.filter(question => {
-            return (
-                question &&
-                question.id !== undefined &&
-                question.type &&
-                question.question &&
-                supportedTypes.includes(question.type)
-            );
-        });
-
-        if (!validBank.length) {
-            throw new Error(
-                "No se encontraron preguntas válidas con tipos soportados."
-            );
-        }
-
-        if (validBank.length !== bank.length) {
-            console.warn(
-                `Se omitieron ${bank.length - validBank.length} preguntas incompletas o con tipos no soportados.`
-            );
-        }
-
-        const config = settings();
-
-        const selectedBank = config.shuffle
-            ? shuffleArray(validBank)
-            : [...validBank];
-
-        questions = selectedBank.slice(
-            0,
-            Math.min(count, selectedBank.length)
-        );
-
-        current = 0;
-        answers = {};
-        examStartedAt = Date.now();
-        examFinished = false;
-
-        stopTimer();
-
-        setVisible("exam-modal", false);
-        setVisible("result-screen", false);
-        setVisible("exam-screen", true);
-
-        startTimer();
-
-        renderQuestion();
-
-    } catch (error) {
-        console.error("Error al iniciar examen:", error);
-        alert(error.message);
-
-    } finally {
-        if (launchButton) {
-            launchButton.disabled = false;
-            launchButton.textContent = "Iniciar examen";
-        }
+async function loadExamQuestions(count) {
+    if (!activeExam?.questionFile) {
+        throw new Error("El examen no tiene definido questionFile.");
     }
+
+    const data = await loadJson(activeExam.questionFile);
+
+    const bank = Array.isArray(data)
+        ? data
+        : Array.isArray(data.questions)
+            ? data.questions
+            : [];
+
+    if (!bank.length) {
+        throw new Error("El banco de preguntas está vacío.");
+    }
+
+    const supportedTypes = Object.keys(QUESTION_TYPE_LABELS);
+
+    const validBank = bank.filter(question => {
+        return (
+            question &&
+            question.id !== undefined &&
+            question.type &&
+            question.question &&
+            supportedTypes.includes(question.type)
+        );
+    });
+
+    if (!validBank.length) {
+        throw new Error(
+            "No se encontraron preguntas válidas con tipos soportados."
+        );
+    }
+
+    if (validBank.length !== bank.length) {
+        console.warn(
+            `Se omitieron ${bank.length - validBank.length} preguntas incompletas o con tipos no soportados.`
+        );
+    }
+
+    const config = settings();
+
+    const selectedBank = config.shuffle
+        ? shuffleArray(validBank)
+        : [...validBank];
+
+    questions = selectedBank.slice(
+        0,
+        Math.min(count, selectedBank.length)
+    );
+
+    current = 0;
+    answers = {};
+    examStartedAt = Date.now();
+    examFinished = false;
 }
 
 /* ============================================================
@@ -741,7 +744,6 @@ function startTimer() {
     stopTimer();
 
     const timer = $("quiz-timer");
-
     if (!timer) return;
 
     if (!settings().showTimer) {
@@ -750,7 +752,6 @@ function startTimer() {
     }
 
     timer.classList.remove("hidden");
-
     updateTimer();
 
     timerInterval = setInterval(updateTimer, 1000);
@@ -761,11 +762,11 @@ function updateTimer() {
 
     if (!timer || !examStartedAt) return;
 
-    const elapsedSeconds = Math.floor(
+    const elapsed = Math.floor(
         (Date.now() - examStartedAt) / 1000
     );
 
-    timer.textContent = formatDuration(elapsedSeconds);
+    timer.textContent = formatDuration(elapsed);
 }
 
 function stopTimer() {
@@ -781,41 +782,31 @@ function stopTimer() {
 
 function createSelect(options, selectedValue, onChange) {
     const select = document.createElement("select");
-
     select.className = "pick-select";
 
     const placeholder = document.createElement("option");
-
     placeholder.value = "";
     placeholder.textContent = "Selecciona una respuesta...";
-
     select.append(placeholder);
 
     (options || []).forEach(option => {
         const element = document.createElement("option");
-
         element.value = getOptionValue(option);
         element.textContent = getOptionLabel(option);
-
         select.append(element);
     });
 
     select.value = selectedValue ?? "";
-
-    select.onchange = () => {
-        onChange(select.value);
-    };
+    select.onchange = () => onChange(select.value);
 
     return select;
 }
 
 function createOption(option, selected, onChange, inputType = "radio") {
     const label = document.createElement("label");
-
     label.className = "option";
 
     const input = document.createElement("input");
-
     input.type = inputType;
     input.value = getOptionValue(option);
 
@@ -824,17 +815,12 @@ function createOption(option, selected, onChange, inputType = "radio") {
     }
 
     input.checked = selected;
-
-    input.onchange = () => {
-        onChange(input.checked);
-    };
+    input.onchange = () => onChange(input.checked);
 
     const span = document.createElement("span");
-
     span.textContent = getOptionLabel(option);
 
     label.append(input, span);
-
     return label;
 }
 
@@ -844,29 +830,21 @@ function createOption(option, selected, onChange, inputType = "radio") {
 
 function renderQuestion() {
     const question = questions[current];
-
     if (!question) return;
 
     renderCaseStudy(question);
 
     setText("quiz-exam", activeExam.id);
-
-    setText(
-        "quiz-counter",
-        `Pregunta ${current + 1} de ${questions.length}`
-    );
-
-    updateProgress();
-
+    setText("quiz-counter", `Pregunta ${current + 1} de ${questions.length}`);
     setText(
         "quiz-type",
         QUESTION_TYPE_LABELS[question.type] || question.type
     );
-
     setText("quiz-question", question.question);
 
-    const answerContainer = $("quiz-answer");
+    updateProgress();
 
+    const answerContainer = $("quiz-answer");
     if (!answerContainer) return;
 
     answerContainer.innerHTML = "";
@@ -876,6 +854,10 @@ function renderQuestion() {
     switch (question.type) {
         case "multiple":
             renderMultiple(question, answerContainer);
+            break;
+
+        case "true-false":
+            renderTrueFalse(question, answerContainer);
             break;
 
         case "multiple-select":
@@ -898,6 +880,10 @@ function renderQuestion() {
             renderDragDropCode(question, answerContainer);
             break;
 
+        case "picklist":
+            renderPicklist(question, answerContainer);
+            break;
+
         default:
             answerContainer.textContent =
                 `Tipo de pregunta no soportado: ${question.type}`;
@@ -908,15 +894,12 @@ function renderQuestion() {
     const previous = $("quiz-prev");
     const next = $("quiz-next");
 
-    if (previous) {
-        previous.disabled = current === 0;
-    }
+    if (previous) previous.disabled = current === 0;
 
     if (next) {
-        next.textContent =
-            current === questions.length - 1
-                ? "Finalizar examen"
-                : "Siguiente";
+        next.textContent = current === questions.length - 1
+            ? "Finalizar examen"
+            : "Siguiente";
     }
 
     updateTimer();
@@ -924,7 +907,6 @@ function renderQuestion() {
 
 function updateProgress() {
     const progress = $("quiz-progress");
-
     if (!progress || !questions.length) return;
 
     const percentage = ((current + 1) / questions.length) * 100;
@@ -937,7 +919,6 @@ function updateProgress() {
     }
 
     bar.style.width = `${percentage}%`;
-
     progress.setAttribute("aria-valuemin", "0");
     progress.setAttribute("aria-valuemax", "100");
     progress.setAttribute("aria-valuenow", String(Math.round(percentage)));
@@ -962,31 +943,26 @@ function resolveAssetPath(imagePath) {
 }
 
 function renderQuestionImage(question, container) {
-    const imagePaths = [
-        question.image,
-        question.answerAreaImage
-    ].filter(Boolean);
+    [question.image, question.answerAreaImage]
+        .filter(Boolean)
+        .forEach((imagePath, index) => {
+            const image = document.createElement("img");
 
-    imagePaths.forEach((imagePath, index) => {
-        const image = document.createElement("img");
+            image.src = resolveAssetPath(imagePath);
+            image.alt = index === 0
+                ? "Imagen de referencia de la pregunta"
+                : "Imagen del área de respuesta";
 
-        image.src = resolveAssetPath(imagePath);
+            image.className = "question-image";
+            image.loading = "lazy";
+            image.onerror = () => image.remove();
 
-        image.alt = index === 0
-            ? "Imagen de referencia de la pregunta"
-            : "Imagen del área de respuesta";
-
-        image.className = "question-image";
-        image.loading = "lazy";
-
-        image.onerror = () => image.remove();
-
-        container.append(image);
-    });
+            container.append(image);
+        });
 }
 
 /* ============================================================
-   TIPO: MULTIPLE
+   MULTIPLE
    ============================================================ */
 
 function renderMultiple(question, container) {
@@ -1008,7 +984,47 @@ function renderMultiple(question, container) {
 }
 
 /* ============================================================
-   TIPO: MULTIPLE-SELECT
+   TRUE / FALSE
+   ============================================================ */
+
+function normalizeBoolean(value) {
+    if (value === true || value === 1) return true;
+    if (value === false || value === 0) return false;
+
+    const normalized = normalizeComparable(value);
+
+    if (["true", "verdadero", "yes", "sí", "si", "1"].includes(normalized)) {
+        return true;
+    }
+
+    if (["false", "falso", "no", "0"].includes(normalized)) {
+        return false;
+    }
+
+    return null;
+}
+
+function renderTrueFalse(question, container) {
+    const saved = normalizeBoolean(answers[question.id]);
+
+    [
+        { value: true, label: "True" },
+        { value: false, label: "False" }
+    ].forEach(option => {
+        container.append(
+            createOption(
+                option,
+                saved === option.value,
+                () => {
+                    answers[question.id] = option.value;
+                }
+            )
+        );
+    });
+}
+
+/* ============================================================
+   MULTIPLE SELECT
    ============================================================ */
 
 function renderMultipleSelect(question, container) {
@@ -1026,21 +1042,21 @@ function renderMultipleSelect(question, container) {
                     item => normalizeComparable(item) === normalizeComparable(value)
                 ),
                 checked => {
-                    let currentSelection = [
-                        ...(answers[question.id] || [])
-                    ];
+                    let selection = [...(answers[question.id] || [])];
 
                     if (checked) {
-                        if (!currentSelection.includes(value)) {
-                            currentSelection.push(value);
+                        if (!selection.some(
+                            item => normalizeComparable(item) === normalizeComparable(value)
+                        )) {
+                            selection.push(value);
                         }
                     } else {
-                        currentSelection = currentSelection.filter(
+                        selection = selection.filter(
                             item => normalizeComparable(item) !== normalizeComparable(value)
                         );
                     }
 
-                    answers[question.id] = currentSelection;
+                    answers[question.id] = selection;
                 },
                 "checkbox"
             )
@@ -1049,7 +1065,7 @@ function renderMultipleSelect(question, container) {
 }
 
 /* ============================================================
-   TIPO: DROPDOWN-GROUP
+   DROPDOWN GROUP
    ============================================================ */
 
 function renderDropdownGroup(question, container) {
@@ -1060,11 +1076,9 @@ function renderDropdownGroup(question, container) {
         const options = item.options || question.options || [];
 
         const wrapper = document.createElement("div");
-
         wrapper.className = "dropdown-item";
 
         const label = document.createElement("b");
-
         label.textContent = labelText;
 
         const select = createSelect(
@@ -1079,43 +1093,35 @@ function renderDropdownGroup(question, container) {
         );
 
         wrapper.append(label, select);
-
         container.append(wrapper);
     });
 }
 
 /* ============================================================
-   TIPO: MATRIX
+   MATRIX
    ============================================================ */
 
 function renderMatrix(question, container) {
     const saved = answers[question.id] || {};
-
     const columns = question.columns || [];
     const rows = question.rows || [];
 
     const wrapper = document.createElement("div");
-
     wrapper.className = "table-wrap matrix-wrapper";
 
     const table = document.createElement("table");
-
     table.className = "matrix-table";
 
     const thead = document.createElement("thead");
     const headerRow = document.createElement("tr");
 
     const statementHeader = document.createElement("th");
-
     statementHeader.textContent = "Enunciado";
-
     headerRow.append(statementHeader);
 
     columns.forEach(column => {
         const th = document.createElement("th");
-
         th.textContent = getOptionLabel(column);
-
         headerRow.append(th);
     });
 
@@ -1126,38 +1132,30 @@ function renderMatrix(question, container) {
 
     rows.forEach((row, index) => {
         const tr = document.createElement("tr");
+        const key = row.statement ?? row.label ?? `Elemento ${index + 1}`;
 
         const statement = document.createElement("td");
-
-        statement.textContent = row.statement ?? row.label ?? `Elemento ${index + 1}`;
-
+        statement.textContent = key;
         tr.append(statement);
 
         columns.forEach(column => {
-            const columnValue = getOptionValue(column);
-
+            const value = getOptionValue(column);
             const td = document.createElement("td");
-
             const label = document.createElement("label");
-
             label.className = "matrix-cell";
 
             const input = document.createElement("input");
-
             input.type = "radio";
             input.name = `matrix-${question.id}-${index}`;
-            input.value = columnValue;
-
-            const rowKey = row.statement ?? row.label ?? `Elemento ${index + 1}`;
+            input.value = value;
 
             input.checked =
-                normalizeComparable(saved[rowKey]) ===
-                normalizeComparable(columnValue);
+                normalizeComparable(saved[key]) === normalizeComparable(value);
 
             input.onchange = () => {
                 answers[question.id] = {
                     ...(answers[question.id] || {}),
-                    [rowKey]: columnValue
+                    [key]: value
                 };
             };
 
@@ -1175,100 +1173,463 @@ function renderMatrix(question, container) {
 }
 
 /* ============================================================
-   TIPO: DRAGDROP
+   DRAG AND DROP: UTILIDADES
+   ============================================================ */
+
+function createDragId(prefix, index) {
+    return `${prefix}-${index}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function getDragOptions(question) {
+    const source = question.options ??
+        question.targets ??
+        question.choices ??
+        question.availableOptions ??
+        [];
+
+    return Array.isArray(source) ? source : [];
+}
+
+function getDragTargets(question) {
+    const source = question.items ??
+        question.slots ??
+        question.targets ??
+        question.dropZones ??
+        [];
+
+    return Array.isArray(source) ? source : [];
+}
+
+function getDragTargetKey(target, index) {
+    if (target && typeof target === "object") {
+        return String(
+            target.id ??
+            target.key ??
+            target.label ??
+            target.name ??
+            target.statement ??
+            `target-${index}`
+        );
+    }
+
+    return String(target ?? `target-${index}`);
+}
+
+function getDragTargetLabel(target) {
+    if (target && typeof target === "object") {
+        return target.label ??
+            target.name ??
+            target.statement ??
+            target.text ??
+            target.id ??
+            "";
+    }
+
+    return target;
+}
+
+function getDragOptionId(option, index) {
+    if (option && typeof option === "object") {
+        return String(
+            option.value ??
+            option.id ??
+            option.code ??
+            option.label ??
+            option.text ??
+            index
+        );
+    }
+
+    return String(option);
+}
+
+function getDragOptionLabel(option) {
+    if (option && typeof option === "object") {
+        return option.label ??
+            option.text ??
+            option.code ??
+            option.value ??
+            option.id ??
+            "";
+    }
+
+    return option;
+}
+
+function createDragBank(question, container, assignedValues) {
+    const bank = document.createElement("div");
+    bank.className = "drag-bank";
+    bank.dataset.dragBank = question.id;
+
+    const title = document.createElement("h4");
+    title.textContent = "Elementos disponibles";
+    bank.append(title);
+
+    const options = getDragOptions(question);
+    const usedValues = Object.values(assignedValues || {})
+        .map(normalizeComparable);
+
+    options.forEach((option, index) => {
+        const optionId = getDragOptionId(option, index);
+
+        if (usedValues.includes(normalizeComparable(optionId))) {
+            return;
+        }
+
+        const item = document.createElement("div");
+        item.className = "drag-option";
+        item.draggable = true;
+        item.tabIndex = 0;
+        item.dataset.dragValue = optionId;
+        item.dataset.dragQuestion = question.id;
+        item.textContent = getDragOptionLabel(option);
+
+        item.addEventListener("dragstart", event => {
+            event.dataTransfer.setData("text/plain", optionId);
+            event.dataTransfer.effectAllowed = "move";
+            item.classList.add("dragging");
+        });
+
+        item.addEventListener("dragend", () => {
+            item.classList.remove("dragging");
+        });
+
+        // Alternativa accesible mediante teclado.
+        item.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                selectDragOption(question, optionId);
+            }
+        });
+
+        bank.append(item);
+    });
+
+    if (!bank.querySelector(".drag-option")) {
+        const empty = document.createElement("p");
+        empty.className = "muted";
+        empty.textContent = "Todos los elementos están asignados.";
+        bank.append(empty);
+    }
+
+    container.append(bank);
+}
+
+function selectDragOption(question, value) {
+    const targets = getDragTargets(question);
+
+    const firstEmpty = targets.find((target, index) => {
+        const key = getDragTargetKey(target, index);
+        return !answers[question.id]?.[key];
+    });
+
+    if (!firstEmpty) return;
+
+    const index = targets.indexOf(firstEmpty);
+    const key = getDragTargetKey(firstEmpty, index);
+
+    answers[question.id] = {
+        ...(answers[question.id] || {}),
+        [key]: value
+    };
+
+    renderQuestion();
+}
+
+function createDropZone(question, target, index, assignedValues, options) {
+    const key = getDragTargetKey(target, index);
+    const wrapper = document.createElement("div");
+
+    wrapper.className = "drop-zone";
+    wrapper.dataset.dropTarget = key;
+    wrapper.dataset.dropQuestion = question.id;
+
+    const label = document.createElement("div");
+    label.className = "drop-zone-label";
+    label.textContent = getDragTargetLabel(target);
+
+    const content = document.createElement("div");
+    content.className = "drop-zone-content";
+
+    const currentValue = assignedValues[key];
+
+    if (currentValue !== undefined && currentValue !== null && currentValue !== "") {
+        const selectedOption = options.find(
+            (option, optionIndex) =>
+                normalizeComparable(getDragOptionId(option, optionIndex)) ===
+                normalizeComparable(currentValue)
+        );
+
+        const chip = document.createElement("div");
+        chip.className = "drag-option assigned";
+        chip.textContent = selectedOption
+            ? getDragOptionLabel(selectedOption)
+            : currentValue;
+
+        chip.draggable = true;
+        chip.dataset.dragValue = currentValue;
+
+        chip.addEventListener("dragstart", event => {
+            event.dataTransfer.setData("text/plain", currentValue);
+            event.dataTransfer.effectAllowed = "move";
+            chip.classList.add("dragging");
+        });
+
+        chip.addEventListener("dragend", () => {
+            chip.classList.remove("dragging");
+        });
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "remove-drag";
+        remove.textContent = "Quitar";
+        remove.onclick = () => {
+            const updated = { ...answers[question.id] };
+            delete updated[key];
+            answers[question.id] = updated;
+            renderQuestion();
+        };
+
+        content.append(chip, remove);
+    } else {
+        content.textContent = "Suelta aquí el elemento";
+        content.classList.add("drop-placeholder");
+    }
+
+    wrapper.addEventListener("dragover", event => {
+        event.preventDefault();
+        wrapper.classList.add("drag-over");
+        event.dataTransfer.dropEffect = "move";
+    });
+
+    wrapper.addEventListener("dragleave", event => {
+        if (!wrapper.contains(event.relatedTarget)) {
+            wrapper.classList.remove("drag-over");
+        }
+    });
+
+    wrapper.addEventListener("drop", event => {
+        event.preventDefault();
+        wrapper.classList.remove("drag-over");
+
+        const value = event.dataTransfer.getData("text/plain");
+        if (!value) return;
+
+        assignDragValue(question, key, value);
+    });
+
+    wrapper.append(label, content);
+    return wrapper;
+}
+
+function assignDragValue(question, targetKey, value) {
+    const currentAnswers = {
+        ...(answers[question.id] || {})
+    };
+
+    // Evita que un mismo elemento quede asignado a dos destinos.
+    Object.keys(currentAnswers).forEach(key => {
+        if (normalizeComparable(currentAnswers[key]) === normalizeComparable(value)) {
+            delete currentAnswers[key];
+        }
+    });
+
+    currentAnswers[targetKey] = value;
+    answers[question.id] = currentAnswers;
+
+    renderQuestion();
+}
+
+/* ============================================================
+   DRAGDROP
    ============================================================ */
 
 function renderDragDrop(question, container) {
-    renderMatchingQuestion(question, container, false);
+    const description = document.createElement("p");
+    description.className = "muted";
+    description.textContent =
+        "Arrastra cada elemento disponible hasta el destino que corresponda.";
+
+    container.append(description);
+
+    const targets = getDragTargets(question);
+    const options = getDragOptions(question);
+    const saved = answers[question.id] || {};
+
+    if (!targets.length || !options.length) {
+        container.append(
+            createStructureWarning(
+                "La pregunta dragdrop no contiene elementos o destinos reconocibles."
+            )
+        );
+        return;
+    }
+
+    const zones = document.createElement("div");
+    zones.className = "drop-zones";
+
+    targets.forEach((target, index) => {
+        zones.append(
+            createDropZone(question, target, index, saved, options)
+        );
+    });
+
+    container.append(zones);
+    createDragBank(question, container, saved);
 }
 
 /* ============================================================
-   TIPO: DRAGDROP-CODE
+   DRAGDROP-CODE
    ============================================================ */
 
 function renderDragDropCode(question, container) {
-    renderMatchingQuestion(question, container, true);
-}
+    const description = document.createElement("p");
+    description.className = "muted";
+    description.textContent =
+        "Arrastra cada bloque de código al espacio correspondiente.";
 
-/* ============================================================
-   RENDERIZADO COMPARTIDO DE RELACIONES
-   ============================================================ */
+    container.append(description);
 
-function renderMatchingQuestion(question, container, isCode) {
+    const targets = getDragTargets(question);
+    const options = getDragOptions(question);
     const saved = answers[question.id] || {};
 
-    if (isCode) {
-        const description = document.createElement("p");
-
-        description.className = "muted";
-        description.textContent =
-            "Selecciona el elemento que corresponde a cada espacio.";
-
-        container.append(description);
+    if (!targets.length || !options.length) {
+        container.append(
+            createStructureWarning(
+                "La pregunta dragdrop-code no contiene espacios o bloques de código reconocibles."
+            )
+        );
+        return;
     }
 
-    const grid = document.createElement("div");
+    const codeWrapper = document.createElement("div");
+    codeWrapper.className = "code-template";
 
-    grid.className = "match-grid";
+    const pre = document.createElement("pre");
+    const code = document.createElement("code");
 
-    getQuestionItems(question).forEach(item => {
-        const labelText = getItemLabel(item);
+    const template = Array.isArray(question.codeTemplate)
+        ? question.codeTemplate.join("\n")
+        : String(question.codeTemplate ?? question.code ?? "");
 
-        const wrapper = document.createElement("div");
+    if (template) {
+        code.textContent = template;
+    } else {
+        code.textContent = "Completa los espacios de código:";
+    }
 
-        wrapper.className = "match-item";
+    pre.append(code);
+    codeWrapper.append(pre);
+    container.append(codeWrapper);
 
-        const label = document.createElement("b");
+    const zones = document.createElement("div");
+    zones.className = "drop-zones code-drop-zones";
 
-        label.textContent = labelText;
-
-        const options = question.targets || question.options || [];
-
-        const select = createSelect(
-            options,
-            saved[labelText],
-            value => {
-                answers[question.id] = {
-                    ...(answers[question.id] || {}),
-                    [labelText]: value
-                };
-            }
+    targets.forEach((target, index) => {
+        zones.append(
+            createDropZone(question, target, index, saved, options)
         );
-
-        wrapper.append(label, select);
-        grid.append(wrapper);
     });
 
-    container.append(grid);
+    container.append(zones);
+    createDragBank(question, container, saved);
 }
 
 /* ============================================================
-   PLANTILLAS DE CÓDIGO
+   PICKLIST
+   ============================================================ */
+
+function renderPicklist(question, container) {
+    const items = getQuestionItems(question);
+    const saved = answers[question.id] || {};
+
+    // Picklist con varios elementos de selección.
+    if (items.length) {
+        items.forEach((item, index) => {
+            const key = getDragTargetKey(item, index);
+            const label = document.createElement("div");
+            label.className = "dropdown-item";
+
+            const title = document.createElement("b");
+            title.textContent = getItemLabel(item);
+
+            const options = item.options ||
+                question.options ||
+                question.choices ||
+                [];
+
+            const select = createSelect(
+                options,
+                saved[key],
+                value => {
+                    answers[question.id] = {
+                        ...(answers[question.id] || {}),
+                        [key]: value
+                    };
+                }
+            );
+
+            label.append(title, select);
+            container.append(label);
+        });
+
+        return;
+    }
+
+    // Picklist de selección única.
+    const options = question.options ||
+        question.choices ||
+        question.values ||
+        [];
+
+    if (options.length) {
+        renderMultiple(question, container);
+        return;
+    }
+
+    container.append(
+        createStructureWarning(
+            "No se encontraron opciones para esta pregunta picklist."
+        )
+    );
+}
+
+/* ============================================================
+   PLANTILLA DE CÓDIGO
    ============================================================ */
 
 function renderCodeTemplate(question, container) {
-    if (!Array.isArray(question.codeTemplate) || !question.codeTemplate.length) {
+    if (
+        question.type === "dragdrop-code" ||
+        !question.codeTemplate
+    ) {
         return;
     }
 
     const wrapper = document.createElement("div");
-
     wrapper.className = "code-template";
 
     const title = document.createElement("h4");
-
     title.textContent = "Código de referencia";
 
     const pre = document.createElement("pre");
-
     const code = document.createElement("code");
 
-    code.textContent = question.codeTemplate.join("\n");
+    code.textContent = Array.isArray(question.codeTemplate)
+        ? question.codeTemplate.join("\n")
+        : String(question.codeTemplate);
 
     pre.append(code);
     wrapper.append(title, pre);
-
     container.append(wrapper);
+}
+
+function createStructureWarning(message) {
+    const warning = document.createElement("p");
+    warning.className = "muted";
+    warning.textContent = message;
+    return warning;
 }
 
 /* ============================================================
@@ -1302,17 +1663,10 @@ function arraysEqual(first, second) {
         return false;
     }
 
-    if (first.length !== second.length) {
-        return false;
-    }
+    if (first.length !== second.length) return false;
 
-    const a = first
-        .map(normalizeComparable)
-        .sort();
-
-    const b = second
-        .map(normalizeComparable)
-        .sort();
+    const a = first.map(normalizeComparable).sort();
+    const b = second.map(normalizeComparable).sort();
 
     return a.every((value, index) => value === b[index]);
 }
@@ -1332,9 +1686,7 @@ function objectsEqual(first, second) {
     const firstKeys = Object.keys(first);
     const secondKeys = Object.keys(second);
 
-    if (firstKeys.length !== secondKeys.length) {
-        return false;
-    }
+    if (firstKeys.length !== secondKeys.length) return false;
 
     return firstKeys.every(key => {
         return (
@@ -1350,53 +1702,44 @@ function compareAnswer(userAnswer, expectedAnswer) {
         return arraysEqual(userAnswer, expectedAnswer);
     }
 
-    if (
-        expectedAnswer &&
-        typeof expectedAnswer === "object"
-    ) {
+    if (expectedAnswer && typeof expectedAnswer === "object") {
         return objectsEqual(userAnswer, expectedAnswer);
     }
 
-    return (
-        normalizeComparable(userAnswer) ===
-        normalizeComparable(expectedAnswer)
-    );
+    return normalizeComparable(userAnswer) ===
+        normalizeComparable(expectedAnswer);
 }
 
 /* ============================================================
-   EVALUACIÓN POR TIPO DE PREGUNTA
+   EVALUACIÓN
    ============================================================ */
 
 function correct(question) {
     const userAnswer = answers[question.id];
 
-    if (isEmptyAnswer(userAnswer)) {
-        return false;
-    }
+    if (isEmptyAnswer(userAnswer)) return false;
 
     switch (question.type) {
         case "multiple":
-            return compareAnswer(
-                userAnswer,
-                getQuestionAnswer(question)
-            );
-
         case "multiple-select":
             return compareAnswer(
                 userAnswer,
                 getQuestionAnswer(question)
             );
 
+        case "true-false":
+            return normalizeBoolean(userAnswer) !== null &&
+                normalizeBoolean(userAnswer) ===
+                normalizeBoolean(getQuestionAnswer(question));
+
         case "dropdown-group":
         case "matrix":
+        case "picklist":
             return correctGroupedAnswer(question, userAnswer);
 
         case "dragdrop":
         case "dragdrop-code":
-            return compareAnswer(
-                userAnswer,
-                getQuestionAnswer(question)
-            );
+            return correctGroupedAnswer(question, userAnswer);
 
         default:
             return false;
@@ -1408,14 +1751,16 @@ function correctGroupedAnswer(question, userAnswer) {
         return false;
     }
 
+    const expected = {};
     const items = getQuestionItems(question);
     const rows = question.rows || [];
 
-    const expected = {};
-
-    if (question.type === "dropdown-group") {
-        items.forEach(item => {
-            const key = getItemLabel(item);
+    if (
+        question.type === "dropdown-group" ||
+        question.type === "picklist"
+    ) {
+        items.forEach((item, index) => {
+            const key = getDragTargetKey(item, index);
 
             if (item.answer !== undefined) {
                 expected[key] = item.answer;
@@ -1425,7 +1770,9 @@ function correctGroupedAnswer(question, userAnswer) {
 
     if (question.type === "matrix") {
         rows.forEach((row, index) => {
-            const key = row.statement ?? row.label ?? `Elemento ${index + 1}`;
+            const key = row.statement ??
+                row.label ??
+                `Elemento ${index + 1}`;
 
             if (row.answer !== undefined) {
                 expected[key] = row.answer;
@@ -1433,7 +1780,23 @@ function correctGroupedAnswer(question, userAnswer) {
         });
     }
 
-    // Algunas estructuras pueden definir la respuesta en question.answer.
+    if (
+        question.type === "dragdrop" ||
+        question.type === "dragdrop-code"
+    ) {
+        getDragTargets(question).forEach((target, index) => {
+            const key = getDragTargetKey(target, index);
+
+            if (target && typeof target === "object") {
+                if (target.answer !== undefined) {
+                    expected[key] = target.answer;
+                } else if (target.correctAnswer !== undefined) {
+                    expected[key] = target.correctAnswer;
+                }
+            }
+        });
+    }
+
     const declaredAnswer = getQuestionAnswer(question);
 
     if (
@@ -1444,9 +1807,7 @@ function correctGroupedAnswer(question, userAnswer) {
         Object.assign(expected, declaredAnswer);
     }
 
-    if (!Object.keys(expected).length) {
-        return false;
-    }
+    if (!Object.keys(expected).length) return false;
 
     return objectsEqual(userAnswer, expected);
 }
@@ -1456,8 +1817,10 @@ function correctGroupedAnswer(question, userAnswer) {
    ============================================================ */
 
 function answerLabel(question, value) {
-    if (isEmptyAnswer(value)) {
-        return "Sin responder";
+    if (isEmptyAnswer(value)) return "Sin responder";
+
+    if (typeof value === "boolean") {
+        return value ? "True" : "False";
     }
 
     if (Array.isArray(value)) {
@@ -1466,9 +1829,7 @@ function answerLabel(question, value) {
 
     if (typeof value === "object") {
         return Object.entries(value)
-            .map(([key, item]) => {
-                return `${key} → ${item || "Sin asignar"}`;
-            })
+            .map(([key, item]) => `${key} → ${item || "Sin asignar"}`)
             .join(" · ");
     }
 
@@ -1479,19 +1840,42 @@ function correctAnswerLabel(question) {
     const answer = getQuestionAnswer(question);
 
     if (answer === null || answer === undefined) {
-        if (question.type === "dropdown-group") {
+        if (
+            question.type === "dropdown-group" ||
+            question.type === "picklist"
+        ) {
             return (question.items || [])
-                .map(item => `${getItemLabel(item)} → ${item.answer ?? "No disponible"}`)
+                .map((item, index) =>
+                    `${getDragTargetKey(item, index)} → ${item.answer ?? "No disponible"}`
+                )
                 .join(" · ");
         }
 
         if (question.type === "matrix") {
             return (question.rows || [])
-                .map(row => `${row.statement ?? row.label} → ${row.answer ?? "No disponible"}`)
+                .map(row =>
+                    `${row.statement ?? row.label} → ${row.answer ?? "No disponible"}`
+                )
+                .join(" · ");
+        }
+
+        if (
+            question.type === "dragdrop" ||
+            question.type === "dragdrop-code"
+        ) {
+            return getDragTargets(question)
+                .map((target, index) => {
+                    const key = getDragTargetKey(target, index);
+                    return `${key} → ${target.answer ?? target.correctAnswer ?? "No disponible"}`;
+                })
                 .join(" · ");
         }
 
         return "No disponible";
+    }
+
+    if (typeof answer === "boolean") {
+        return answer ? "True" : "False";
     }
 
     if (Array.isArray(answer)) {
@@ -1512,9 +1896,7 @@ function correctAnswerLabel(question) {
    ============================================================ */
 
 function renderExplanation(explanation) {
-    if (!explanation) {
-        return "No hay explicación disponible.";
-    }
+    if (!explanation) return "No hay explicación disponible.";
 
     if (typeof explanation === "string") {
         return escapeHtml(explanation);
@@ -1552,7 +1934,6 @@ function finishExam() {
     if (examFinished || !questions.length) return;
 
     examFinished = true;
-
     stopTimer();
 
     const right = questions.filter(correct).length;
@@ -1578,9 +1959,7 @@ function finishExam() {
     };
 
     const history = readStore(STORE.history, []);
-
     history.push(record);
-
     writeStore(STORE.history, history);
 
     setVisible("exam-screen", false);
@@ -1595,12 +1974,13 @@ function finishExam() {
 
     renderResults();
 
-    renderDashboard();
+    if (!examMode) {
+        renderDashboard();
+    }
 }
 
 function renderResults() {
     const container = $("result-reviews");
-
     if (!container) return;
 
     container.innerHTML = questions
@@ -1616,7 +1996,6 @@ function renderResults() {
 
             return `
                 <article class="review ${isCorrect ? "good" : "bad"}">
-
                     <b>
                         ${index + 1}.
                         ${escapeHtml(question.question)}
@@ -1642,7 +2021,6 @@ function renderResults() {
                         <b>Explicación:</b>
                         ${renderExplanation(question.explanation)}
                     </div>
-
                 </article>
             `;
         })
@@ -1655,7 +2033,6 @@ function renderResults() {
 
 function renderCaseStudy(question) {
     const container = $("case-study");
-
     if (!container) return;
 
     container.innerHTML = "";
@@ -1677,38 +2054,25 @@ function renderCaseStudy(question) {
     container.classList.remove("hidden");
 
     const title = document.createElement("h3");
-
     title.textContent = study.title || "Caso de estudio";
 
     const details = document.createElement("details");
-
     const summary = document.createElement("summary");
-
     summary.textContent = "Ver caso de estudio";
 
     const content = document.createElement("div");
-
     content.className = "case-study-content";
 
-    const source = getCaseStudyContent(study);
-
-    renderCaseStudyObject(source, content);
+    renderCaseStudyObject(getCaseStudyContent(study), content);
 
     details.append(summary, content);
-
     container.append(title, details);
 }
 
 function getCaseStudyContent(study) {
-    if (study.fullText) {
-        return study.fullText;
-    }
+    if (study.fullText) return study.fullText;
+    if (study.scenario) return study.scenario;
 
-    if (study.scenario) {
-        return study.scenario;
-    }
-
-    // Estructuras habituales de casos de estudio.
     const sections = [
         "overview",
         "existingEnvironment",
@@ -1726,16 +2090,17 @@ function getCaseStudyContent(study) {
         }
     });
 
-    if (Object.keys(content).length) {
-        return content;
-    }
+    if (Object.keys(content).length) return content;
 
-    const excluded = ["id", "title", "questionCount", "questionNumbers"];
+    const excluded = [
+        "id",
+        "title",
+        "questionCount",
+        "questionNumbers"
+    ];
 
     return Object.fromEntries(
-        Object.entries(study).filter(
-            ([key]) => !excluded.includes(key)
-        )
+        Object.entries(study).filter(([key]) => !excluded.includes(key))
     );
 }
 
@@ -1748,11 +2113,8 @@ function renderCaseStudyObject(object, container, level = 0) {
         typeof object === "boolean"
     ) {
         const paragraph = document.createElement("p");
-
         paragraph.textContent = String(object);
-
         container.append(paragraph);
-
         return;
     }
 
@@ -1772,13 +2134,11 @@ function renderCaseStudyObject(object, container, level = 0) {
         });
 
         container.append(list);
-
         return;
     }
 
     Object.entries(object).forEach(([key, value]) => {
         const section = document.createElement("section");
-
         section.className = "case-study-section";
 
         const heading = document.createElement(
@@ -1786,20 +2146,13 @@ function renderCaseStudyObject(object, container, level = 0) {
         );
 
         heading.textContent = formatCaseStudyTitle(key);
-
         section.append(heading);
 
         if (typeof value === "object" && value !== null) {
-            renderCaseStudyObject(
-                value,
-                section,
-                level + 1
-            );
+            renderCaseStudyObject(value, section, level + 1);
         } else {
             const paragraph = document.createElement("p");
-
             paragraph.textContent = String(value);
-
             section.append(paragraph);
         }
 
@@ -1823,9 +2176,12 @@ function bindInterfaceEvents() {
         nav.onclick = event => {
             event.preventDefault();
 
-            if (examStartedAt && !examFinished &&
+            if (
+                examStartedAt &&
+                !examFinished &&
                 $("exam-screen") &&
-                !$("exam-screen").classList.contains("hidden")) {
+                !$("exam-screen").classList.contains("hidden")
+            ) {
                 return;
             }
 
@@ -1861,12 +2217,15 @@ function bindInterfaceEvents() {
                 )
             ) {
                 stopTimer();
-
                 examFinished = true;
                 examStartedAt = null;
 
-                setVisible("exam-screen", false);
+                if (examMode) {
+                    window.close();
+                    return;
+                }
 
+                setVisible("exam-screen", false);
                 navigate("certifications");
             }
         };
@@ -1874,6 +2233,11 @@ function bindInterfaceEvents() {
 
     if ($("result-home")) {
         $("result-home").onclick = () => {
+            if (examMode) {
+                window.close();
+                return;
+            }
+
             setVisible("result-screen", false);
 
             examStartedAt = null;
@@ -1915,10 +2279,7 @@ function saveProfile() {
     const name = $("profile-name")?.value.trim() || "Estudiante";
     const email = $("profile-email")?.value.trim() || "";
 
-    writeStore(STORE.profile, {
-        name,
-        email
-    });
+    writeStore(STORE.profile, { name, email });
 
     alert("Perfil guardado en este navegador.");
 }
@@ -1966,7 +2327,6 @@ function clearHistory() {
         )
     ) {
         writeStore(STORE.history, []);
-
         renderHistory();
         renderDashboard();
     }
