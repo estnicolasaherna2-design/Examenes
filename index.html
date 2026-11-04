@@ -4,982 +4,1004 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="theme-color"
-        content="#101a2d"
-    >
-
-    <meta
-        name="description"
-        content="Exam Lab - Plataforma de simulación y preparación para certificaciones técnicas."
-    >
+    <meta name="theme-color" content="#f4f6fb">
+    <meta name="description" content="Exam Lab - Plataforma de simulación y preparación para exámenes de certificación.">
 
     <title>Exam Lab</title>
 
-    <link
-        rel="stylesheet"
-        href="css/styles.css"
-    >
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/exam.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body>
 
-<div class="app">
+    <div class="app">
 
-    <!-- =====================================================
-         SIDEBAR
-         ===================================================== -->
+        <!-- =====================================================
+             SIDEBAR
+        ====================================================== -->
 
-    <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
 
-        <div class="brand">
+            <a href="#" class="brand" data-page="dashboard">
+                <span class="brand-mark">E</span>
+                <span class="brand-name">Exam Lab</span>
+            </a>
 
-            <span class="brand-mark">E</span>
+            <nav class="nav">
 
-            <span class="brand-name">
-                Exam Lab
-            </span>
+                <div class="nav-section">
 
-        </div>
-
-        <div class="nav-label">
-            Workspace
-        </div>
-
-        <a
-            class="nav active"
-            data-page="dashboard"
-            href="#dashboard"
-        >
-            <span class="ico">⌂</span>
-            <span class="nav-text">Dashboard</span>
-        </a>
-
-        <a
-            class="nav"
-            data-page="certifications"
-            href="#certifications"
-        >
-            <span class="ico">✧</span>
-            <span class="nav-text">Certificaciones</span>
-        </a>
-
-        <div class="nav-label">
-            Mi espacio
-        </div>
-
-        <a
-            class="nav"
-            data-page="profile"
-            href="#profile"
-        >
-            <span class="ico">◉</span>
-            <span class="nav-text">Perfil</span>
-        </a>
-
-        <a
-            class="nav"
-            data-page="history"
-            href="#history"
-        >
-            <span class="ico">◷</span>
-            <span class="nav-text">Historial de exámenes</span>
-        </a>
-
-        <a
-            class="nav"
-            data-page="settings"
-            href="#settings"
-        >
-            <span class="ico">⚙</span>
-            <span class="nav-text">Configuración</span>
-        </a>
-
-        <div class="side-bottom">
-            Simulador local · Datos en este navegador
-        </div>
-
-    </aside>
-
-
-    <!-- =====================================================
-         MAIN
-         ===================================================== -->
-
-    <div class="main">
-
-        <!-- HEADER -->
-
-        <header class="topbar">
-
-            <div
-                class="crumb"
-                id="breadcrumb"
-            >
-                Dashboard
-            </div>
-
-            <div class="user-chip">
-
-                <span>Mi espacio</span>
-
-                <span class="avatar">
-                    E
-                </span>
-
-            </div>
-
-        </header>
-
-
-        <!-- =================================================
-             CONTENT
-             ================================================= -->
-
-        <main class="content">
-
-            <!-- ERROR GLOBAL -->
-
-            <div
-                id="app-error"
-                class="card hidden"
-                role="alert"
-            ></div>
-
-
-            <!-- =================================================
-                 DASHBOARD
-                 ================================================= -->
-
-            <section
-                id="page-dashboard"
-                class="page"
-            >
-
-                <div class="page-head">
-
-                    <div>
-
-                        <div class="eyebrow">
-                            Resumen general
-                        </div>
-
-                        <h1>Dashboard</h1>
-
-                        <div class="muted">
-                            Bienvenido a tu centro de preparación.
-                        </div>
-
+                    <div class="nav-section-title">
+                        PLATAFORMA
                     </div>
 
-                    <button
-                        type="button"
-                        onclick="navigate('certifications')"
-                    >
-                        Explorar certificaciones
+                    <button class="nav-link active" data-page="dashboard">
+                        <span class="nav-icon">⌂</span>
+                        <span>Panel principal</span>
+                    </button>
+
+                    <button class="nav-link" data-page="certifications">
+                        <span class="nav-icon">▤</span>
+                        <span>Exámenes</span>
+                    </button>
+
+                    <button class="nav-link" data-page="history">
+                        <span class="nav-icon">◷</span>
+                        <span>Historial</span>
                     </button>
 
                 </div>
 
+                <div class="nav-section">
 
-                <!-- ESTADÍSTICAS -->
-
-                <div class="grid stats">
-
-                    <div class="card">
-
-                        <div class="stat-label">
-                            Exámenes realizados
-                        </div>
-
-                        <div
-                            class="stat-value"
-                            id="stat-exams"
-                        >
-                            0
-                        </div>
-
-                        <div class="stat-note">
-                            Intentos completados
-                        </div>
-
+                    <div class="nav-section-title">
+                        CUENTA
                     </div>
 
+                    <button class="nav-link" data-page="profile">
+                        <span class="nav-icon">◎</span>
+                        <span>Perfil</span>
+                    </button>
 
-                    <div class="card">
+                    <button class="nav-link" data-page="settings">
+                        <span class="nav-icon">⚙</span>
+                        <span>Configuración</span>
+                    </button>
 
-                        <div class="stat-label">
-                            Promedio general
-                        </div>
+                </div>
 
-                        <div
-                            class="stat-value"
-                            id="stat-average"
-                        >
-                            0%
-                        </div>
+            </nav>
 
-                        <div class="stat-note">
-                            De todos tus intentos
-                        </div>
+            <div class="sidebar-footer">
 
+                <div class="avatar" id="sidebar-avatar">
+                    U
+                </div>
+
+                <div class="sidebar-user-info">
+                    <strong id="sidebar-name">Usuario</strong>
+                    <small>Estudiante</small>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================================
+             MAIN
+        ====================================================== -->
+
+        <main class="main">
+
+            <!-- TOPBAR -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <div class="breadcrumb">
+                        <span>Exam Lab</span>
+                        <span class="breadcrumb-separator">/</span>
+                        <strong id="breadcrumb-current">
+                            Panel principal
+                        </strong>
                     </div>
 
+                </div>
 
-                    <div class="card">
+                <div class="topbar-right">
 
-                        <div class="stat-label">
-                            Mejor resultado
+                    <div class="user-menu">
+
+                        <div class="avatar" id="user-avatar">
+                            U
                         </div>
 
-                        <div
-                            class="stat-value"
-                            id="stat-best"
-                        >
-                            0%
-                        </div>
-
-                        <div class="stat-note">
-                            Tu puntuación más alta
-                        </div>
-
-                    </div>
-
-
-                    <div class="card">
-
-                        <div class="stat-label">
-                            Certificaciones disponibles
-                        </div>
-
-                        <div
-                            class="stat-value"
-                            id="stat-available"
-                        >
-                            0
-                        </div>
-
-                        <div class="stat-note">
-                            Bancos configurados
+                        <div class="user-info">
+                            <strong id="user-name">Usuario</strong>
+                            <small>Mi cuenta</small>
                         </div>
 
                     </div>
 
                 </div>
 
+            </header>
 
-                <!-- CERTIFICACIONES DESTACADAS -->
 
-                <div class="page-head">
+            <!-- =================================================
+                 CONTENT
+            ================================================== -->
 
-                    <div>
+            <div class="content">
 
-                        <h2 class="section-title">
-                            Continúa tu preparación
-                        </h2>
 
-                        <div class="muted">
-                            Selecciona una certificación para comenzar.
+                <!-- =============================================
+                     DASHBOARD
+                ============================================== -->
+
+                <section id="page-dashboard" class="page">
+
+                    <div class="page-header">
+
+                        <div>
+                            <p class="eyebrow">RESUMEN</p>
+
+                            <h1>Panel principal</h1>
+
+                            <p>
+                                Continúa tu preparación y revisa tu progreso.
+                            </p>
+                        </div>
+
+                        <button
+                            class="btn btn-primary"
+                            data-go="certifications">
+                            Explorar exámenes
+                        </button>
+
+                    </div>
+
+
+                    <!-- ESTADÍSTICAS -->
+
+                    <div class="stats-grid">
+
+                        <article class="stat-card">
+
+                            <div class="stat-card-header">
+                                <span>Exámenes realizados</span>
+                            </div>
+
+                            <strong id="stat-exams">0</strong>
+
+                            <small class="stat-description">
+                                Intentos completados
+                            </small>
+
+                        </article>
+
+
+                        <article class="stat-card">
+
+                            <div class="stat-card-header">
+                                <span>Promedio</span>
+                            </div>
+
+                            <strong id="stat-average">0%</strong>
+
+                            <small class="stat-description">
+                                Resultado acumulado
+                            </small>
+
+                        </article>
+
+
+                        <article class="stat-card">
+
+                            <div class="stat-card-header">
+                                <span>Aprobados</span>
+                            </div>
+
+                            <strong id="stat-passed">0</strong>
+
+                            <small class="stat-description">
+                                Según puntaje mínimo
+                            </small>
+
+                        </article>
+
+
+                        <article class="stat-card">
+
+                            <div class="stat-card-header">
+                                <span>Tiempo de estudio</span>
+                            </div>
+
+                            <strong id="stat-time">0 min</strong>
+
+                            <small class="stat-description">
+                                Tiempo registrado
+                            </small>
+
+                        </article>
+
+                    </div>
+
+
+                    <!-- CONTENIDO DASHBOARD -->
+
+                    <div class="dashboard-grid">
+
+                        <section class="card dashboard-section">
+
+                            <div class="section-header">
+
+                                <div>
+                                    <h2>Exámenes disponibles</h2>
+
+                                    <p>
+                                        Selecciona una certificación para comenzar.
+                                    </p>
+                                </div>
+
+                                <button
+                                    class="btn btn-ghost"
+                                    data-go="certifications">
+                                    Ver todos
+                                </button>
+
+                            </div>
+
+                            <div
+                                id="dashboard-certifications"
+                                class="certification-list">
+                            </div>
+
+                        </section>
+
+
+                        <section class="card dashboard-section">
+
+                            <div class="section-header">
+
+                                <div>
+                                    <h2>Actividad reciente</h2>
+
+                                    <p>
+                                        Consulta tus últimos intentos.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div
+                                id="dashboard-history"
+                                class="activity-list">
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =============================================
+                     CERTIFICATIONS
+                ============================================== -->
+
+                <section
+                    id="page-certifications"
+                    class="page hidden">
+
+                    <div class="page-header">
+
+                        <div>
+                            <p class="eyebrow">CATÁLOGO</p>
+
+                            <h1>Exámenes</h1>
+
+                            <p>
+                                Explora los simuladores disponibles.
+                            </p>
                         </div>
 
                     </div>
 
-                </div>
 
-                <div
-                    class="grid exam-grid"
-                    id="dashboard-exams"
-                ></div>
+                    <div class="toolbar">
+
+                        <input
+                            type="search"
+                            id="certification-search"
+                            placeholder="Buscar examen..."
+                            autocomplete="off">
+
+                        <select id="certification-filter">
+                            <option value="">
+                                Todas las categorías
+                            </option>
+                        </select>
+
+                    </div>
 
 
-                <!-- ACTIVIDAD RECIENTE -->
+                    <div
+                        id="certification-grid"
+                        class="certification-grid">
+                    </div>
 
-                <div
-                    class="card"
-                    style="margin-top:20px"
-                >
+                </section>
 
-                    <h2 class="section-title">
-                        Actividad reciente
-                    </h2>
 
-                    <div class="table-wrap">
+                <!-- =============================================
+                     PROFILE
+                ============================================== -->
 
-                        <table>
+                <section
+                    id="page-profile"
+                    class="page hidden">
+
+                    <div class="page-header">
+
+                        <div>
+                            <p class="eyebrow">CUENTA</p>
+
+                            <h1>Perfil</h1>
+
+                            <p>
+                                Administra tu información personal.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-layout">
+
+                        <section class="card profile-card">
+
+                            <div class="profile-avatar-container">
+
+                                <div
+                                    class="avatar avatar-large"
+                                    id="profile-avatar">
+                                    U
+                                </div>
+
+                                <h2 id="profile-name">
+                                    Usuario
+                                </h2>
+
+                                <p id="profile-email">
+                                    usuario@correo.com
+                                </p>
+
+                            </div>
+
+
+                            <form id="profile-form" class="profile-form">
+
+                                <div class="form-group">
+
+                                    <label for="profile-name-input">
+                                        Nombre
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="profile-name-input"
+                                        placeholder="Tu nombre"
+                                        required>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="profile-email-input">
+                                        Correo electrónico
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        id="profile-email-input"
+                                        placeholder="correo@ejemplo.com">
+
+                                </div>
+
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary">
+                                    Guardar cambios
+                                </button>
+
+                            </form>
+
+                        </section>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =============================================
+                     HISTORY
+                ============================================== -->
+
+                <section
+                    id="page-history"
+                    class="page hidden">
+
+                    <div class="page-header">
+
+                        <div>
+                            <p class="eyebrow">SEGUIMIENTO</p>
+
+                            <h1>Historial</h1>
+
+                            <p>
+                                Consulta los resultados de tus exámenes.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="toolbar">
+
+                        <select id="history-filter">
+                            <option value="all">
+                                Todos los resultados
+                            </option>
+
+                            <option value="passed">
+                                Aprobados
+                            </option>
+
+                            <option value="failed">
+                                No aprobados
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                    <section class="card table-container">
+
+                        <table class="history-table">
 
                             <thead>
                                 <tr>
                                     <th>Examen</th>
                                     <th>Fecha</th>
                                     <th>Resultado</th>
-                                    <th>Aciertos</th>
+                                    <th>Estado</th>
                                 </tr>
                             </thead>
 
-                            <tbody id="dashboard-history"></tbody>
+                            <tbody id="history-table-body">
+                            </tbody>
 
                         </table>
 
-                    </div>
+                    </section>
 
-                </div>
+                </section>
 
-            </section>
 
+                <!-- =============================================
+                     SETTINGS
+                ============================================== -->
 
-            <!-- =================================================
-                 CERTIFICACIONES
-                 ================================================= -->
+                <section
+                    id="page-settings"
+                    class="page hidden">
 
-            <section
-                id="page-certifications"
-                class="page hidden"
-            >
-
-                <div class="page-head">
-
-                    <div>
-
-                        <div class="eyebrow">
-                            Catálogo
-                        </div>
-
-                        <h1>Certificaciones</h1>
-
-                        <div class="muted">
-                            Selecciona el examen que quieres preparar.
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div
-                    class="grid exam-grid"
-                    id="certification-list"
-                ></div>
-
-            </section>
-
-
-            <!-- =================================================
-                 PERFIL
-                 ================================================= -->
-
-            <section
-                id="page-profile"
-                class="page hidden"
-            >
-
-                <div class="page-head">
-
-                    <div>
-
-                        <div class="eyebrow">
-                            Mi espacio
-                        </div>
-
-                        <h1>Perfil</h1>
-
-                        <div class="muted">
-                            Administra tu información de estudiante.
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="grid two-col">
-
-                    <div class="card">
-
-                        <h2 class="section-title">
-                            Información personal
-                        </h2>
-
-                        <div class="field">
-
-                            <label for="profile-name">
-                                Nombre
-                            </label>
-
-                            <input
-                                id="profile-name"
-                                type="text"
-                                placeholder="Tu nombre"
-                                autocomplete="name"
-                            >
-
-                        </div>
-
-
-                        <div class="field">
-
-                            <label for="profile-email">
-                                Correo electrónico
-                            </label>
-
-                            <input
-                                id="profile-email"
-                                type="email"
-                                placeholder="correo@ejemplo.com"
-                                autocomplete="email"
-                            >
-
-                        </div>
-
-                        <button
-                            type="button"
-                            id="profile-save"
-                        >
-                            Guardar perfil
-                        </button>
-
-                    </div>
-
-
-                    <div class="card">
-
-                        <h2 class="section-title">
-                            Mi progreso
-                        </h2>
-
-                        <div class="settings-row">
-
-                            <div>
-
-                                <b>
-                                    Exámenes completados
-                                </b>
-
-                                <p>
-                                    Total de intentos registrados
-                                </p>
-
-                            </div>
-
-                            <strong id="profile-total">
-                                0
-                            </strong>
-
-                        </div>
-
-
-                        <div class="settings-row">
-
-                            <div>
-
-                                <b>
-                                    Promedio general
-                                </b>
-
-                                <p>
-                                    Promedio de puntuaciones
-                                </p>
-
-                            </div>
-
-                            <strong id="profile-average">
-                                0%
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 HISTORIAL
-                 ================================================= -->
-
-            <section
-                id="page-history"
-                class="page hidden"
-            >
-
-                <div class="page-head">
-
-                    <div>
-
-                        <div class="eyebrow">
-                            Seguimiento
-                        </div>
-
-                        <h1>Historial de exámenes</h1>
-
-                        <div class="muted">
-                            Consulta tus resultados anteriores.
-                        </div>
-
-                    </div>
-
-                    <button
-                        type="button"
-                        class="secondary"
-                        id="history-clear"
-                    >
-                        Limpiar historial
-                    </button>
-
-                </div>
-
-
-                <div class="card table-wrap">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Certificación</th>
-                                <th>Preguntas</th>
-                                <th>Aciertos</th>
-                                <th>Resultado</th>
-                                <th>Estado</th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody id="history-rows"></tbody>
-
-                    </table>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 CONFIGURACIÓN
-                 ================================================= -->
-
-            <section
-                id="page-settings"
-                class="page hidden"
-            >
-
-                <div class="page-head">
-
-                    <div>
-
-                        <div class="eyebrow">
-                            Preferencias
-                        </div>
-
-                        <h1>Configuración</h1>
-
-                        <div class="muted">
-                            Personaliza la experiencia de tus exámenes.
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-
-                    <h2 class="section-title">
-                        Preferencias de examen
-                    </h2>
-
-
-                    <div class="form-row">
-
-                        <div class="field">
-
-                            <label for="setting-count">
-                                Cantidad predeterminada de preguntas
-                            </label>
-
-                            <select id="setting-count">
-
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                                <option value="40">40</option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div class="field">
-
-                            <label for="setting-pass">
-                                Porcentaje mínimo para aprobar
-                            </label>
-
-                            <select id="setting-pass">
-
-                                <option value="60">60%</option>
-                                <option value="65">65%</option>
-                                <option value="70">70%</option>
-                                <option value="75">75%</option>
-                                <option value="80">80%</option>
-
-                            </select>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="settings-row">
+                    <div class="page-header">
 
                         <div>
+                            <p class="eyebrow">PREFERENCIAS</p>
 
-                            <b>
-                                Orden aleatorio de preguntas
-                            </b>
+                            <h1>Configuración</h1>
 
                             <p>
-                                Mezclar las preguntas al iniciar un examen.
+                                Personaliza tu experiencia de simulación.
                             </p>
-
                         </div>
-
-                        <input
-                            type="checkbox"
-                            id="setting-shuffle"
-                            checked
-                        >
 
                     </div>
 
 
-                    <div class="settings-row">
+                    <section class="card settings-layout">
 
-                        <div>
+                        <div class="setting-item">
 
-                            <b>
-                                Temporizador
-                            </b>
+                            <div>
+                                <strong>Mezclar preguntas</strong>
+
+                                <small>
+                                    Presenta las preguntas en orden aleatorio.
+                                </small>
+                            </div>
+
+                            <input
+                                type="checkbox"
+                                id="setting-shuffle"
+                                checked>
+
+                        </div>
+
+
+                        <div class="setting-item">
+
+                            <div>
+                                <strong>Mostrar temporizador</strong>
+
+                                <small>
+                                    Muestra el tiempo transcurrido durante el examen.
+                                </small>
+                            </div>
+
+                            <input
+                                type="checkbox"
+                                id="setting-timer"
+                                checked>
+
+                        </div>
+
+
+                        <div class="setting-item">
+
+                            <div>
+                                <strong>Confirmar al salir</strong>
+
+                                <small>
+                                    Solicita confirmación antes de abandonar un examen.
+                                </small>
+                            </div>
+
+                            <input
+                                type="checkbox"
+                                id="setting-confirm-exit"
+                                checked>
+
+                        </div>
+
+
+                        <div class="settings-danger-zone">
+
+                            <h3>Zona de mantenimiento</h3>
 
                             <p>
-                                Mostrar el tiempo transcurrido durante el examen.
+                                Elimina los datos locales de progreso e historial.
                             </p>
 
-                        </div>
-
-                        <input
-                            type="checkbox"
-                            id="setting-timer"
-                        >
-
-                    </div>
-
-
-                    <div style="margin-top:18px">
-
-                        <button
-                            type="button"
-                            id="settings-save"
-                        >
-                            Guardar configuración
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 EXAMEN
-                 ================================================= -->
-
-            <section
-                id="exam-screen"
-                class="page hidden"
-            >
-
-                <div class="card quiz-card">
-
-                    <!-- CABECERA -->
-
-                    <div class="page-head">
-
-                        <div>
-
-                            <span
-                                class="exam-code"
-                                id="quiz-exam"
-                            ></span>
-
-                            <span
-                                class="pill"
-                                id="quiz-type"
-                            ></span>
-
-                        </div>
-
-
-                        <div class="quiz-header-info">
-
-                            <b id="quiz-counter"></b>
-
-                            <span
-                                id="quiz-timer"
-                                class="quiz-timer hidden"
-                            >
-                                00:00
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- PROGRESO -->
-
-                    <div
-                        class="quiz-progress"
-                        role="progressbar"
-                        aria-label="Progreso del examen"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                    >
-
-                        <div id="quiz-progress"></div>
-
-                    </div>
-
-
-                    <!-- CASO DE ESTUDIO -->
-
-                    <div
-                        id="case-study"
-                        class="case-study hidden"
-                    ></div>
-
-
-                    <!-- PREGUNTA -->
-
-                    <div
-                        class="question"
-                        id="quiz-question"
-                    ></div>
-
-
-                    <!-- RESPUESTAS -->
-
-                    <div
-                        id="quiz-answer"
-                        class="quiz-answer"
-                    ></div>
-
-
-                    <!-- NAVEGACIÓN -->
-
-                    <div class="quiz-actions">
-
-                        <button
-                            type="button"
-                            class="secondary"
-                            id="quiz-exit"
-                        >
-                            Salir
-                        </button>
-
-
-                        <div class="quiz-navigation">
-
                             <button
-                                type="button"
-                                class="secondary"
-                                id="quiz-prev"
-                            >
-                                Anterior
-                            </button>
-
-                            <button
-                                type="button"
-                                id="quiz-next"
-                            >
-                                Siguiente
+                                id="clear-data"
+                                class="btn btn-danger">
+                                Borrar historial y progreso
                             </button>
 
                         </div>
 
+                    </section>
+
+                </section>
+
+
+                <!-- =============================================
+                     EXAM SCREEN
+                ============================================== -->
+
+                <section
+                    id="exam-screen"
+                    class="page hidden exam-page">
+
+                    <div class="quiz-layout">
+
+                        <article class="quiz-card">
+
+
+                            <!-- HEADER DEL EXAMEN -->
+
+                            <div class="quiz-top">
+
+                                <div class="quiz-title-group">
+
+                                    <p class="eyebrow">
+                                        SIMULACIÓN
+                                    </p>
+
+                                    <h1 id="quiz-exam">
+                                        Examen
+                                    </h1>
+
+                                    <span
+                                        id="quiz-type"
+                                        class="muted">
+                                        Práctica
+                                    </span>
+
+                                </div>
+
+
+                                <div class="quiz-header-info">
+
+                                    <span id="quiz-counter">
+                                        Pregunta 0 de 0
+                                    </span>
+
+                                    <span
+                                        id="quiz-timer"
+                                        class="quiz-timer">
+                                        00:00
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- PROGRESO -->
+
+                            <div class="quiz-progress-container">
+
+                                <div class="progress-meta">
+
+                                    <span>Progreso</span>
+
+                                    <span id="quiz-progress-label">
+                                        0%
+                                    </span>
+
+                                </div>
+
+                                <div class="quiz-progress">
+                                    <div id="quiz-progress"></div>
+                                </div>
+
+                            </div>
+
+
+                            <!-- CASO DE ESTUDIO -->
+
+                            <div
+                                id="case-study"
+                                class="case-study hidden">
+
+                                <div class="case-study-header">
+
+                                    <span class="eyebrow">
+                                        CASO DE ESTUDIO
+                                    </span>
+
+                                    <h3 id="case-study-title"></h3>
+
+                                </div>
+
+                                <div id="case-study-content"></div>
+
+                            </div>
+
+
+                            <!-- PREGUNTA -->
+
+                            <div class="quiz-question-section">
+
+                                <div
+                                    id="quiz-question-number"
+                                    class="eyebrow">
+                                </div>
+
+                                <h2 id="quiz-question"></h2>
+
+
+                                <!-- CÓDIGO -->
+
+                                <div
+                                    id="quiz-code-container"
+                                    class="quiz-code-container hidden">
+
+                                    <div class="quiz-code-header">
+
+                                        <span id="quiz-code-language">
+                                            Código
+                                        </span>
+
+                                    </div>
+
+                                    <pre
+                                        id="quiz-code"
+                                        class="quiz-code"><code id="quiz-code-content"></code></pre>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- RESPUESTAS -->
+
+                            <div
+                                id="quiz-answer"
+                                class="quiz-answer-section">
+                            </div>
+
+
+                            <!-- NAVEGACIÓN -->
+
+                            <div class="quiz-actions">
+
+                                <button
+                                    id="quiz-exit"
+                                    class="btn btn-ghost">
+                                    Salir del examen
+                                </button>
+
+
+                                <div class="quiz-navigation">
+
+                                    <button
+                                        id="quiz-prev"
+                                        class="btn btn-secondary">
+                                        Anterior
+                                    </button>
+
+                                    <button
+                                        id="quiz-next"
+                                        class="btn btn-primary">
+                                        Siguiente
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
                     </div>
 
-                </div>
-
-            </section>
+                </section>
 
 
-            <!-- =================================================
-                 RESULTADOS
-                 ================================================= -->
+                <!-- =============================================
+                     RESULTS
+                ============================================== -->
 
-            <section
-                id="result-screen"
-                class="page hidden"
-            >
+                <section
+                    id="result-screen"
+                    class="page hidden exam-page">
 
-                <div class="page-head">
+                    <div class="result-container">
 
-                    <div>
+                        <div class="result-header">
 
-                        <div class="eyebrow">
-                            Resultado
+                            <p class="eyebrow">
+                                RESULTADO
+                            </p>
+
+                            <h1>Examen finalizado</h1>
+
+                            <p>
+                                Revisa tu desempeño y las respuestas del examen.
+                            </p>
+
                         </div>
 
-                        <h1>Examen finalizado</h1>
 
                         <div
-                            class="muted"
                             id="result-summary"
-                        ></div>
+                            class="result-summary">
+
+                            <div class="result-score-container">
+
+                                <span class="result-label">
+                                    Puntaje obtenido
+                                </span>
+
+                                <strong
+                                    id="result-score"
+                                    class="result-score">
+                                    0%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="result-status-container">
+
+                                <span class="result-label">
+                                    Estado
+                                </span>
+
+                                <strong id="result-status">
+                                    Pendiente
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="result-reviews-container">
+
+                            <div class="section-header">
+                                <div>
+                                    <h2>Revisión de respuestas</h2>
+
+                                    <p>
+                                        Consulta tus respuestas y su evaluación.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div
+                                id="result-reviews"
+                                class="result-reviews">
+                            </div>
+
+                        </div>
+
+
+                        <div class="result-actions">
+
+                            <button
+                                id="result-home"
+                                class="btn btn-primary">
+                                Volver al panel
+                            </button>
+
+                        </div>
 
                     </div>
 
-                    <button
-                        type="button"
-                        id="result-home"
-                    >
-                        Volver al dashboard
-                    </button>
-
-                </div>
+                </section>
 
 
-                <div class="card">
-
-                    <div class="eyebrow">
-                        Puntuación
-                    </div>
-
-                    <div
-                        class="result-score"
-                        id="result-score"
-                    >
-                        0%
-                    </div>
-
-
-                    <h2 class="section-title">
-                        Revisión y explicaciones
-                    </h2>
-
-                    <div id="result-reviews"></div>
-
-                </div>
-
-            </section>
+            </div>
 
         </main>
 
     </div>
 
-</div>
 
+    <!-- =========================================================
+         MODAL DE CONFIGURACIÓN DEL EXAMEN
+    ========================================================== -->
 
-<!-- ============================================================
-     MODAL DE CONFIGURACIÓN DEL EXAMEN
-     ============================================================ -->
+    <div
+        id="exam-modal"
+        class="modal-overlay hidden">
 
-<div
-    id="exam-modal"
-    class="hidden modal-overlay"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="modal-title"
->
-
-    <div class="card modal-content">
-
-        <div class="modal-header">
-
-            <h2 id="modal-title">
-                Configurar examen
-            </h2>
+        <div
+            class="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="exam-modal-title">
 
             <button
-                type="button"
-                class="ghost"
-                id="modal-close"
-                aria-label="Cerrar"
-            >
+                id="exam-close"
+                class="modal-close"
+                aria-label="Cerrar">
                 ×
             </button>
 
-        </div>
+
+            <div class="modal-header">
+
+                <p class="eyebrow">
+                    CONFIGURAR SESIÓN
+                </p>
+
+                <h2 id="exam-modal-title">
+                    Iniciar examen
+                </h2>
+
+                <p id="exam-modal-description" class="muted">
+                    Configura los parámetros de tu simulación.
+                </p>
+
+            </div>
 
 
-        <p
-            class="muted"
-            id="modal-description"
-        ></p>
+            <div class="modal-body">
+
+                <div class="form-group">
+
+                    <label for="exam-count">
+                        Cantidad de preguntas
+                    </label>
+
+                    <input
+                        type="number"
+                        id="exam-count"
+                        min="1"
+                        value="20">
+
+                </div>
 
 
-        <div class="field">
+                <div
+                    id="exam-advanced-config"
+                    class="exam-advanced-config">
 
-            <label for="exam-count">
-                Número de preguntas
-            </label>
+                    <div class="form-group">
 
-            <select id="exam-count">
+                        <label for="exam-pass-mark">
+                            Porcentaje mínimo para aprobar
+                        </label>
 
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="40">40</option>
+                        <input
+                            type="number"
+                            id="exam-pass-mark"
+                            min="0"
+                            max="100"
+                            value="70">
 
-            </select>
-
-        </div>
-
-
-        <p class="muted modal-help">
-            Si el banco tiene menos preguntas que la cantidad seleccionada,
-            se utilizarán todas las disponibles.
-        </p>
+                    </div>
 
 
-        <div class="modal-actions">
+                    <label class="check-row">
 
-            <button
-                type="button"
-                class="secondary"
-                id="exam-cancel"
-            >
-                Cancelar
-            </button>
+                        <input
+                            type="checkbox"
+                            id="exam-shuffle"
+                            checked>
 
-            <button
-                type="button"
-                id="launch-exam"
-            >
-                Iniciar examen
-            </button>
+                        <span>Mezclar preguntas</span>
+
+                    </label>
+
+
+                    <label class="check-row">
+
+                        <input
+                            type="checkbox"
+                            id="exam-show-timer"
+                            checked>
+
+                        <span>Mostrar temporizador</span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    id="exam-cancel"
+                    class="btn btn-secondary">
+                    Cancelar
+                </button>
+
+                <button
+                    id="launch-exam"
+                    class="btn btn-primary">
+                    Comenzar examen
+                </button>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
 
-<!-- ============================================================
-     SCRIPTS
-     ============================================================ -->
-
-<script src="js/app.js"></script>
+    <script src="js/app.js"></script>
 
 </body>
 </html>

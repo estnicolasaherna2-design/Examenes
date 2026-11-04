@@ -130,7 +130,6 @@
       "domain": "Fabric Notebooks",
       "difficulty": "medium",
       "question": "You need to migrate the Research division data for Productline1. The solution must meet the data preparation requirements. Complete the notebook code.",
-      "image": "images/case01-q06-productline1.png",
       "codeTemplate": [
         "df = spark.read.format('csv')",
         "    .options(header='true', inferSchema='true')",
@@ -241,6 +240,10 @@
       "type": "dropdown-group",
       "domain": "Microsoft Fabric Security",
       "difficulty": "hard",
+        "images": [
+          "images/Litware_1.png",
+          "images/Litware_2.png"
+        ],
       "question": "You need to assign permissions for the data store in the AnalyticsPOC workspace. The solution must meet the security requirements. Select the appropriate additional permissions.",
       "items": [
         {
@@ -292,6 +295,10 @@
       "type": "dropdown-group",
       "domain": "DAX",
       "difficulty": "hard",
+      "images": [
+        "images/Litware_1.png",
+        "images/Litware_2.png"
+      ],
       "question": "You need to create a DAX measure to calculate the average overall satisfaction score. Complete the DAX code.",
       "codeTemplate": [
         "Rolling 12 Overall Satisfaction =",
@@ -351,6 +358,10 @@
       "type": "dropdown-group",
       "domain": "T-SQL",
       "difficulty": "hard",
+      "images": [
+        "images/Litware_1.png",
+        "images/Litware_2.png"
+      ],
       "question": "You need to resolve the issue with the pricing group classification. Complete the T-SQL statement.",
       "codeTemplate": [
         "CREATE {OBJECT_TYPE} [dbo].[ProductsWithPricingGroup]",
@@ -419,6 +430,10 @@
       "type": "multiple",
       "domain": "Data Ingestion",
       "difficulty": "medium",
+      "images": [
+        "images/Litware_1.png",
+        "images/Litware_2.png"
+      ],
       "question": "What should you recommend using to ingest the customer data into the data store in the AnalyticsPOC workspace?",
       "options": [
         "A stored procedure",
@@ -443,6 +458,10 @@
       "type": "multiple",
       "domain": "Lakehouse",
       "difficulty": "medium",
+      "images": [
+        "images/Litware_1.png",
+        "images/Litware_2.png"
+      ],
       "question": "Which type of data store should you recommend in the AnalyticsPOC workspace?",
       "options": [
         "A data lake",
@@ -473,6 +492,10 @@
       "type": "multiple-select",
       "domain": "Fabric Administration",
       "difficulty": "medium",
+      "images": [
+        "images/Litware_1.png",
+        "images/Litware_2.png"
+      ],
       "question": "You need to recommend a solution to prepare the tenant for the proof of concept (PoC). Which two actions should you recommend performing from the Fabric Admin portal?",
       "options": [
         "Enable the Users can try Microsoft Fabric paid features option for the entire organization",
@@ -493,6 +516,10 @@
       "type": "dropdown-group",
       "domain": "Semantic Models",
       "difficulty": "hard",
+      "images": [
+        "images/Litware_1.png",
+        "images/Litware_2.png"
+      ],
       "question": "You need to design a semantic model for the customer satisfaction report. Select the appropriate authentication method and mode.",
       "items": [
         {
@@ -527,6 +554,10 @@
       "type": "multiple-select",
       "domain": "Dimensional Modeling",
       "difficulty": "medium",
+      "images": [
+        "images/Litware_1.png",
+        "images/Litware_2.png"
+      ],
       "question": "You need to implement the date dimension in the data store. Which two approaches can achieve the goal?",
       "options": [
         "Populate the date dimension table by using a dataflow",
@@ -548,6 +579,10 @@
       "type": "multiple",
       "domain": "Data Orchestration",
       "difficulty": "medium",
+      "images": [
+        "images/Litware_1.png",
+        "images/Litware_2.png"
+      ],
       "question": "You need to ensure the data loading activities in the AnalyticsPOC workspace are executed in the appropriate sequence. What should you do?",
       "options": [
         "Create a dataflow that has multiple steps and schedule the dataflow",
@@ -566,6 +601,10 @@
       "type": "multiple",
       "domain": "T-SQL",
       "difficulty": "medium",
+      "images": [
+        "images/Litware_1.png",
+        "images/Litware_2.png"
+      ],
       "question": "You have a Fabric warehouse that contains a table named Staging.Sales. You need to write a T-SQL query that returns data for the year 2023, displays ProductID and ProductName, and has a summarized Amount greater than 10,000. Which query should you use?",
       "options": [
         "SELECT ProductID, ProductName, SUM(Amount) AS TotalAmount FROM Staging.Sales WHERE DATEPART(YEAR, SaleDate) = '2023' GROUP BY ProductID, ProductName HAVING SUM(Amount) > 10000",
@@ -817,7 +856,7 @@
       "domain": "Power Query",
       "difficulty": "medium",
       "question": "You have a Fabric workspace named Workspace1 that contains a dataflow named Dataflow1. Dataflow1 has a query that returns 2,000 rows. You view the query in Power Query as shown in the exhibit. What can you identify about the pickupLongitude column?",
-      "image": "images/dp600-q019.png",
+      "image": "images/DP600-019.png",
       "options": [
         "The column has duplicate values.",
         "All the table rows are profiled.",
@@ -1080,8 +1119,8 @@
       "domain": "Data Modeling",
       "difficulty": "hard",
       "question": "You need to create a dimensional data model that will enable the analysis of order items by date, product, and customer. Select the appropriate options.",
-      "image": "images/dp600-q031-model.png",
-      "answerAreaImage": "images/dp600-q031-answer.png",
+      "image": "images/DP600-031.png",
+      "answerAreaImage": "images/DP600-031.png",
       "items": [
         {
           "label": "The relationship between OrderItem and Product must be based on",
@@ -1121,7 +1160,7 @@
       "domain": "Semantic Model Optimization",
       "difficulty": "medium",
       "question": "You have a Fabric tenant that contains a semantic model named Model1. Model1 uses Import mode. Model1 contains a table named Orders with 100 million rows. You need to reduce memory consumption and the time required to refresh the model. Which two actions should you perform?",
-      "image": "images/dp600-q032-orders-table.png",
+      "image": "images/DP600-032.png",
       "options": [
         "Split OrderDateTime into separate date and time columns",
         "Replace TotalQuantity with a calculated column",
@@ -1184,8 +1223,8 @@
       "domain": "Power Query",
       "difficulty": "hard",
       "question": "You have a Fabric tenant that contains two lakehouses. You are building a dataflow that combines data from the lakehouses. Based on the query shown in the exhibit, select the appropriate options.",
-      "image": "images/dp600-q034-query-steps.png",
-      "answerAreaImage": "images/dp600-q034-answer-area.png",
+      "image": "images/DP600-034.png",
+      "answerAreaImage": "images/DP600-034.png",
       "items": [
         {
           "label": "_____ of the transformation steps in the query will fold.",
@@ -1347,7 +1386,7 @@
       "type": "matrix",
       "domain": "Spark",
       "difficulty": "medium",
-      "question": "You are saving a DataFrame by using the following code: df.write.partitionBy('year','month','day').mode('overwrite').parquet('Files/SalesOrder'). For each statement, select Yes if the statement is true. Otherwise, select No.",
+      "question": "You are saving a DataFrame by using the following code: For each statement, select Yes if the statement is true. Otherwise, select No.",
       "code": "df.write.partitionBy('year','month','day').mode('overwrite').parquet('Files/SalesOrder')",
       "columns": [
         "Yes",
@@ -1387,7 +1426,7 @@
       "domain": "Power Query",
       "difficulty": "medium",
       "question": "You have a Fabric workspace named Workspace1 that contains a dataflow named Dataflow1. The query returns the data shown in the exhibit. You need to transform the data columns into attribute-value pairs where columns become rows. You select the VendorID column. Which transformation should you select?",
-      "image": "images/dp600-q042-powerquery-unpivot.png",
+      "image": "images/DP600-042.png",
       "options": [
         "Group by",
         "Unpivot columns",
@@ -1437,7 +1476,7 @@
       "domain": "PySpark",
       "difficulty": "hard",
       "question": "You have a Fabric workspace that uses the default Spark starter pool and runtime version 1.2. You plan to read a CSV file named Sales_raw.csv in a lakehouse, select columns, and save the data as a Delta table to the managed area of the lakehouse. Based on the code shown in the exhibit, indicate whether each statement is true.",
-      "image": "images/dp600-q045-pyspark-code.png",
+      "image": "images/DP600-045.png",
       "columns": [
         "Yes",
         "No"
@@ -1492,7 +1531,6 @@
       "domain": "Power Query",
       "difficulty": "hard",
       "question": "You are creating a dataflow in Fabric to ingest data from an Azure SQL database by using a T-SQL statement. You need to ensure that foldable Power Query transformation steps are processed by the Microsoft SQL Server engine. Complete the M code.",
-      "image": "images/dp600-q047-nativequery.png",
       "items": [
         "EnableFolding",
         "NativeQuery",
@@ -1545,8 +1583,7 @@
       "type": "dragdrop",
       "domain": "Delta Lake",
       "difficulty": "hard",
-      "question": "You have a Fabric lakehouse that receives IoT readings from 100 devices. Small files are being appended continuously and queries are slow. You need to remove files that are no longer used and combine small files into larger files with a target size of 1 GB. Match the correct action to each requirement.",
-      "image": "images/dp600-q048-delta-maintenance.png",
+      "question": "You have a Fabric tenant that contains a lakehouse named Lakehouse1. Readings from 100 IoT devices are appended to a Delta table in Lakehouse1. Each set of readings is approximately 25 KB. Approximately 10 GB of data is received daily. All the table and SparkSession settings are set to the default. You discover that queries are slow to execute. In addition, the lakehouse storage contains data and log files that are no longer used. You need to remove the files that are no longer used and combine small files into larger files with a target size of 1 GB per file. What should you do? To answer, drag the appropriate actions to the correct requirements. Each action may be used once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content. NOTE: Each correct selection is worth one point.",
       "items": [
         "Set the autoCompact table setting",
         "Set the optimizeWrite table setting",
@@ -1670,9 +1707,9 @@
       "type": "dropdown-group",
       "domain": "Direct Lake",
       "difficulty": "hard",
-      "question": "You have a Microsoft Power BI report and a semantic model that uses Direct Lake mode. Based on the Performance Analyzer output in the exhibit, select the correct options.",
-      "image": "images/dp600-q052-performance-analyzer.png",
-      "answerAreaImage": "images/dp600-q052-answer-area.png",
+      "question": "You have a Microsoft Power BI report and a semantic model that uses Direct Lake mode. From Power BI Desktop, you open Performance analyzer as shown in the following exhibit.",
+      "image": "images/DP600-052.png",
+      "answerAreaImage": "images/DP600-052.png",
       "items": [
         {
           "label": "The Direct Lake fallback behavior is set to",
@@ -1712,13 +1749,13 @@
       "domain": "PySpark",
       "difficulty": "hard",
       "question": "You have a table named Nyctaxi_raw. You need to create a new column named pickupDate that contains only the date portion of pickupDateTime and filter the rows to include only records where fareAmount is greater than 0 and less than 100.",
-      "image": "images/dp600-q053-schema.png",
-      "answerAreaImage": "images/dp600-q053-code.png",
+      "image": "images/DP600-053.png",
+      "answerAreaImage": "images/DP600-053.png",
       "codeTemplate": [
         "df = spark.read.format(\"delta\").load(\"Tables/nyctaxi_raw\")",
         "",
         "df2 = {FUNCTION}(\"pickupDate\",",
-        "               df['pickupDateTime'].{DATE_CONVERSION})",
+        "               df['tpePickupDateTime'].{DATE_CONVERSION})",
         "",
         "{FILTER_EXPRESSION}"
       ],
