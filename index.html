@@ -26,9 +26,15 @@
 
         <aside class="sidebar" id="sidebar">
 
-            <a href="#" class="brand" data-page="dashboard">
+            <a
+                href="#"
+                class="brand"
+                data-action="navigate"
+                data-page="dashboard">
+
                 <span class="brand-mark">E</span>
                 <span class="brand-name">Exam Lab</span>
+
             </a>
 
             <nav class="nav">
@@ -39,19 +45,37 @@
                         PLATAFORMA
                     </div>
 
-                    <button class="nav-link active" data-page="dashboard">
+                    <button
+                        type="button"
+                        class="nav-link active"
+                        data-action="navigate"
+                        data-page="dashboard">
+
                         <span class="nav-icon">⌂</span>
                         <span>Panel principal</span>
+
                     </button>
 
-                    <button class="nav-link" data-page="certifications">
+                    <button
+                        type="button"
+                        class="nav-link"
+                        data-action="navigate"
+                        data-page="certifications">
+
                         <span class="nav-icon">▤</span>
                         <span>Exámenes</span>
+
                     </button>
 
-                    <button class="nav-link" data-page="history">
+                    <button
+                        type="button"
+                        class="nav-link"
+                        data-action="navigate"
+                        data-page="history">
+
                         <span class="nav-icon">◷</span>
                         <span>Historial</span>
+
                     </button>
 
                 </div>
@@ -62,14 +86,26 @@
                         CUENTA
                     </div>
 
-                    <button class="nav-link" data-page="profile">
+                    <button
+                        type="button"
+                        class="nav-link"
+                        data-action="navigate"
+                        data-page="profile">
+
                         <span class="nav-icon">◎</span>
                         <span>Perfil</span>
+
                     </button>
 
-                    <button class="nav-link" data-page="settings">
+                    <button
+                        type="button"
+                        class="nav-link"
+                        data-action="navigate"
+                        data-page="settings">
+
                         <span class="nav-icon">⚙</span>
                         <span>Configuración</span>
+
                     </button>
 
                 </div>
@@ -107,6 +143,7 @@
                     <div class="breadcrumb">
                         <span>Exam Lab</span>
                         <span class="breadcrumb-separator">/</span>
+
                         <strong id="breadcrumb-current">
                             Panel principal
                         </strong>
@@ -160,9 +197,12 @@
                         </div>
 
                         <button
+                            type="button"
                             class="btn btn-primary"
                             data-go="certifications">
+
                             Explorar exámenes
+
                         </button>
 
                     </div>
@@ -251,9 +291,12 @@
                                 </div>
 
                                 <button
+                                    type="button"
                                     class="btn btn-ghost"
                                     data-go="certifications">
+
                                     Ver todos
+
                                 </button>
 
                             </div>
@@ -324,9 +367,11 @@
                             autocomplete="off">
 
                         <select id="certification-filter">
+
                             <option value="">
                                 Todas las categorías
                             </option>
+
                         </select>
 
                     </div>
@@ -420,7 +465,9 @@
                                 <button
                                     type="submit"
                                     class="btn btn-primary">
+
                                     Guardar cambios
+
                                 </button>
 
                             </form>
@@ -458,6 +505,7 @@
                     <div class="toolbar">
 
                         <select id="history-filter">
+
                             <option value="all">
                                 Todos los resultados
                             </option>
@@ -469,6 +517,7 @@
                             <option value="failed">
                                 No aprobados
                             </option>
+
                         </select>
 
                     </div>
@@ -585,9 +634,12 @@
                             </p>
 
                             <button
+                                type="button"
                                 id="clear-data"
                                 class="btn btn-danger">
+
                                 Borrar historial y progreso
+
                             </button>
 
                         </div>
@@ -627,7 +679,9 @@
                                     <span
                                         id="quiz-type"
                                         class="muted">
+
                                         Práctica
+
                                     </span>
 
                                 </div>
@@ -642,7 +696,9 @@
                                     <span
                                         id="quiz-timer"
                                         class="quiz-timer">
+
                                         00:00
+
                                     </span>
 
                                 </div>
@@ -740,24 +796,33 @@
                             <div class="quiz-actions">
 
                                 <button
+                                    type="button"
                                     id="quiz-exit"
                                     class="btn btn-ghost">
+
                                     Salir del examen
+
                                 </button>
 
 
                                 <div class="quiz-navigation">
 
                                     <button
+                                        type="button"
                                         id="quiz-prev"
                                         class="btn btn-secondary">
+
                                         Anterior
+
                                     </button>
 
                                     <button
+                                        type="button"
                                         id="quiz-next"
                                         class="btn btn-primary">
+
                                         Siguiente
+
                                     </button>
 
                                 </div>
@@ -809,7 +874,9 @@
                                 <strong
                                     id="result-score"
                                     class="result-score">
+
                                     0%
+
                                 </strong>
 
                             </div>
@@ -833,6 +900,7 @@
                         <div class="result-reviews-container">
 
                             <div class="section-header">
+
                                 <div>
                                     <h2>Revisión de respuestas</h2>
 
@@ -840,6 +908,7 @@
                                         Consulta tus respuestas y su evaluación.
                                     </p>
                                 </div>
+
                             </div>
 
                             <div
@@ -853,9 +922,12 @@
                         <div class="result-actions">
 
                             <button
+                                type="button"
                                 id="result-home"
                                 class="btn btn-primary">
+
                                 Volver al panel
+
                             </button>
 
                         </div>
@@ -887,10 +959,13 @@
             aria-labelledby="exam-modal-title">
 
             <button
+                type="button"
                 id="exam-close"
                 class="modal-close"
                 aria-label="Cerrar">
+
                 ×
+
             </button>
 
 
@@ -979,15 +1054,21 @@
             <div class="modal-actions">
 
                 <button
+                    type="button"
                     id="exam-cancel"
                     class="btn btn-secondary">
+
                     Cancelar
+
                 </button>
 
                 <button
+                    type="button"
                     id="launch-exam"
                     class="btn btn-primary">
+
                     Comenzar examen
+
                 </button>
 
             </div>
