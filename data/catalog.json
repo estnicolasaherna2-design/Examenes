@@ -19,6 +19,15 @@
       "active": true,
       "questionFile": "data/exams/AZ-900/questions.json",
       "metadataFile": "data/exams/AZ-900/metadata.json"
+    },
+    {
+      "id": "DP-600",
+      "name": "Fabric Analytics Engineer Associate",
+      "description": "Analítica y modelado de datos en Microsoft Fabric",
+      "level": "Associate",
+      "active": true,
+      "questionFile": "data/exams/DP-600/questions.json",
+      "metadataFile": "data/exams/DP-600/metadata.json"
     }
   ]
 }
