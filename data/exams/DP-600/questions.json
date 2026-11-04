@@ -1,80 +1,1856 @@
 {
   "examId": "DP-600",
   "examName": "Fabric Analytics Engineer Associate",
+  "questionCount": 80,
   "questions": [
     {
       "id": "DP600-001",
-      "domain": "Semantic Models",
-      "difficulty": "easy",
+      "caseStudyId": "CASE-CONTOSO",
+      "caseQuestionOrder": 1,
+      "status": "verified",
       "type": "multiple",
-      "question": "¿Qué componente de Microsoft Fabric se utiliza para crear modelos semánticos reutilizables?",
+      "domain": "Fabric Governance",
+      "difficulty": "medium",
+      "question": "You need to ensure that Contoso can use version control to meet the data analytics requirements and the general requirements. What should you do?",
       "options": [
-        "Lakehouse",
-        "Warehouse",
-        "Semantic Model",
-        "Data Factory"
+        "Store all semantic models and reports in Data Lake Storage Gen2",
+        "Modify the settings of the Research workspaces to use a GitHub repository",
+        "Modify the settings of the Research division workspaces to use an Azure Repos repository",
+        "Store all semantic models and reports in Microsoft OneDrive"
       ],
-      "answer": "Semantic Model",
-      "explanation": "Los Semantic Models permiten centralizar métricas, relaciones y medidas para ser consumidas por Power BI y otros componentes."
+      "answer": "Modify the settings of the Research division workspaces to use an Azure Repos repository",
+      "explanation": "Azure Repos provides Git-based version control with branching support."
     },
     {
       "id": "DP600-002",
-      "domain": "Data Visualization",
-      "difficulty": "easy",
-      "type": "truefalse",
-      "question": "Power BI forma parte de Microsoft Fabric.",
-      "answer": true,
-      "explanation": "Power BI es una de las experiencias principales integradas dentro de Microsoft Fabric."
+      "caseStudyId": "CASE-CONTOSO",
+      "caseQuestionOrder": 2,
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "Fabric Administration",
+      "difficulty": "medium",
+      "question": "You need to recommend a solution to group the Research division workspaces. Select the appropriate options.",
+      "items": [
+        {
+          "label": "Grouping method",
+          "options": [
+            "Capacity",
+            "Domain",
+            "Tenant"
+          ],
+          "answer": "Domain"
+        },
+        {
+          "label": "Tool",
+          "options": [
+            "OneLake data hub",
+            "The Fabric Admin portal",
+            "The Microsoft Entra admin center"
+          ],
+          "answer": "The Fabric Admin portal"
+        }
+      ],
+      "explanation": {
+        "groupingMethod": "Domains in Microsoft Fabric provide a business-oriented way to logically group workspaces. This satisfies the requirement to group Research division workspaces and enables filtering in OneLake Data Hub by department.",
+        "tool": "Domains are created and managed from the Fabric Admin Portal. OneLake Data Hub is used for discovery and consumption, while Microsoft Entra Admin Center manages identities rather than workspace domains."
+      }
     },
     {
       "id": "DP600-003",
-      "domain": "Data Preparation",
+      "caseStudyId": "CASE-CONTOSO",
+      "caseQuestionOrder": 3,
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Data Factory",
       "difficulty": "medium",
-      "type": "picklist",
-      "question": "Seleccione el formato nativo utilizado por las tablas en un Lakehouse de Fabric.",
+      "question": "You need to refresh the Orders table of the Online Sales department. The solution must meet the semantic model requirements. What should you include in the solution?",
       "options": [
-        "CSV",
-        "JSON",
-        "Delta Lake",
-        "Avro"
+        "An Azure Data Factory pipeline that executes a Stored Procedure activity to retrieve the maximum value of the OrderID column in the destination lakehouse",
+        "An Azure Data Factory pipeline that executes a Stored Procedure activity to retrieve the minimum value of the OrderID column in the destination lakehouse",
+        "An Azure Data Factory pipeline that executes a dataflow to retrieve the minimum value of the OrderID column in the destination lakehouse",
+        "An Azure Data Factory pipeline that executes a dataflow to retrieve the maximum value of the OrderID column in the destination lakehouse"
       ],
-      "answer": "Delta Lake",
-      "explanation": "Las tablas de Lakehouse utilizan el formato Delta Lake para garantizar transacciones ACID y versionamiento."
+      "answer": "An Azure Data Factory pipeline that executes a dataflow to retrieve the maximum value of the OrderID column in the destination lakehouse",
+      "explanation": "The OrderID column represents sequential order creation. Retrieving the maximum OrderID enables incremental loading by processing only new rows added since the previous refresh. Using a Dataflow minimizes implementation and maintenance effort and aligns with the Fabric-native approach.",
+      "skillsMeasured": [
+        "Incremental Refresh",
+        "Data Factory",
+        "Dataflow Gen2",
+        "Lakehouse"
+      ]
     },
     {
       "id": "DP600-004",
-      "domain": "Data Modeling",
-      "difficulty": "medium",
+      "caseStudyId": "CASE-CONTOSO",
+      "caseQuestionOrder": 4,
+      "status": "verified",
       "type": "multiple",
-      "question": "¿Cuál es la mejor práctica para optimizar un modelo semántico en Power BI?",
+      "domain": "Lakehouse",
+      "difficulty": "medium",
+      "question": "Which syntax should you use in a notebook to access the Research division data for Productline1?",
       "options": [
-        "Eliminar relaciones",
-        "Utilizar tablas de hechos y dimensiones",
-        "Duplicar columnas",
-        "Evitar medidas DAX"
+        "spark.read.format(\"delta\").load(\"Tables/productline1/ResearchProduct\")",
+        "spark.sql(\"SELECT * FROM Lakehouse1.ResearchProduct\")",
+        "external_table(\"Tables/ResearchProduct\")",
+        "external_table(ResearchProduct)"
       ],
-      "answer": "Utilizar tablas de hechos y dimensiones",
-      "explanation": "El modelado en estrella mejora el rendimiento, la mantenibilidad y la compresión del modelo."
+      "answer": "spark.sql(\"SELECT * FROM Lakehouse1.ResearchProduct\")",
+      "explanation": "The shortcut is exposed as a managed Lakehouse table. Querying it through Spark SQL provides direct access using the Lakehouse catalog. The external_table syntax is associated with KQL databases rather than Fabric Lakehouse notebooks.",
+      "skillsMeasured": [
+        "Fabric Notebooks",
+        "Spark SQL",
+        "Lakehouse",
+        "Shortcuts"
+      ]
     },
     {
       "id": "DP600-005",
-      "domain": "Data Analytics",
-      "difficulty": "medium",
+      "caseStudyId": "CASE-CONTOSO",
+      "caseQuestionOrder": 5,
+      "status": "verified",
       "type": "multiple",
-      "multipleAnswers": true,
-      "question": "¿Cuáles de los siguientes elementos pueden utilizarse para explorar datos en Fabric?",
+      "domain": "Fabric Capacity",
+      "difficulty": "medium",
+      "question": "You need to recommend which type of Fabric capacity SKU meets the data analytics requirements for the Research division. What should you recommend?",
       "options": [
-        "Power BI",
-        "Notebooks",
-        "Dataflows Gen2",
-        "Semantic Models"
+        "A",
+        "EM",
+        "P",
+        "F"
       ],
-      "answer": [
-        "Power BI",
-        "Notebooks",
-        "Semantic Models"
+      "answer": "F",
+      "explanation": "Fabric capacities use the F SKU family and support pay-as-you-go billing with per-minute consumption, matching the Research division requirements."
+    },
+    {
+      "id": "DP600-006",
+      "caseStudyId": "CASE-CONTOSO",
+      "caseQuestionOrder": 6,
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "Fabric Notebooks",
+      "difficulty": "medium",
+      "question": "You need to migrate the Research division data for Productline1. The solution must meet the data preparation requirements. Complete the notebook code.",
+      "image": "images/case01-q06-productline1.png",
+      "codeTemplate": [
+        "df = spark.read.format('csv')",
+        "    .options(header='true', inferSchema='true')",
+        "    .load('fs1@storage1.dfs.core.windows.net/files/productline1')",
+        "",
+        "df.write.mode('overwrite')",
+        "    .format('{FORMAT}')",
+        "    .save('{TARGET}')"
       ],
-      "explanation": "Estas herramientas permiten consumir, analizar o explorar información dentro del ecosistema Fabric."
+      "items": [
+        {
+          "label": "Format",
+          "options": [
+            "csv",
+            "delta",
+            "parquet"
+          ],
+          "answer": "delta"
+        },
+        {
+          "label": "Target Path",
+          "options": [
+            "productline1",
+            "Tables/productline1",
+            "Tables/research/productline1"
+          ],
+          "answer": "Tables/productline1"
+        }
+      ],
+      "explanation": {
+        "format": "The research data must be presented as managed tables in Lakehouse Explorer. Delta is the required table format for managed lakehouse tables.",
+        "target": "Saving to Tables/productline1 creates a managed table in the lakehouse that can be queried and consumed by Fabric workloads."
+      },
+      "skillsMeasured": [
+        "PySpark",
+        "Lakehouse",
+        "Managed Tables",
+        "Delta Lake",
+        "Fabric Notebooks"
+      ]
+    },
+    {
+      "id": "DP600-007",
+      "caseStudyId": "CASE-CONTOSO",
+      "caseQuestionOrder": 7,
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Fabric Capacity",
+      "difficulty": "medium",
+      "question": "You need to recommend which type of Fabric capacity SKU meets the data analytics requirements for the Research division. What should you recommend?",
+      "options": [
+        "A",
+        "EM",
+        "P",
+        "F"
+      ],
+      "answer": "F",
+      "explanation": "Fabric capacities use the F SKU family and support pay-as-you-go billing with per-minute consumption, satisfying the requirement for dedicated on-demand capacity."
+    },
+    {
+      "id": "DP600-008",
+      "caseStudyId": "CASE-CONTOSO",
+      "caseQuestionOrder": 8,
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "Workspace Security",
+      "difficulty": "medium",
+      "question": "You need to recommend workspace role assignments for ResearchReviewersGroup1 and ResearchReviewersGroup2. Select the appropriate workspace roles.",
+      "items": [
+        {
+          "label": "ResearchReviewersGroup1",
+          "options": [
+            "Admin",
+            "Member",
+            "Contributor",
+            "Viewer"
+          ],
+          "answer": "Viewer"
+        },
+        {
+          "label": "ResearchReviewersGroup2",
+          "options": [
+            "Admin",
+            "Member",
+            "Contributor",
+            "Viewer"
+          ],
+          "answer": "Contributor"
+        }
+      ],
+      "explanation": {
+        "group1": "ResearchReviewersGroup1 requires read-only access to lakehouse and warehouse data through SQL endpoints. Viewer is the least-privilege role that satisfies this requirement.",
+        "group2": "ResearchReviewersGroup2 requires access to lakehouse data through Lakehouse Explorer. Contributor provides the required access without elevating permissions to administrative roles."
+      },
+      "skillsMeasured": [
+        "Microsoft Fabric Security",
+        "Workspace Roles",
+        "Lakehouse Permissions",
+        "Least Privilege",
+        "Workspace Governance"
+      ]
+    },
+    {
+      "id": "DP600-009",
+      "caseStudyId": "CASE-LITWARE",
+      "caseQuestionOrder": 1,
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "Microsoft Fabric Security",
+      "difficulty": "hard",
+      "question": "You need to assign permissions for the data store in the AnalyticsPOC workspace. The solution must meet the security requirements. Select the appropriate additional permissions.",
+      "items": [
+        {
+          "label": "Data Engineers",
+          "options": [
+            "Build Reports on the default dataset",
+            "Read All Apache Spark",
+            "Read All SQL analytics endpoint data"
+          ],
+          "answer": "Read All Apache Spark"
+        },
+        {
+          "label": "Data Analysts",
+          "options": [
+            "Build Reports on the default dataset",
+            "Read All Apache Spark",
+            "Read All SQL analytics endpoint data"
+          ],
+          "answer": "Build Reports on the default dataset"
+        },
+        {
+          "label": "Data Scientists",
+          "options": [
+            "Build Reports on the default dataset",
+            "Read All Apache Spark",
+            "Read All SQL analytics endpoint data"
+          ],
+          "answer": "Read All SQL analytics endpoint data"
+        }
+      ],
+      "explanation": {
+        "dataEngineers": "Data engineers require Spark access to ingest, transform, curate, and manage Delta Lake data in accordance with the principle of least privilege.",
+        "dataAnalysts": "Data analysts need to build reports using the default semantic model and do not require direct Spark or SQL endpoint access.",
+        "dataScientists": "Data scientists need read access to curated data through SQL analytics endpoints while avoiding write permissions or unnecessary reporting privileges."
+      },
+      "skillsMeasured": [
+        "Workspace Security",
+        "Lakehouse Security",
+        "Least Privilege",
+        "SQL Analytics Endpoint",
+        "Apache Spark Permissions"
+      ]
+    },
+    {
+      "id": "DP600-010",
+      "caseStudyId": "CASE-LITWARE",
+      "caseQuestionOrder": 2,
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "DAX",
+      "difficulty": "hard",
+      "question": "You need to create a DAX measure to calculate the average overall satisfaction score. Complete the DAX code.",
+      "codeTemplate": [
+        "Rolling 12 Overall Satisfaction =",
+        "VAR NumberOfMonths = 12",
+        "VAR LastCurrentDate = MAX('Date'[Date])",
+        "VAR Period = DATESINPERIOD('Date'[Date], LastCurrentDate, -NumberOfMonths, MONTH)",
+        "VAR Result =",
+        "  CALCULATE(",
+        "    {EXPRESSION},",
+        "    {FILTER},",
+        "    'Survey Question'[Question Title] = \"Overall Satisfaction\"",
+        "  )",
+        "RETURN",
+        "  Result"
+      ],
+      "items": [
+        {
+          "label": "Expression",
+          "options": [
+            "AVERAGE('Survey'[Response Value])",
+            "AVERAGEA('Question'[Question Text])",
+            "AVERAGEX(VALUES('Survey'[Customer Key]))"
+          ],
+          "answer": "AVERAGE('Survey'[Response Value])"
+        },
+        {
+          "label": "Filter",
+          "options": [
+            "LastCurrentDate",
+            "NumberOfMonths",
+            "Period"
+          ],
+          "answer": "Period"
+        }
+      ],
+      "explanation": {
+        "expression": "Response Value is the only numerical field representing the satisfaction score and therefore can be aggregated using AVERAGE.",
+        "filter": "Period contains the rolling 12-month date filter generated by DATESINPERIOD and can be passed directly into CALCULATE.",
+        "incorrect1": "Question Text contains strings and cannot be averaged.",
+        "incorrect2": "Customer Key is an identifier and not a satisfaction value.",
+        "incorrect3": "LastCurrentDate is a scalar value, not a filter table.",
+        "incorrect4": "NumberOfMonths is a constant integer and cannot be used directly as a filter argument in CALCULATE."
+      },
+      "skillsMeasured": [
+        "DAX",
+        "Time Intelligence",
+        "DATESINPERIOD",
+        "CALCULATE",
+        "Power BI Semantic Models"
+      ]
+    },
+    {
+      "id": "DP600-011",
+      "caseStudyId": "CASE-LITWARE",
+      "caseQuestionOrder": 3,
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "T-SQL",
+      "difficulty": "hard",
+      "question": "You need to resolve the issue with the pricing group classification. Complete the T-SQL statement.",
+      "codeTemplate": [
+        "CREATE {OBJECT_TYPE} [dbo].[ProductsWithPricingGroup]",
+        "AS",
+        "SELECT",
+        "    ProductID,",
+        "    ProductName,",
+        "    ProductCategory,",
+        "    ListPrice,",
+        "    {EXPRESSION}",
+        "        WHEN ListPrice <= 50 THEN 'low'",
+        "        {MEDIUM_RULE}",
+        "        WHEN ListPrice > 1000 THEN 'high'",
+        "    END AS PricingGroup",
+        "FROM dbo.Products"
+      ],
+      "items": [
+        {
+          "label": "Object Type",
+          "options": [
+            "FUNCTION",
+            "PROCEDURE",
+            "TABLE",
+            "VIEW"
+          ],
+          "answer": "VIEW"
+        },
+        {
+          "label": "Expression",
+          "options": [
+            "CASE",
+            "COALESCE",
+            "IIF",
+            "SET"
+          ],
+          "answer": "CASE"
+        },
+        {
+          "label": "Medium Price Rule",
+          "options": [
+            "WHEN ListPrice > 50 AND ListPrice < 1000 THEN 'medium'",
+            "WHEN ListPrice >= 50 AND ListPrice < 1000 THEN 'medium'",
+            "WHEN ListPrice BETWEEN 50 AND 1000 THEN 'medium'"
+          ],
+          "answer": "WHEN ListPrice BETWEEN 50 AND 1000 THEN 'medium'"
+        }
+      ],
+      "explanation": {
+        "objectType": "A VIEW centralizes pricing logic in a single location and makes it available to T-SQL consumers and semantic models.",
+        "expression": "CASE is the correct T-SQL construct for multi-condition classification logic.",
+        "mediumRule": "BETWEEN includes both boundary values. This correctly classifies products with a ListPrice of exactly 1000 as medium and avoids classification gaps."
+      },
+      "skillsMeasured": [
+        "T-SQL",
+        "Data Modeling",
+        "Business Logic Centralization",
+        "Views",
+        "Microsoft Fabric Warehouse"
+      ]
+    },
+    {
+      "id": "DP600-012",
+      "caseStudyId": "CASE-LITWARE",
+      "caseQuestionOrder": 4,
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Data Ingestion",
+      "difficulty": "medium",
+      "question": "What should you recommend using to ingest the customer data into the data store in the AnalyticsPOC workspace?",
+      "options": [
+        "A stored procedure",
+        "A pipeline that contains a KQL activity",
+        "A Spark notebook",
+        "A dataflow"
+      ],
+      "answer": "A dataflow",
+      "explanation": "The solution requires minimizing implementation and maintenance effort while enabling low-code ingestion. Dataflows provide a low-code ingestion and transformation experience that aligns with the requirements. Stored procedures and Spark notebooks require more maintenance, while a KQL activity is not the appropriate ingestion mechanism for this scenario.",
+      "skillsMeasured": [
+        "Data Ingestion",
+        "Dataflow Gen2",
+        "Microsoft Fabric",
+        "Low-Code Data Integration"
+      ]
+    },
+    {
+      "id": "DP600-013",
+      "caseStudyId": "CASE-LITWARE",
+      "caseQuestionOrder": 5,
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Lakehouse",
+      "difficulty": "medium",
+      "question": "Which type of data store should you recommend in the AnalyticsPOC workspace?",
+      "options": [
+        "A data lake",
+        "A warehouse",
+        "A lakehouse",
+        "An external Hive metastore"
+      ],
+      "answer": "A lakehouse",
+      "explanation": "The data store must support T-SQL and Python access, semi-structured and unstructured data, Delta Lake storage, dimensional modeling, and Fabric analytics workloads. A Lakehouse supports all these requirements and provides native Fabric integration.",
+      "skillsMeasured": [
+        "Lakehouse Architecture",
+        "OneLake",
+        "Delta Lake",
+        "Microsoft Fabric",
+        "Data Storage Design"
+      ],
+      "references": [
+        "Technical Requirements",
+        "AnalyticsPOC Workspace",
+        "Lakehouse"
+      ]
+    },
+    {
+      "id": "DP600-014",
+      "caseStudyId": "CASE-LITWARE",
+      "caseQuestionOrder": 6,
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Fabric Administration",
+      "difficulty": "medium",
+      "question": "You need to recommend a solution to prepare the tenant for the proof of concept (PoC). Which two actions should you recommend performing from the Fabric Admin portal?",
+      "options": [
+        "Enable the Users can try Microsoft Fabric paid features option for the entire organization",
+        "Enable the Users can try Microsoft Fabric paid features option for specific security groups",
+        "Enable the Allow Azure Active Directory guest users to access Microsoft Fabric option for specific security groups",
+        "Enable the Users can create Fabric items option and exclude specific security groups",
+        "Enable the Users can create Fabric items option for specific security groups"
+      ],
+      "answers": [
+        "Enable the Users can try Microsoft Fabric paid features option for specific security groups",
+        "Enable the Users can create Fabric items option for specific security groups"
+      ],
+      "explanation": "The PoC must be restricted to the analytics team while following the principle of least privilege. Limiting Fabric paid features and Fabric item creation to specific security groups ensures controlled access."
+    },
+    {
+      "id": "DP600-015",
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "Semantic Models",
+      "difficulty": "hard",
+      "question": "You need to design a semantic model for the customer satisfaction report. Select the appropriate authentication method and mode.",
+      "items": [
+        {
+          "label": "Authentication Method",
+          "options": [
+            "Basic authentication",
+            "Single sign-on (SSO) authentication",
+            "Service principal authentication"
+          ],
+          "answer": "Single sign-on (SSO) authentication"
+        },
+        {
+          "label": "Mode",
+          "options": [
+            "Import",
+            "DirectQuery",
+            "Direct Lake"
+          ],
+          "answer": "Direct Lake"
+        }
+      ],
+      "explanation": {
+        "authentication": "SSO ensures report security respects source security rules while providing a seamless user experience.",
+        "mode": "Direct Lake provides near real-time access to Delta tables in OneLake while maximizing query performance."
+      }
+    },
+    {
+      "id": "DP600-016",
+      "caseStudyId": "CASE-LITWARE",
+      "caseQuestionOrder": 7,
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Dimensional Modeling",
+      "difficulty": "medium",
+      "question": "You need to implement the date dimension in the data store. Which two approaches can achieve the goal?",
+      "options": [
+        "Populate the date dimension table by using a dataflow",
+        "Populate the date dimension table by using a Copy activity in a pipeline",
+        "Populate the date dimension view by using T-SQL",
+        "Populate the date dimension table by using a Stored procedure activity in a pipeline"
+      ],
+      "answers": [
+        "Populate the date dimension table by using a dataflow",
+        "Populate the date dimension table by using a Stored procedure activity in a pipeline"
+      ],
+      "explanation": "Both Dataflows and Stored Procedure activities can generate and maintain a date dimension. A Copy activity requires an existing source, which does not exist in this scenario."
+    },
+    {
+      "id": "DP600-017",
+      "caseStudyId": "CASE-LITWARE",
+      "caseQuestionOrder": 8,
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Data Orchestration",
+      "difficulty": "medium",
+      "question": "You need to ensure the data loading activities in the AnalyticsPOC workspace are executed in the appropriate sequence. What should you do?",
+      "options": [
+        "Create a dataflow that has multiple steps and schedule the dataflow",
+        "Create and schedule a Spark notebook",
+        "Create and schedule a Spark job definition",
+        "Create a pipeline that has dependencies between activities and schedule the pipeline"
+      ],
+      "answer": "Create a pipeline that has dependencies between activities and schedule the pipeline",
+      "explanation": "Pipelines support activity orchestration and dependencies, ensuring that raw data, cleansed data, and dimensional loads occur in the correct order."
+    },
+    {
+      "id": "DP600-018",
+      "caseStudyId": "CASE-LITWARE",
+      "caseQuestionOrder": 9,
+      "status": "verified",
+      "type": "multiple",
+      "domain": "T-SQL",
+      "difficulty": "medium",
+      "question": "You have a Fabric warehouse that contains a table named Staging.Sales. You need to write a T-SQL query that returns data for the year 2023, displays ProductID and ProductName, and has a summarized Amount greater than 10,000. Which query should you use?",
+      "options": [
+        "SELECT ProductID, ProductName, SUM(Amount) AS TotalAmount FROM Staging.Sales WHERE DATEPART(YEAR, SaleDate) = '2023' GROUP BY ProductID, ProductName HAVING SUM(Amount) > 10000",
+        "SELECT ProductID, ProductName, SUM(Amount) AS TotalAmount FROM Staging.Sales GROUP BY ProductID, ProductName HAVING DATEPART(YEAR, SaleDate) = '2023' AND SUM(Amount) > 10000",
+        "SELECT ProductID, ProductName, SUM(Amount) AS TotalAmount FROM Staging.Sales WHERE DATEPART(YEAR, SaleDate) = '2023' AND SUM(Amount) > 10000",
+        "SELECT ProductID, ProductName, SUM(Amount) AS TotalAmount FROM Staging.Sales WHERE DATEPART(YEAR, SaleDate) = '2023' GROUP BY ProductID, ProductName HAVING TotalAmount > 10000"
+      ],
+      "answer": "SELECT ProductID, ProductName, SUM(Amount) AS TotalAmount FROM Staging.Sales WHERE DATEPART(YEAR, SaleDate) = '2023' GROUP BY ProductID, ProductName HAVING SUM(Amount) > 10000",
+      "explanation": "The year filter must be applied in the WHERE clause because it is not an aggregate expression. Aggregate filtering on SUM(Amount) must be applied in the HAVING clause after GROUP BY. SQL Server does not allow the alias TotalAmount to be referenced directly in HAVING.",
+      "skillsMeasured": [
+        "T-SQL",
+        "WHERE",
+        "GROUP BY",
+        "HAVING",
+        "Aggregate Functions",
+        "Fabric Warehouse"
+      ]
+    },
+    {
+      "id": "DP600-019",
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "T-SQL",
+      "difficulty": "medium",
+      "question": "You have a data warehouse that contains a table named Stage.Customers. The table contains multiple updates per customer. Complete the T-SQL query to return the most recent record for each CustomerID.",
+      "codeTemplate": [
+        "WITH CUSTOMERBASE AS (",
+        "    SELECT",
+        "        CustomerID,",
+        "        CustomerName,",
+        "        PostalCode,",
+        "        LastUpdated,",
+        "        X = {WINDOW_FUNCTION} OVER (PARTITION BY CustomerID ORDER BY LastUpdated DESC)",
+        "    FROM Stage.Customers",
+        ")",
+        "SELECT CustomerID, CustomerName, PostalCode, LastUpdated",
+        "FROM CUSTOMERBASE",
+        "{FILTER_CLAUSE}"
+      ],
+      "items": [
+        {
+          "label": "Window Function",
+          "options": [
+            "LAST_VALUE()",
+            "NTILE()",
+            "ROW_NUMBER()"
+          ],
+          "answer": "ROW_NUMBER()"
+        },
+        {
+          "label": "Filter Clause",
+          "options": [
+            "HAVING MAX(LastUpdated) = 1",
+            "WHERE LastUpdated = MAX(LastUpdated)",
+            "WHERE X = 1"
+          ],
+          "answer": "WHERE X = 1"
+        }
+      ],
+      "explanation": {
+        "windowFunction": "ROW_NUMBER() assigns a sequential ranking within each CustomerID partition ordered by LastUpdated descending. The newest record receives row number 1.",
+        "filterClause": "Filtering with WHERE X = 1 returns only the latest record for each customer.",
+        "incorrect1": "LAST_VALUE() and NTILE() do not uniquely identify the latest row per customer.",
+        "incorrect2": "MAX(LastUpdated) cannot be referenced directly in a row-level WHERE clause without aggregation logic."
+      },
+      "skillsMeasured": [
+        "T-SQL",
+        "Window Functions",
+        "ROW_NUMBER",
+        "Data Warehousing",
+        "Microsoft Fabric Warehouse"
+      ]
+    },
+    {
+      "id": "DP600-020",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Power BI",
+      "difficulty": "medium",
+      "question": "You have a Fabric tenant. You plan to create a Fabric notebook that will use Spark DataFrames to generate Microsoft Power BI visuals. You run the following code: from powerbiclient import QuickVisualize, get_dataset_config, Report. PBI_visualize = QuickVisualize(get_dataset_config(df)). PBI_visualize. For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "code": "from powerbiclient import QuickVisualize, get_dataset_config, Report\n\nPBI_visualize = QuickVisualize(get_dataset_config(df))\n\nPBI_visualize",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "The code embeds an existing Power BI report.",
+          "answer": "No"
+        },
+        {
+          "statement": "The code creates a Power BI report.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "The code displays a summary of the DataFrame.",
+          "answer": "No"
+        }
+      ],
+      "explanation": {
+        "row1": "Embedding an existing Power BI report would require Power BI Embedded APIs and references to an existing report. The code shown does not perform report embedding.",
+        "row2": "QuickVisualize generates a Power BI visualization experience directly from the Spark DataFrame dataset configuration.",
+        "row3": "Displaying a DataFrame summary would require operations such as describe(), summary(), info(), or head(). QuickVisualize is intended for Power BI visualization generation."
+      },
+      "skillsMeasured": [
+        "Power BI",
+        "Microsoft Fabric",
+        "Fabric Notebooks",
+        "Spark DataFrames",
+        "QuickVisualize",
+        "PowerBIClient"
+      ]
+    },
+    {
+      "id": "DP600-021",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Lakehouse",
+      "difficulty": "medium",
+      "question": "You are the administrator of a Fabric workspace that contains a lakehouse named Lakehouse1. Lakehouse1 contains the following tables: Table1 (Delta table created by using a shortcut), Table2 (external table created by using Spark), and Table3 (managed table). You plan to connect to Lakehouse1 by using its SQL endpoint. What will you be able to do?",
+      "options": [
+        "Read Table3",
+        "Update the data in Table3",
+        "Read Table2",
+        "Update the data in Table1"
+      ],
+      "answer": "Read Table3",
+      "explanation": "The SQL analytics endpoint for a Fabric Lakehouse is read-only and exposes managed tables. Managed tables can be queried, but data cannot be updated through the SQL endpoint."
+    },
+    {
+      "id": "DP600-022",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power Query",
+      "difficulty": "medium",
+      "question": "You use a dataflow to load a new dataset from OneLake into a warehouse. You need to identify the maximum values for numeric columns. Which Power Query function should you use?",
+      "options": [
+        "Table.MaxN",
+        "Table.Max",
+        "Table.Range",
+        "Table.Profile"
+      ],
+      "answer": "Table.Profile",
+      "explanation": "Table.Profile returns profiling information for table columns including minimum, maximum, average, distinct count, and other statistics."
+    },
+    {
+      "id": "DP600-023",
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Machine Learning",
+      "difficulty": "medium",
+      "question": "You have a machine learning model registered in a Fabric workspace. You need to use the PREDICT function in a Fabric notebook to perform model scoring. Which two languages can you use?",
+      "options": [
+        "T-SQL",
+        "DAX",
+        "Spark SQL",
+        "PySpark"
+      ],
+      "answers": [
+        "Spark SQL",
+        "PySpark"
+      ],
+      "explanation": "The PREDICT function is supported in Fabric notebooks through Spark SQL and PySpark."
+    },
+    {
+      "id": "DP600-024",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Fabric Notebooks",
+      "difficulty": "easy",
+      "question": "You are analyzing data in a Fabric notebook. A Spark DataFrame is assigned to a variable named df. Which function should you run to make the data available in Chart view?",
+      "options": [
+        "displayHTML",
+        "show",
+        "write",
+        "display"
+      ],
+      "answer": "display",
+      "explanation": "The display() function renders DataFrames in an interactive format and enables Chart view capabilities in Fabric notebooks."
+    },
+    {
+      "id": "DP600-025",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power BI",
+      "difficulty": "medium",
+      "question": "You have a Power BI report that contains a Python visual. Data displayed by the visual is grouped automatically and duplicate rows are not displayed. You need all rows to appear in the visual. What should you do?",
+      "options": [
+        "Reference the columns in the Python code by index",
+        "Modify the Sort Column By property for all columns",
+        "Add a unique field to each row",
+        "Modify the Summarize By property for all columns"
+      ],
+      "answer": "Add a unique field to each row",
+      "explanation": "Adding a unique identifier prevents Power BI from grouping duplicate rows before passing the dataset to the Python visual."
+    },
+    {
+      "id": "DP600-026",
+      "status": "verified",
+      "type": "dragdrop-code",
+      "domain": "DAX",
+      "difficulty": "medium",
+      "question": "Complete the DAX query that returns a table of stores that have opened since December 1, 2023.",
+      "items": [
+        "DEFINE",
+        "EVALUATE",
+        "FILTER",
+        "SUMMARIZE",
+        "TABLE"
+      ],
+      "targets": [
+        "Query Declaration",
+        "Result Statement",
+        "Table Definition"
+      ],
+      "answer": {
+        "DEFINE": "Query Declaration",
+        "EVALUATE": "Result Statement",
+        "SUMMARIZE": "Table Definition"
+      },
+      "codeTemplate": [
+        "{DEFINE}",
+        "VAR _SalesSince = DATE(2023,12,01)",
+        "",
+        "{EVALUATE}",
+        "FILTER(",
+        "    {SUMMARIZE}(Store, Store[Name], Store[OpenDate]),",
+        "    Store[OpenDate] >= _SalesSince",
+        ")"
+      ],
+      "explanation": {
+        "DEFINE": "DEFINE is used to declare variables and measures used in the query.",
+        "EVALUATE": "EVALUATE is required in DAX queries executed through XMLA endpoints and returns the result set.",
+        "SUMMARIZE": "SUMMARIZE creates a table projection containing the selected Store columns before filtering."
+      },
+      "skillsMeasured": [
+        "DAX",
+        "XMLA Endpoint",
+        "SUMMARIZE",
+        "FILTER",
+        "DEFINE",
+        "EVALUATE"
+      ]
+    },
+    {
+      "id": "DP600-027",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power Query",
+      "difficulty": "medium",
+      "question": "You have a Fabric workspace named Workspace1 that contains a dataflow named Dataflow1. Dataflow1 has a query that returns 2,000 rows. You view the query in Power Query as shown in the exhibit. What can you identify about the pickupLongitude column?",
+      "image": "images/dp600-q019.png",
+      "options": [
+        "The column has duplicate values.",
+        "All the table rows are profiled.",
+        "The column has missing values.",
+        "There are 935 values that occur only once."
+      ],
+      "answer": "The column has duplicate values.",
+      "explanation": "The profile shows Distinct count = 935 and Unique count = 871. Because the unique count is lower than the distinct count, some values appear more than once, indicating duplicates. Power Query is profiling only 1,000 rows, not all 2,000 rows. Null count is 0, so there are no missing values.",
+      "skillsMeasured": [
+        "Power Query",
+        "Data Profiling",
+        "Fabric Dataflow Gen2"
+      ]
+    },
+    {
+      "id": "DP600-028",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Semantic Models",
+      "difficulty": "medium",
+      "question": "You have a Fabric tenant named Tenant1 that contains a workspace named WS1. WS1 uses a capacity named C1 and contains a dataset named DS1. You need to ensure read-write access to DS1 is available by using the XMLA endpoint. What should be modified first?",
+      "options": [
+        "The DS1 settings",
+        "The WS1 settings",
+        "The C1 settings",
+        "The Tenant1 settings"
+      ],
+      "answer": "The C1 settings",
+      "explanation": "XMLA endpoint read-write mode is configured at the capacity level. Workspaces and semantic models inherit XMLA capabilities from the assigned capacity.",
+      "skillsMeasured": [
+        "XMLA Endpoint",
+        "Premium Capacity",
+        "Semantic Models"
+      ]
+    },
+    {
+      "id": "DP600-029",
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Semantic Models",
+      "difficulty": "hard",
+      "question": "You need to provide users with the ability to create and publish custom Direct Lake semantic models by using external tools while following the principle of least privilege. Which three actions should you perform in the Fabric Admin portal?",
+      "options": [
+        "Enable Allow XMLA Endpoints and Analyze in Excel with on-premises datasets",
+        "Enable Allow Azure Active Directory guest users to access Microsoft Fabric",
+        "Enable Users can edit data model in the Power BI service",
+        "Set XMLA Endpoint to Read Write",
+        "Enable Users can create Fabric items",
+        "Enable Publish to Web"
+      ],
+      "answers": [
+        "Enable Allow XMLA Endpoints and Analyze in Excel with on-premises datasets",
+        "Set XMLA Endpoint to Read Write",
+        "Enable Users can create Fabric items"
+      ],
+      "explanation": "Direct Lake semantic models created through external tools require XMLA connectivity, read-write XMLA endpoint access at the capacity level, and permissions to create Fabric items.",
+      "skillsMeasured": [
+        "XMLA Endpoint",
+        "Direct Lake",
+        "Fabric Administration",
+        "Semantic Models"
+      ]
+    },
+    {
+      "id": "DP600-030",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "TMDL",
+      "difficulty": "medium",
+      "question": "You are creating a semantic model in Power BI Desktop and plan to make bulk changes by using the Tabular Model Definition Language (TMDL) extension for Visual Studio Code. Which file format should you use?",
+      "options": [
+        "PBIP",
+        "PBIX",
+        "PBIT",
+        "PBIDS"
+      ],
+      "answer": "PBIP",
+      "explanation": "PBIP (Power BI Project) stores semantic model metadata as project files and supports TMDL editing in source-control and development environments such as Visual Studio Code.",
+      "skillsMeasured": [
+        "TMDL",
+        "Power BI Project",
+        "Semantic Models",
+        "Visual Studio Code"
+      ]
+    },
+    {
+      "id": "DP600-031",
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "Warehouse Security",
+      "difficulty": "medium",
+      "question": "You have a Fabric warehouse that contains three schemas named schemaA, schemaB, and schemaC. You need to ensure that User1 can truncate tables in schemaA only. Complete the T-SQL statement.",
+      "codeTemplate": [
+        "GRANT {PERMISSION}",
+        "ON {SECURABLE}",
+        "TO User1"
+      ],
+      "items": [
+        {
+          "label": "Permission",
+          "options": [
+            "ALTER",
+            "CONNECT",
+            "EXECUTE"
+          ],
+          "answer": "ALTER"
+        },
+        {
+          "label": "Securable",
+          "options": [
+            "DATABASE::schemaA",
+            "OBJECT::schemaA",
+            "SCHEMA::schemaA"
+          ],
+          "answer": "SCHEMA::schemaA"
+        }
+      ],
+      "explanation": {
+        "permission": "TRUNCATE TABLE requires ALTER permission on the target table or on the schema that contains the table.",
+        "securable": "Granting ALTER on SCHEMA::schemaA allows User1 to truncate tables only within schemaA without granting broader warehouse permissions."
+      },
+      "skillsMeasured": [
+        "T-SQL Security",
+        "Warehouse Security",
+        "GRANT",
+        "ALTER Permission",
+        "Schema Permissions",
+        "Microsoft Fabric Warehouse"
+      ]
+    },
+    {
+      "id": "DP600-032",
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Deployment Pipelines",
+      "difficulty": "medium",
+      "question": "You need to provide Power BI developers with access to a deployment pipeline that contains Development, Test, and Production stages. Developers must be able to deploy to Development and Test, but not to Production. Which three levels of access should you assign?",
+      "options": [
+        "Build permission to the production semantic models",
+        "Admin access to the deployment pipeline",
+        "Viewer access to the Development and Test workspaces",
+        "Viewer access to the Production workspace",
+        "Contributor access to the Development and Test workspaces",
+        "Contributor access to the Production workspace"
+      ],
+      "answers": [
+        "Admin access to the deployment pipeline",
+        "Viewer access to the Production workspace",
+        "Contributor access to the Development and Test workspaces"
+      ],
+      "explanation": "Developers require deployment pipeline administration plus Contributor access to Development and Test. Viewer access to Production prevents modifications while allowing visibility."
+    },
+    {
+      "id": "DP600-033",
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "DirectQuery Optimization",
+      "difficulty": "medium",
+      "question": "You have a DirectQuery semantic model that queries a source with 500 million rows. Which two features can reduce query execution time for report visuals?",
+      "options": [
+        "User-defined aggregations",
+        "Automatic aggregations",
+        "Query caching",
+        "OneLake integration"
+      ],
+      "answers": [
+        "User-defined aggregations",
+        "Automatic aggregations"
+      ],
+      "explanation": "Aggregations reduce the amount of source data scanned and improve DirectQuery performance."
+    },
+    {
+      "id": "DP600-034",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Incremental Refresh",
+      "difficulty": "medium",
+      "question": "A semantic model that uses CSV files in OneLake fails during incremental refresh after running out of resources. What is a possible cause?",
+      "options": [
+        "Query folding is occurring",
+        "Only refresh complete days is selected",
+        "XMLA Endpoint is set to Read Only",
+        "Query folding is not occurring",
+        "The partition column data type changed"
+      ],
+      "answer": "Query folding is not occurring",
+      "explanation": "Incremental refresh depends on query folding. Without folding, the entire dataset can be loaded into memory before filtering."
+    },
+    {
+      "id": "DP600-035",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Semantic Models",
+      "difficulty": "medium",
+      "question": "You need to enable scale-out for a semantic model. What should you do first?",
+      "options": [
+        "Set Large dataset storage format to Off",
+        "Enable Create and use Metrics",
+        "Set Large dataset storage format to On",
+        "Enable Data Activator"
+      ],
+      "answer": "Set Large dataset storage format to On",
+      "explanation": "Scale-out requires the semantic model to use Large Dataset Storage Format."
+    },
+    {
+      "id": "DP600-036",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Direct Lake",
+      "difficulty": "medium",
+      "question": "A Direct Lake semantic model uses Delta tables and warehouse row-level security (RLS). When users interact with reports built on the model, which mode will DAX queries use?",
+      "options": [
+        "DirectQuery",
+        "Dual",
+        "Direct Lake",
+        "Import"
+      ],
+      "answer": "DirectQuery",
+      "explanation": "When warehouse RLS must be enforced, Direct Lake falls back to DirectQuery to honor security requirements."
+    },
+    {
+      "id": "DP600-037",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power BI Desktop",
+      "difficulty": "easy",
+      "question": "You need to create a diagram that contains only the Sales table and its related tables. Which Power BI Desktop view should you use?",
+      "options": [
+        "Data categories",
+        "Data view",
+        "Model view",
+        "DAX query view"
+      ],
+      "answer": "Model view",
+      "explanation": "Model view provides a visual representation of relationships and allows focusing on specific tables and related objects."
+    },
+    {
+      "id": "DP600-038",
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Direct Lake Optimization",
+      "difficulty": "hard",
+      "question": "You suspect that some DAX queries load unnecessary columns into memory in a Direct Lake semantic model. Which two approaches can identify frequently used columns loaded into memory?",
+      "options": [
+        "Analyze in Excel",
+        "VertiPaq Analyzer",
+        "Query the $System.DISCOVER_STORAGE_TABLE_COLUMN_SEGMENTS DMV",
+        "Query the DISCOVER_MEMORYGRANT DMV"
+      ],
+      "answers": [
+        "VertiPaq Analyzer",
+        "Query the $System.DISCOVER_STORAGE_TABLE_COLUMN_SEGMENTS DMV"
+      ],
+      "explanation": "VertiPaq Analyzer and the DISCOVER_STORAGE_TABLE_COLUMN_SEGMENTS DMV provide visibility into storage structures and column memory usage."
+    },
+    {
+      "id": "DP600-039",
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "Data Modeling",
+      "difficulty": "hard",
+      "question": "You need to create a dimensional data model that will enable the analysis of order items by date, product, and customer. Select the appropriate options.",
+      "image": "images/dp600-q031-model.png",
+      "answerAreaImage": "images/dp600-q031-answer.png",
+      "items": [
+        {
+          "label": "The relationship between OrderItem and Product must be based on",
+          "options": [
+            "The ProductID column",
+            "Both the CompanyID and ProductID columns",
+            "A new key that combines the CompanyID and ProductID columns"
+          ],
+          "answer": "The ProductID column"
+        },
+        {
+          "label": "The Company entity must be",
+          "options": [
+            "Omitted",
+            "Denormalized into the Product entity only",
+            "Denormalized into the Customer and Product entities"
+          ],
+          "answer": "Denormalized into the Customer and Product entities"
+        }
+      ],
+      "explanation": {
+        "relationship": "In a star schema, the fact table should join to dimensions using the dimension key. ProductID becomes the dimension key used by OrderItem.",
+        "company": "To avoid a snowflake schema and optimize Power BI performance, Company attributes should be denormalized into the Customer and Product dimensions."
+      },
+      "skillsMeasured": [
+        "Data Modeling",
+        "Star Schema",
+        "Dimensional Modeling",
+        "Power BI",
+        "Microsoft Fabric"
+      ]
+    },
+    {
+      "id": "DP600-040",
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Semantic Model Optimization",
+      "difficulty": "medium",
+      "question": "You have a Fabric tenant that contains a semantic model named Model1. Model1 uses Import mode. Model1 contains a table named Orders with 100 million rows. You need to reduce memory consumption and the time required to refresh the model. Which two actions should you perform?",
+      "image": "images/dp600-q032-orders-table.png",
+      "options": [
+        "Split OrderDateTime into separate date and time columns",
+        "Replace TotalQuantity with a calculated column",
+        "Convert Quantity into the Text data type",
+        "Replace TotalSalesAmount with a measure"
+      ],
+      "answers": [
+        "Split OrderDateTime into separate date and time columns",
+        "Replace TotalSalesAmount with a measure"
+      ],
+      "explanation": {
+        "optionA": "DateTime columns typically have very high cardinality. Splitting them into separate date and time columns improves compression and reduces memory consumption.",
+        "optionD": "Measures are calculated at query time and do not consume storage in the model, unlike calculated columns.",
+        "optionB": "Replacing a measure with a calculated column would increase model size.",
+        "optionC": "Converting numeric values to text would significantly increase cardinality and memory usage."
+      },
+      "skillsMeasured": [
+        "Semantic Models",
+        "Import Mode",
+        "VertiPaq Compression",
+        "Model Optimization",
+        "Performance Tuning"
+      ]
+    },
+    {
+      "id": "DP600-041",
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Semantic Models",
+      "difficulty": "medium",
+      "question": "You have a Fabric tenant that contains a semantic model. You need to prevent report creators from populating visuals by using implicit measures. What two tools can you use to achieve the goal?",
+      "options": [
+        "Microsoft Power BI Desktop",
+        "Tabular Editor",
+        "Microsoft SQL Server Management Studio (SSMS)",
+        "DAX Studio"
+      ],
+      "answers": [
+        "Microsoft Power BI Desktop",
+        "Tabular Editor"
+      ],
+      "explanation": {
+        "powerBIDesktop": "Power BI Desktop allows developers to control model behavior and promote the use of explicit measures instead of implicit measures.",
+        "tabularEditor": "Tabular Editor allows direct modification of tabular model properties and enforcement of modeling best practices, including disabling implicit measures.",
+        "ssms": "SQL Server Management Studio is primarily used for model administration and XMLA connectivity, not for controlling implicit measures.",
+        "daxStudio": "DAX Studio is a query and performance analysis tool and does not manage semantic model settings related to implicit measures."
+      },
+      "skillsMeasured": [
+        "Semantic Models",
+        "Tabular Editor",
+        "Power BI Desktop",
+        "Model Governance",
+        "Explicit Measures"
+      ]
+    },
+    {
+      "id": "DP600-042",
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "Power Query",
+      "difficulty": "hard",
+      "question": "You have a Fabric tenant that contains two lakehouses. You are building a dataflow that combines data from the lakehouses. Based on the query shown in the exhibit, select the appropriate options.",
+      "image": "images/dp600-q034-query-steps.png",
+      "answerAreaImage": "images/dp600-q034-answer-area.png",
+      "items": [
+        {
+          "label": "_____ of the transformation steps in the query will fold.",
+          "options": [
+            "All",
+            "None",
+            "Some"
+          ],
+          "answer": "Some"
+        },
+        {
+          "label": "The Added custom step will be performed in",
+          "options": [
+            "each lakehouse's query engine",
+            "the Microsoft Power Query engine",
+            "the source lakehouse query engine"
+          ],
+          "answer": "the Microsoft Power Query engine"
+        }
+      ],
+      "explanation": {
+        "folding": "Some transformations can be pushed back to the source lakehouse and therefore fold. Other transformations cannot be folded and must be processed locally.",
+        "customStep": "Custom steps typically cannot be folded and are executed by the Microsoft Power Query engine rather than by the source query engine."
+      },
+      "skillsMeasured": [
+        "Power Query",
+        "Query Folding",
+        "Dataflow Gen2",
+        "Microsoft Fabric",
+        "Performance Optimization"
+      ]
+    },
+    {
+      "id": "DP600-043",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Data Pipelines",
+      "difficulty": "medium",
+      "question": "You have a Fabric tenant that contains a lakehouse named Lakehouse1. Lakehouse1 contains a table named Table1. You are creating a new data pipeline and plan to copy external data to Table1. The schema of the external data changes regularly. You need the copy operation to replace the schema of Table1 and replace all existing data with the external data. What should you configure?",
+      "options": [
+        "From the Source tab, add additional columns",
+        "From the Destination tab, set Table action to Overwrite",
+        "From the Settings tab, select Enable staging",
+        "From the Source tab, select Enable partition discovery",
+        "From the Source tab, select Recursively"
+      ],
+      "answer": "From the Destination tab, set Table action to Overwrite",
+      "explanation": "The Overwrite table action replaces both the existing schema and the existing data in the destination table, ensuring that Table1 always matches the current structure and content of the external source."
+    },
+    {
+      "id": "DP600-044",
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Lakehouse",
+      "difficulty": "medium",
+      "question": "You plan to query sales data files stored in an Amazon S3 bucket by using a Fabric lakehouse SQL endpoint. Which two actions should you take?",
+      "options": [
+        "Create a shortcut in the Files section",
+        "Use the Parquet format",
+        "Use the CSV format",
+        "Create a shortcut in the Tables section",
+        "Use the Delta format"
+      ],
+      "answers": [
+        "Create a shortcut in the Tables section",
+        "Use the Delta format"
+      ],
+      "explanation": "The Fabric SQL endpoint can query tables exposed in the Tables section of a lakehouse. Delta format provides the table metadata and transaction support required for SQL endpoint access."
+    },
+    {
+      "id": "DP600-045",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Lakehouse",
+      "difficulty": "medium",
+      "question": "A lakehouse contains CSV files stored in a folder. You need to convert the CSV files into Delta format and enable V-Order optimization. What should you do from Lakehouse Explorer?",
+      "options": [
+        "Use the Load to Tables feature",
+        "Create a shortcut in the Files section",
+        "Create a shortcut in the Tables section",
+        "Use the Optimize feature"
+      ],
+      "answer": "Use the Load to Tables feature",
+      "explanation": "Load to Tables converts files into managed Delta tables and automatically applies Fabric optimizations including V-Order."
+    },
+    {
+      "id": "DP600-046",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Data Pipelines",
+      "difficulty": "medium",
+      "question": "You have a lakehouse that contains an unpartitioned table named Table1. You plan to use a Copy activity to load data and partition the destination table by a date column. What should you do first?",
+      "options": [
+        "Set Mode to Append",
+        "Select the partition column",
+        "Enable partition discovery",
+        "Set Mode to Overwrite"
+      ],
+      "answer": "Set Mode to Overwrite",
+      "explanation": "Partitioned table creation in Fabric Copy Activity requires Table Action/Mode set to Overwrite before partition columns can be configured."
+    },
+    {
+      "id": "DP600-047",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Warehouse",
+      "difficulty": "hard",
+      "question": "You have a Fabric warehouse named Warehouse1. Warehouse1 contains a fact table named FactSales that has one billion rows. You run the following T-SQL statement: CREATE TABLE test.FactSales AS CLONE OF dbo.FactSales. For each statement, select Yes if the statement is true. Otherwise, select No.",
+      "code": "CREATE TABLE test.FactSales AS CLONE OF dbo.FactSales;",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "A replica of dbo.FactSales is created in the test schema by copying metadata only.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "Additional schema changes to dbo.FactSales will automatically apply to test.FactSales.",
+          "answer": "No"
+        },
+        {
+          "statement": "Additional schema changes to dbo.FactSales will be propagated automatically to the cloned table.",
+          "answer": "No"
+        }
+      ],
+      "explanation": {
+        "row1": "The CLONE operation creates a metadata-only copy of the table definition without duplicating the underlying data.",
+        "row2": "The cloned table becomes an independent object. Subsequent schema changes made to dbo.FactSales do not automatically propagate to the clone.",
+        "row3": "A cloned table does not maintain a live schema link to the source table."
+      },
+      "skillsMeasured": [
+        "Fabric Warehouse",
+        "Table Clone",
+        "T-SQL",
+        "Metadata Operations"
+      ]
+    },
+    {
+      "id": "DP600-048",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Lakehouse",
+      "difficulty": "medium",
+      "question": "You have source data in a folder on a local computer. You need to create a Fabric solution that supports dataflows, appends data to the data store, and automatically applies V-Order optimization and compaction. Which type of data store should you use?",
+      "options": [
+        "A lakehouse",
+        "An Azure SQL Database",
+        "A warehouse",
+        "A KQL database"
+      ],
+      "answer": "A lakehouse",
+      "explanation": "Lakehouses use Delta tables and support automatic optimization, compaction, and V-Order processing in Microsoft Fabric."
+    },
+    {
+      "id": "DP600-049",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Spark",
+      "difficulty": "medium",
+      "question": "You are saving a DataFrame by using the following code: df.write.partitionBy('year','month','day').mode('overwrite').parquet('Files/SalesOrder'). For each statement, select Yes if the statement is true. Otherwise, select No.",
+      "code": "df.write.partitionBy('year','month','day').mode('overwrite').parquet('Files/SalesOrder')",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "The results will form a hierarchy of folders for each partition key.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "The resulting file partitions can be read in parallel across multiple nodes.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "The resulting file partitions will use file compression.",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "Partitioning creates physical folder structures such as year=2025/month=01/day=15.",
+        "row2": "Partitions can be processed independently across distributed Spark executors.",
+        "row3": "Parquet files support compression and Spark applies compression by default unless configured otherwise."
+      },
+      "skillsMeasured": [
+        "PySpark",
+        "Partitioning",
+        "Parquet",
+        "Lakehouse",
+        "Distributed Processing"
+      ]
+    },
+    {
+      "id": "DP600-050",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power Query",
+      "difficulty": "medium",
+      "question": "You have a Fabric workspace named Workspace1 that contains a dataflow named Dataflow1. The query returns the data shown in the exhibit. You need to transform the data columns into attribute-value pairs where columns become rows. You select the VendorID column. Which transformation should you select?",
+      "image": "images/dp600-q042-powerquery-unpivot.png",
+      "options": [
+        "Group by",
+        "Unpivot columns",
+        "Unpivot other columns",
+        "Split column",
+        "Remove other columns"
+      ],
+      "answer": "Unpivot other columns",
+      "explanation": "When VendorID is selected and all remaining columns must become attribute-value pairs, the correct transformation is Unpivot Other Columns. This keeps VendorID as the identifier and converts all other columns into rows."
+    },
+    {
+      "id": "DP600-051",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Data Pipelines",
+      "difficulty": "medium",
+      "question": "You have a Fabric data pipeline. You need the pipeline to run every four hours on Mondays and Fridays. To what should you set Repeat for the schedule?",
+      "options": [
+        "Daily",
+        "By the minute",
+        "Weekly",
+        "Hourly"
+      ],
+      "answer": "Weekly",
+      "explanation": "Weekly scheduling allows selecting specific days such as Monday and Friday while also configuring recurring execution intervals throughout those days."
+    },
+    {
+      "id": "DP600-052",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Monitoring",
+      "difficulty": "medium",
+      "question": "You have a Fabric warehouse. Several times a day performance degrades and you suspect compute throttling. What should you use to determine whether throttling is occurring?",
+      "options": [
+        "Capacity settings",
+        "Monitoring hub",
+        "Dynamic Management Views (DMVs)",
+        "Microsoft Fabric Capacity Metrics app"
+      ],
+      "answer": "Microsoft Fabric Capacity Metrics app",
+      "explanation": "The Capacity Metrics app provides visibility into capacity utilization, throttling events, overload conditions, and resource consumption across Fabric workloads."
+    },
+    {
+      "id": "DP600-053",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "PySpark",
+      "difficulty": "hard",
+      "question": "You have a Fabric workspace that uses the default Spark starter pool and runtime version 1.2. You plan to read a CSV file named Sales_raw.csv in a lakehouse, select columns, and save the data as a Delta table to the managed area of the lakehouse. Based on the code shown in the exhibit, indicate whether each statement is true.",
+      "image": "images/dp600-q045-pyspark-code.png",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "The Spark engine will initially read only the selected columns from Sales_raw.csv.",
+          "answer": "No"
+        },
+        {
+          "statement": "Removing the partitionBy('Year') statement will reduce the execution time of the operation.",
+          "answer": "No"
+        },
+        {
+          "statement": "Adding inferSchema='true' will increase the execution time of the query.",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "Spark reads the CSV file before applying the select transformation, so all columns are initially processed.",
+        "row2": "Removing partitioning does not guarantee faster execution and may negatively impact downstream query performance.",
+        "row3": "inferSchema requires Spark to inspect the data to determine data types, adding an additional processing step."
+      },
+      "skillsMeasured": [
+        "PySpark",
+        "Delta Lake",
+        "Partitioning",
+        "Schema Inference",
+        "Fabric Notebooks"
+      ]
+    },
+    {
+      "id": "DP600-054",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Warehouse Monitoring",
+      "difficulty": "medium",
+      "question": "You have a Fabric warehouse. A report that normally takes two minutes to render has been running for 45 minutes. You need to identify what is preventing the report query from completing. Which dynamic management view (DMV) should you use?",
+      "options": [
+        "sys.dm_exec_requests",
+        "sys.dm_exec_sessions",
+        "sys.dm_exec_connections",
+        "sys.dm_pdw_exec_requests"
+      ],
+      "answer": "sys.dm_exec_requests",
+      "explanation": "sys.dm_exec_requests provides real-time information about currently executing requests, including wait states, blocking sessions, execution status, and resource consumption. It is the primary DMV used to troubleshoot long-running queries."
+    },
+    {
+      "id": "DP600-055",
+      "status": "verified",
+      "type": "dragdrop-code",
+      "domain": "Power Query",
+      "difficulty": "hard",
+      "question": "You are creating a dataflow in Fabric to ingest data from an Azure SQL database by using a T-SQL statement. You need to ensure that foldable Power Query transformation steps are processed by the Microsoft SQL Server engine. Complete the M code.",
+      "image": "images/dp600-q047-nativequery.png",
+      "items": [
+        "EnableFolding",
+        "NativeQuery",
+        "Optimize",
+        "Record",
+        "StopFolding",
+        "Table",
+        "Value"
+      ],
+      "targets": [
+        "Function Container",
+        "Native SQL Execution",
+        "Folding Configuration"
+      ],
+      "answer": {
+        "Value": "Function Container",
+        "NativeQuery": "Native SQL Execution",
+        "EnableFolding": "Folding Configuration"
+      },
+      "codeTemplate": [
+        "let",
+        "  Source = Sql.Databases(\"server.database.windows.net\"),",
+        "  Database = Source{[Name = \"db\"]}[Data],",
+        "  Query = {VALUE}.{NATIVEQUERY}(",
+        "      Database,",
+        "      \"SELECT * FROM Customer WHERE Country IN ('USA','UK')\",",
+        "      null,",
+        "      [{ENABLEFOLDING} = true]",
+        "  )",
+        "in",
+        "  Query"
+      ],
+      "explanation": {
+        "Value": "Value.NativeQuery is the Power Query M function used to execute native SQL queries against the source.",
+        "NativeQuery": "NativeQuery executes the T-SQL statement directly against SQL Server.",
+        "EnableFolding": "EnableFolding=true allows subsequent foldable Power Query transformations to continue being pushed to SQL Server."
+      },
+      "skillsMeasured": [
+        "Power Query",
+        "Query Folding",
+        "M Language",
+        "Value.NativeQuery",
+        "Dataflow Gen2",
+        "Microsoft Fabric"
+      ]
+    },
+    {
+      "id": "DP600-056",
+      "status": "verified",
+      "type": "dragdrop",
+      "domain": "Delta Lake",
+      "difficulty": "hard",
+      "question": "You have a Fabric lakehouse that receives IoT readings from 100 devices. Small files are being appended continuously and queries are slow. You need to remove files that are no longer used and combine small files into larger files with a target size of 1 GB. Match the correct action to each requirement.",
+      "image": "images/dp600-q048-delta-maintenance.png",
+      "items": [
+        "Set the autoCompact table setting",
+        "Set the optimizeWrite table setting",
+        "Run the VACUUM command on a schedule",
+        "Set the autoCompact SparkSession setting",
+        "Run the OPTIMIZE command on a schedule",
+        "Set the parallelDelete SparkSession setting"
+      ],
+      "targets": [
+        "Remove the files",
+        "Combine the files"
+      ],
+      "answer": {
+        "Run the VACUUM command on a schedule": "Remove the files",
+        "Run the OPTIMIZE command on a schedule": "Combine the files"
+      },
+      "explanation": {
+        "vacuum": "VACUUM removes obsolete data and transaction log files that are no longer referenced by the Delta table.",
+        "optimize": "OPTIMIZE compacts many small files into larger files, improving query performance and reducing file management overhead."
+      },
+      "skillsMeasured": [
+        "Delta Lake",
+        "Lakehouse Maintenance",
+        "VACUUM",
+        "OPTIMIZE",
+        "Microsoft Fabric",
+        "Data Engineering"
+      ]
+    },
+    {
+      "id": "DP600-057",
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Data Warehousing",
+      "difficulty": "medium",
+      "question": "You need to create a data loading pattern for a Type 1 Slowly Changing Dimension (SCD). Which two actions should you include in the process?",
+      "options": [
+        "Update rows when the non-key attributes have changed",
+        "Insert new rows when the natural key exists in the dimension table and the non-key attribute values have changed",
+        "Update the effective end date of rows when the non-key attribute values have changed",
+        "Insert new records when the natural key is a new value in the table"
+      ],
+      "answers": [
+        "Update rows when the non-key attributes have changed",
+        "Insert new records when the natural key is a new value in the table"
+      ],
+      "explanation": {
+        "optionA": "Type 1 SCD overwrites existing attribute values when changes are detected. Historical values are not preserved.",
+        "optionD": "New business entities identified by a new natural key must be inserted as new rows in the dimension table.",
+        "optionB": "Inserting a new row when an existing natural key changes corresponds to historical tracking patterns such as Type 2 SCD, not Type 1.",
+        "optionC": "Managing effective start and end dates is characteristic of Type 2 SCD implementations."
+      },
+      "skillsMeasured": [
+        "Data Warehousing",
+        "Slowly Changing Dimensions",
+        "Type 1 SCD",
+        "Dimensional Modeling",
+        "ETL"
+      ]
+    },
+    {
+      "id": "DP600-058",
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "OneLake Shortcuts",
+      "difficulty": "medium",
+      "question": "You have a Fabric workspace named Workspace1 and an Azure Data Lake Storage Gen2 account named storage1. You need to create a shortcut to storage1 in Lakehouse1. Select the appropriate connection type and endpoint.",
+      "items": [
+        {
+          "label": "Connection type",
+          "options": [
+            "abfs",
+            "abfss",
+            "https",
+            "sftp"
+          ],
+          "answer": "https"
+        },
+        {
+          "label": "Endpoint type",
+          "options": [
+            "blob",
+            "dfs",
+            "file",
+            "queue"
+          ],
+          "answer": "dfs"
+        }
+      ],
+      "explanation": {
+        "connectionType": "HTTPS is used to access the storage account through secure endpoints when creating the shortcut.",
+        "endpointType": "The dfs endpoint is required for Azure Data Lake Storage Gen2 because it provides Hierarchical Namespace support used by Fabric, Spark, and OneLake."
+      },
+      "skillsMeasured": [
+        "OneLake",
+        "Lakehouse",
+        "Shortcuts",
+        "ADLS Gen2",
+        "Storage Integration"
+      ]
+    },
+    {
+      "id": "DP600-059",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "PySpark",
+      "difficulty": "medium",
+      "question": "You are joining a transactions DataFrame containing 10 million rows with a customers DataFrame containing 1,000 rows. You need to minimize data shuffling. Which code should you use?",
+      "options": [
+        "transactions.join(F.broadcast(customers), transactions.customer_id == customers.customer_id)",
+        "transactions.join(customers, transactions.customer_id == customers.customer_id).distinct()",
+        "transactions.join(customers, transactions.customer_id == customers.customer_id)",
+        "transactions.crossJoin(customers).where(transactions.customer_id == customers.customer_id)"
+      ],
+      "answer": "transactions.join(F.broadcast(customers), transactions.customer_id == customers.customer_id)",
+      "explanation": "Broadcast joins replicate the small DataFrame to all worker nodes, eliminating expensive shuffle operations and significantly improving join performance."
+    },
+    {
+      "id": "DP600-060",
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "Direct Lake",
+      "difficulty": "hard",
+      "question": "You have a Microsoft Power BI report and a semantic model that uses Direct Lake mode. Based on the Performance Analyzer output in the exhibit, select the correct options.",
+      "image": "images/dp600-q052-performance-analyzer.png",
+      "answerAreaImage": "images/dp600-q052-answer-area.png",
+      "items": [
+        {
+          "label": "The Direct Lake fallback behavior is set to",
+          "options": [
+            "Automatic",
+            "DirectLakeOnly",
+            "DirectQueryOnly"
+          ],
+          "answer": "Automatic"
+        },
+        {
+          "label": "The query for the table visual is executed by using",
+          "options": [
+            "the composite model",
+            "Direct Lake",
+            "DirectQuery"
+          ],
+          "answer": "Direct Lake"
+        }
+      ],
+      "explanation": {
+        "fallbackBehavior": "Automatic fallback allows the semantic model to switch between Direct Lake and DirectQuery when required by unsupported features or scenarios.",
+        "queryExecution": "The Performance Analyzer output indicates the visual is running in Direct Lake mode rather than falling back to DirectQuery."
+      },
+      "skillsMeasured": [
+        "Direct Lake",
+        "Power BI",
+        "Performance Analyzer",
+        "Semantic Models",
+        "Microsoft Fabric"
+      ]
+    },
+    {
+      "id": "DP600-061",
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "PySpark",
+      "difficulty": "hard",
+      "question": "You have a table named Nyctaxi_raw. You need to create a new column named pickupDate that contains only the date portion of pickupDateTime and filter the rows to include only records where fareAmount is greater than 0 and less than 100.",
+      "image": "images/dp600-q053-schema.png",
+      "answerAreaImage": "images/dp600-q053-code.png",
+      "codeTemplate": [
+        "df = spark.read.format(\"delta\").load(\"Tables/nyctaxi_raw\")",
+        "",
+        "df2 = {FUNCTION}(\"pickupDate\",",
+        "               df['pickupDateTime'].{DATE_CONVERSION})",
+        "",
+        "{FILTER_EXPRESSION}"
+      ],
+      "items": [
+        {
+          "label": "Function",
+          "options": [
+            "df.columns",
+            "df.select",
+            "df.withColumn",
+            "df.withColumnsRenamed"
+          ],
+          "answer": "df.withColumn"
+        },
+        {
+          "label": "Date Conversion",
+          "options": [
+            ".alias('date')",
+            ".cast('date')",
+            ".cast('pickupDate')",
+            ".getfield('date')"
+          ],
+          "answer": ".cast('date')"
+        },
+        {
+          "label": "Filter Expression",
+          "options": [
+            ".filter(\"fareAmount > 0 AND fareAmount < 100\")",
+            ".filter(col('fareAmount').contains('1..100'))",
+            ".when(df.fareAmount > 0 AND fareAmount < 100)",
+            ".where(df.fareAmount.isin([1,100]))"
+          ],
+          "answer": ".filter(\"fareAmount > 0 AND fareAmount < 100\")"
+        }
+      ],
+      "explanation": {
+        "function": "withColumn is used to create or replace columns in a DataFrame.",
+        "conversion": "cast('date') converts a timestamp column to the date data type, removing the time portion.",
+        "filter": "filter() applies a SQL-style predicate and retains only rows where fareAmount is greater than 0 and less than 100."
+      },
+      "skillsMeasured": [
+        "PySpark",
+        "DataFrame Transformations",
+        "withColumn",
+        "Type Conversion",
+        "Filtering",
+        "Microsoft Fabric"
+      ]
+    },
+    {
+      "id": "DP600-062",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "PySpark",
+      "difficulty": "easy",
+      "question": "You have a Fabric tenant that contains a new semantic model in OneLake. You use a Fabric notebook to read the data into a Spark DataFrame. You need to evaluate the data to calculate the min, max, mean, and standard deviation values for all the string and numeric columns. Solution: Use df.explain(). Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No",
+      "explanation": "df.explain() displays the logical and physical execution plans of a DataFrame. It does not calculate statistical metrics such as min, max, mean, or standard deviation."
+    },
+    {
+      "id": "DP600-063",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "PySpark",
+      "difficulty": "easy",
+      "question": "You have a Fabric tenant that contains a new semantic model in OneLake. You use a Fabric notebook to read the data into a Spark DataFrame. You need to evaluate the data to calculate the min, max, mean, and standard deviation values for all the string and numeric columns. Solution: Use df.show(). Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No",
+      "explanation": "df.show() displays rows from a DataFrame but does not calculate statistical information. Functions such as describe() or summary() are required."
+    },
+    {
+      "id": "DP600-064",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "PySpark",
+      "difficulty": "easy",
+      "question": "You have a Fabric tenant that contains a new semantic model in OneLake. You use a Fabric notebook to read the data into a Spark DataFrame. You need to evaluate the data to calculate the min, max, mean, and standard deviation values for all the string and numeric columns. Solution: Use df.summary(). Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes",
+      "explanation": "df.summary() provides descriptive statistics including count, mean, standard deviation, minimum, and maximum values. It works for both numeric and string columns."
+    },
+    {
+      "id": "DP600-065",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Delta Lake",
+      "difficulty": "medium",
+      "question": "You have a lakehouse named Lakehouse1 that contains a Delta table named Customer. The query performance is slow and you suspect maintenance was not performed. Solution: Run DESCRIBE HISTORY customer. Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes",
+      "explanation": "DESCRIBE HISTORY returns the transaction history of a Delta table, including maintenance operations such as OPTIMIZE and VACUUM."
+    },
+    {
+      "id": "DP600-066",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Delta Lake",
+      "difficulty": "medium",
+      "question": "You have a lakehouse named Lakehouse1 that contains a Delta table named Customer. The query performance is slow and you suspect maintenance was not performed. Solution: Run REFRESH TABLE customer. Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No",
+      "explanation": "REFRESH TABLE updates metadata and cache state but does not show whether maintenance operations were previously executed."
+    },
+    {
+      "id": "DP600-067",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Delta Lake",
+      "difficulty": "medium",
+      "question": "You have a lakehouse named Lakehouse1 that contains a Delta table named Customer. The query performance is slow and you suspect maintenance was not performed. Solution: Run EXPLAIN TABLE customer. Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No",
+      "explanation": "EXPLAIN displays a query execution plan but provides no historical information about optimization, compaction, or maintenance operations performed on the table."
     }
   ]
 }

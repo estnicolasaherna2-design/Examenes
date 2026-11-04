@@ -1,117 +1,1510 @@
 {
   "examId": "AZ-900",
+  "examName": "Azure Fundamentals",
+  "questionCount": 80,
   "questions": [
     {
       "id": "AZ900-001",
-      "domain": "Conceptos de nube",
+      "status": "verified",
       "type": "multiple",
-      "question": "¿Cuál es una característica habitual de la computación en la nube?",
+      "domain": "Governance",
+      "question": "You need to ensure that Contoso can use version control to meet the data analytics requirements and the general requirements. What should you do?",
       "options": [
-        "Pago por uso",
-        "Compra obligatoria de servidores propios",
-        "Capacidad fija e invariable",
-        "Acceso únicamente desde una red local"
+        "Store all semantic models and reports in Data Lake Gen2",
+        "Use a GitHub repository",
+        "Use an Azure Repos repository",
+        "Store all semantic models and reports in OneDrive"
       ],
-      "answer": "Pago por uso",
-      "explanation": "Los servicios en la nube suelen permitir pagar por los recursos consumidos, según el modelo de precios."
+      "answer": "Use an Azure Repos repository",
+      "explanation": "Azure Repos provides Git-based version control with branching support for Fabric artifacts."
     },
     {
       "id": "AZ900-002",
-      "domain": "Arquitectura de Azure",
-      "type": "boolean",
-      "question": "Una región de Azure está formada por uno o varios centros de datos conectados mediante una red de baja latencia.",
-      "answer": true,
-      "explanation": "Una región es un área geográfica que contiene uno o más centros de datos conectados mediante una red dedicada de baja latencia."
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Azure Storage",
+      "question": "Your company has datacenters in Los Angeles and New York. The company has a Microsoft Azure subscription. You are configuring the two datacenters as geo-clustered sites for site resiliency. You need to recommend an Azure Storage redundancy option. You have the following data storage requirements: Data must be stored on multiple nodes. Data must be stored on nodes in separate geographic locations. Data can be read from the secondary location as well as from the primary location. Which Azure Storage redundancy option should you recommend?",
+      "options": [
+        "Geo-redundant storage (GRS)",
+        "Read-access geo-redundant storage (RA-GRS)",
+        "Zone-redundant storage (ZRS)",
+        "Locally redundant storage (LRS)"
+      ],
+      "answer": "Read-access geo-redundant storage (RA-GRS)",
+      "explanation": "RA-GRS replicates data to a secondary geographic region and provides read-only access to the secondary endpoint. This enables applications to read data from both the primary and secondary regions while maintaining geo-redundancy and higher availability."
     },
     {
       "id": "AZ900-003",
-      "domain": "Identidad",
-      "type": "picklist",
-      "question": "¿Qué servicio permite administrar identidades y controlar el acceso a recursos?",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Data Integration",
+      "question": "How should you refresh the Orders table while minimizing rows added during refreshes?",
       "options": [
-        "Microsoft Entra ID",
-        "Azure Blob Storage",
-        "Azure Monitor",
-        "Azure Virtual Network"
+        "Stored procedure with MAX(OrderID)",
+        "Stored procedure with MIN(OrderID)",
+        "Dataflow with MIN(OrderID)",
+        "Dataflow with MAX(OrderID)"
       ],
-      "answer": "Microsoft Entra ID",
-      "explanation": "Microsoft Entra ID es el servicio de administración de identidades y acceso de Microsoft."
+      "answer": "Dataflow with MAX(OrderID)",
+      "explanation": "Using the maximum OrderID supports incremental loading."
     },
     {
       "id": "AZ900-004",
-      "domain": "Modelos de servicio cloud",
-      "type": "drag",
-      "question": "Relaciona cada modelo de servicio con la responsabilidad principal del cliente.",
-      "pairs": [
-        {
-          "left": "IaaS",
-          "right": "Administrar sistema operativo y aplicaciones"
-        },
-        {
-          "left": "PaaS",
-          "right": "Administrar aplicaciones y datos"
-        },
-        {
-          "left": "SaaS",
-          "right": "Usar y configurar la aplicación"
-        }
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Lakehouse",
+      "question": "Which notebook syntax should be used to access Productline1 data?",
+      "options": [
+        "spark.read.format('delta').load(...)",
+        "spark.sql('SELECT * FROM Lakehouse1.ResearchProduct')",
+        "external_table('ResearchProduct')",
+        "external_table(ResearchProduct)"
       ],
-      "explanation": "En IaaS el cliente administra más componentes; en PaaS se centra en aplicaciones y datos; en SaaS consume una aplicación administrada por el proveedor."
+      "answer": "spark.sql('SELECT * FROM Lakehouse1.ResearchProduct')"
     },
     {
       "id": "AZ900-005",
-      "domain": "Arquitectura de Azure",
-      "type": "hotspot",
-      "question": "Selecciona en el esquema la zona que representa una región de Azure.",
-      "diagram": {
-        "labels": [
-          "Región de Azure",
-          "Centro de datos",
-          "Servicio"
-        ]
-      },
-      "zones": [
-        {
-          "id": "region",
-          "label": "Región de Azure",
-          "x": 4,
-          "y": 18,
-          "w": 92,
-          "h": 66
-        },
-        {
-          "id": "datacenter",
-          "label": "Centro de datos",
-          "x": 12,
-          "y": 34,
-          "w": 22,
-          "h": 30
-        },
-        {
-          "id": "service",
-          "label": "Servicio",
-          "x": 70,
-          "y": 34,
-          "w": 22,
-          "h": 30
-        }
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Azure Fundamentals",
+      "question": "You are tasked with deploying Azure virtual machines for your company. You need to make use of the appropriate cloud deployment solution. Solution: Use Platform as a Service (PaaS). Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
       ],
-      "answer": "region",
-      "explanation": "Una región de Azure es un área geográfica que contiene uno o más centros de datos."
+      "answer": "No",
+      "explanation": "Azure Virtual Machines are an Infrastructure as a Service (IaaS) offering. PaaS provides a managed platform for application deployment and does not provide direct virtual machine management."
     },
     {
       "id": "AZ900-006",
-      "domain": "Costos y gobernanza",
+      "status": "verified",
       "type": "multiple",
-      "question": "¿Qué herramienta permite estimar el costo de productos y servicios de Azure antes de implementarlos?",
+      "domain": "Azure Fundamentals",
+      "question": "You are tasked with deploying Azure virtual machines for your company. You need to make use of the appropriate cloud deployment solution. Solution: You should make use of Infrastructure as a Service (IaaS). Does the solution meet the goal?",
       "options": [
-        "Calculadora de precios de Azure",
-        "Azure Service Health",
-        "Azure Advisor",
-        "Microsoft Entra ID"
+        "Yes",
+        "No"
       ],
-      "answer": "Calculadora de precios de Azure",
-      "explanation": "La calculadora de precios permite estimar costos a partir de servicios, configuraciones y patrones de uso previstos."
+      "answer": "Yes",
+      "explanation": "Azure Virtual Machines are an Infrastructure as a Service (IaaS) offering. IaaS provides virtualized computing resources such as virtual machines, storage accounts, networking, and operating system management. Therefore, using IaaS satisfies the requirement."
+    },
+    {
+      "id": "AZ900-007",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Azure App Service",
+      "question": "Your developers have created 10 web applications that must be hosted on Azure. You need to determine which Azure App Service plan to use. The plan must meet the following requirements: support custom domains, provide 10 GB of storage per application, run each application on dedicated compute instances, include load balancing between instances, and minimize costs. Which App Service plan should you use?",
+      "options": [
+        "Standard",
+        "Basic",
+        "Free",
+        "Shared"
+      ],
+      "answer": "Standard",
+      "explanation": "The Standard App Service plan supports custom domains, dedicated compute instances, autoscaling, and load balancing. Free and Shared tiers do not support dedicated resources or load balancing. Basic supports dedicated instances but does not provide built-in load balancing and autoscaling capabilities. Standard is the lowest-cost tier that satisfies all requirements."
+    },
+    {
+      "id": "AZ900-008",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Data Ingestion",
+      "question": "What should you recommend to ingest customer data into the AnalyticsPOC datastore?",
+      "options": [
+        "Stored procedure",
+        "Pipeline with KQL activity",
+        "Spark notebook",
+        "Dataflow"
+      ],
+      "answer": "Dataflow"
+    },
+    {
+      "id": "AZ900-009",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Architecture",
+      "question": "Which data store should you recommend in AnalyticsPOC?",
+      "options": [
+        "Data lake",
+        "Warehouse",
+        "Lakehouse",
+        "External Hive metastore"
+      ],
+      "answer": "Lakehouse"
+    },
+    {
+      "id": "AZ900-010",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "T-SQL",
+      "question": "Which T-SQL query correctly returns ProductID and ProductName for 2023 with SUM(Amount) > 10000?",
+      "answer": "Option A",
+      "explanation": "Uses WHERE on SaleDate, GROUP BY ProductID/ProductName and HAVING SUM(Amount) > 10000."
+    },
+    {
+      "id": "AZ900-011",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Azure Cost Management",
+      "question": "Your company is planning to migrate all its virtual machines to an Azure pay-as-you-go subscription. The virtual machines are currently hosted on Hyper-V hosts in a datacenter. You need to ensure that the Azure solution uses the correct expenditure model. Solution: You recommend using the scalable expenditure model. Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No",
+      "explanation": "Azure pay-as-you-go subscriptions use an Operational Expenditure (OpEx) model rather than a Capital Expenditure (CapEx) model. 'Scalable expenditure model' is not a recognized Azure expenditure model and does not address the requirement. Therefore, the proposed solution does not meet the goal."
+    },
+    {
+      "id": "AZ900-012",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Azure Cost Management",
+      "question": "Your company is planning to migrate all its virtual machines to an Azure pay-as-you-go subscription. The virtual machines are currently hosted on Hyper-V hosts in a datacenter. You need to ensure that the Azure solution uses the correct expenditure model. Solution: You recommend using the operational expenditure (OpEx) model. Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes",
+      "explanation": "Azure pay-as-you-go subscriptions follow an Operational Expenditure (OpEx) model because organizations pay for resources as they consume them rather than making large upfront capital investments. Therefore, recommending the operational expenditure model satisfies the requirement."
+    },
+    {
+      "id": "AZ900-013",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Lakehouse",
+      "question": "What can you do through a Lakehouse SQL endpoint?",
+      "options": [
+        "Read Table3",
+        "Update Table3",
+        "Read Table2",
+        "Update Table1"
+      ],
+      "answer": "Read Table3"
+    },
+    {
+      "id": "AZ900-014",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power Query",
+      "question": "Which Power Query function identifies maximum values for numeric columns?",
+      "options": [
+        "Table.MaxN",
+        "Table.Max",
+        "Table.Range",
+        "Table.Profile"
+      ],
+      "answer": "Table.Profile"
+    },
+    {
+      "id": "AZ900-015",
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Machine Learning",
+      "question": "Which languages support the PREDICT function in Fabric notebooks?",
+      "options": [
+        "T-SQL",
+        "DAX",
+        "Spark SQL",
+        "PySpark"
+      ],
+      "answers": [
+        "Spark SQL",
+        "PySpark"
+      ]
+    },
+    {
+      "id": "AZ900-016",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Notebooks",
+      "question": "Which function makes a DataFrame available in Chart View?",
+      "options": [
+        "displayHTML",
+        "show",
+        "write",
+        "display"
+      ],
+      "answer": "display"
+    },
+    {
+      "id": "AZ900-017",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power BI",
+      "question": "How can you ensure all rows appear in a Python visual?",
+      "options": [
+        "Reference columns by index",
+        "Modify Sort By",
+        "Add a unique field",
+        "Modify Summarize By"
+      ],
+      "answer": "Add a unique field"
+    },
+    {
+      "id": "AZ900-018",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Azure Resource Manager",
+      "question": "Your company's infrastructure includes a number of business units that each need a large number of Azure resources for daily operations. The resources required by each business unit are identical. You need to recommend a strategy to create Azure resources automatically. Solution: Include Azure Resource Manager (ARM) templates in the strategy. Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes",
+      "explanation": "Azure Resource Manager (ARM) templates enable Infrastructure as Code (IaC), allowing organizations to automate and standardize Azure deployments. ARM templates define resources declaratively in JSON and can be version-controlled, reused, and deployed consistently across multiple environments. Therefore, using ARM templates satisfies the requirement to automatically create identical Azure resources."
+    },
+    {
+      "id": "AZ900-019",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power Query",
+      "question": "What can be identified about the pickupLongitude column?",
+      "options": [
+        "Contains duplicates",
+        "All rows profiled",
+        "Contains missing values",
+        "935 unique values"
+      ],
+      "answer": "Contains duplicates"
+    },
+    {
+      "id": "AZ900-020",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "XMLA",
+      "question": "What must be modified first to enable read-write XMLA access?",
+      "options": [
+        "Dataset settings",
+        "Workspace settings",
+        "Capacity settings",
+        "Tenant settings"
+      ],
+      "answer": "Capacity settings"
+    },
+    {
+      "id": "AZ900-021",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Dataflows Gen2",
+      "question": "Which storage mode should be configured to improve Dataflow Gen2 performance when loading large volumes of data?",
+      "options": [
+        "DirectQuery",
+        "Import",
+        "Staging",
+        "Live Connection"
+      ],
+      "answer": "Staging",
+      "explanation": "Staging enables intermediate persistence and improves transformation performance."
+    },
+    {
+      "id": "AZ900-022",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power Query",
+      "question": "What should be used to parameterize a Dataflow Gen2 solution?",
+      "options": [
+        "Variables",
+        "Parameters",
+        "Measures",
+        "Views"
+      ],
+      "answer": "Parameters",
+      "explanation": "Parameters provide reusable and configurable values in Dataflow Gen2."
+    },
+    {
+      "id": "AZ900-023",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Azure DevTest Labs",
+      "question": "Your company's developers intend to deploy a large number of custom virtual machines on a weekly basis. The virtual machines will also be removed during the same week they are deployed. Sixty percent of the virtual machines run Windows Server 2016 and forty percent run Ubuntu Linux. You need to reduce the administrative effort required for this process by using an appropriate Azure service. Solution: Recommend the use of Azure Reserved Virtual Machine (VM) Instances. Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No",
+      "explanation": "Azure Reserved VM Instances are a pricing and cost optimization mechanism that provides discounts for long-term VM usage. They do not simplify deployment, lifecycle management, or environment provisioning. Azure DevTest Labs is the appropriate service because it enables rapid deployment of reusable VM environments through templates, artifacts, policies, and automated lifecycle controls, reducing administrative effort."
+    },
+    {
+      "id": "AZ900-024",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Lakehouse",
+      "question": "Which format provides ACID transactions in a Fabric Lakehouse?",
+      "options": [
+        "CSV",
+        "JSON",
+        "Parquet",
+        "Delta"
+      ],
+      "answer": "Delta",
+      "explanation": "Delta provides ACID transactions, schema enforcement and versioning."
+    },
+    {
+      "id": "AZ900-025",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power BI",
+      "question": "Which capability enables report consumers to analyze data using natural language?",
+      "options": [
+        "Q&A",
+        "Bookmarks",
+        "Drillthrough",
+        "Perspectives"
+      ],
+      "answer": "Q&A"
+    },
+    {
+      "id": "AZ900-026",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "DAX",
+      "question": "Which DAX function removes filters from a calculation context?",
+      "options": [
+        "SUMX",
+        "RELATED",
+        "REMOVEFILTERS",
+        "VALUES"
+      ],
+      "answer": "REMOVEFILTERS"
+    },
+    {
+      "id": "AZ900-027",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Semantic Models",
+      "question": "What is the recommended schema design for optimal model performance?",
+      "options": [
+        "Snowflake",
+        "Star Schema",
+        "Hierarchical",
+        "Data Vault"
+      ],
+      "answer": "Star Schema"
+    },
+    {
+      "id": "AZ900-028",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power BI",
+      "question": "Which feature allows row-level data security to be implemented?",
+      "options": [
+        "Sensitivity Labels",
+        "Roles",
+        "Domains",
+        "Capacities"
+      ],
+      "answer": "Roles"
+    },
+    {
+      "id": "AZ900-029",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Security",
+      "question": "Which type of security filters rows visible to report users?",
+      "options": [
+        "Object Level Security",
+        "Row Level Security",
+        "Workspace Security",
+        "Column Encryption"
+      ],
+      "answer": "Row Level Security"
+    },
+    {
+      "id": "AZ900-030",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power Query",
+      "question": "Which Power Query operation combines rows from multiple tables?",
+      "options": [
+        "Merge",
+        "Group By",
+        "Pivot",
+        "Replace"
+      ],
+      "answer": "Merge"
+    },
+    {
+      "id": "AZ900-031",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Azure Networking",
+      "question": "You are planning a strategy to deploy numerous web servers and database servers to Azure. This strategy should allow the connection types between the web servers and database servers to be controlled. Solution: You include Network Security Groups (NSGs) in the strategy. Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes",
+      "explanation": "Network Security Groups (NSGs) allow administrators to control inbound and outbound network traffic using security rules. NSGs can filter traffic based on source, destination, port, protocol, and direction, making them an appropriate solution for controlling communication between web servers and database servers."
+    },
+    {
+      "id": "AZ900-032",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Power BI",
+      "question": "Which feature improves performance by summarizing data?",
+      "options": [
+        "Aggregations",
+        "Bookmarks",
+        "Themes",
+        "Perspectives"
+      ],
+      "answer": "Aggregations"
+    },
+    {
+      "id": "AZ900-033",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "DAX",
+      "question": "Which function returns a table of unique values?",
+      "options": [
+        "FILTER",
+        "VALUES",
+        "DIVIDE",
+        "COUNTROWS"
+      ],
+      "answer": "VALUES"
+    },
+    {
+      "id": "AZ900-034",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Azure PaaS",
+      "question": "For each of the following statements about Platform as a Service (PaaS), select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "A Platform as a Service (PaaS) solution that hosts web apps in Azure provides full control of the operating systems that host applications.",
+          "answer": "No"
+        },
+        {
+          "statement": "A Platform as a Service (PaaS) solution that hosts web apps in Azure provides the ability to scale the platform automatically.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "A Platform as a Service (PaaS) solution that hosts web apps in Azure provides professional development services to continuously add features to custom applications.",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "PaaS does not provide direct access to or control over the underlying operating system. Azure App Service manages the infrastructure on behalf of the customer.",
+        "row2": "Azure App Service supports autoscaling, allowing the platform to automatically add or remove compute resources based on demand.",
+        "row3": "PaaS provides development frameworks, services, middleware, and managed components that accelerate application development and deployment."
+      }
+    },
+    {
+      "id": "AZ900-035",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Azure Fundamentals",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "Azure provides flexibility between capital expenditure (CapEx) and operational expenditure (OpEx).",
+          "answer": "Yes"
+        },
+        {
+          "statement": "If you create two Azure virtual machines that use the B2S size, each virtual machine will always generate the same monthly costs.",
+          "answer": "No"
+        },
+        {
+          "statement": "When an Azure virtual machine is stopped, you continue to pay storage costs associated with the virtual machine.",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "Cloud services enable organizations to move from Capital Expenditure (CapEx) to Operational Expenditure (OpEx) through pay-as-you-go consumption models.",
+        "row2": "Two virtual machines with the same size can have different monthly costs because storage, backups, networking, and other services may vary.",
+        "row3": "When a virtual machine is stopped and deallocated, compute charges stop, but storage costs for managed disks, backups, and other related resources continue."
+      }
+    },
+    {
+      "id": "AZ900-036",
+      "status": "verified",
+      "type": "picklist",
+      "domain": "Cloud Concepts",
+      "difficulty": "easy",
+      "question": "When you are implementing a Software as a Service (SaaS) solution, you are responsible for ________.",
+      "options": [
+        "configuring high availability",
+        "defining scalability rules",
+        "installing the SaaS solution",
+        "configuring the SaaS solution"
+      ],
+      "answer": "configuring the SaaS solution",
+      "explanation": "In a Software as a Service (SaaS) model, the cloud provider is responsible for managing the underlying infrastructure, operating system, middleware, application platform, availability, scalability, and maintenance. The customer is responsible primarily for configuring and consuming the SaaS application."
+    },
+    {
+      "id": "AZ900-037",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Azure Availability",
+      "difficulty": "easy",
+      "question": "You have an on-premises network that contains several servers. You plan to migrate all the servers to Azure. You need to recommend a solution to ensure that some of the servers remain available if a single Azure datacenter goes offline for an extended period. What should you include in the recommendation?",
+      "options": [
+        "Fault tolerance",
+        "Elasticity",
+        "Scalability",
+        "Low latency"
+      ],
+      "answer": "Fault tolerance",
+      "explanation": "Fault tolerance is the ability of a system to continue operating when one or more components fail. Azure Availability Zones and replicated virtual machines provide fault tolerance by ensuring workloads remain available if a datacenter becomes unavailable."
+    },
+    {
+      "id": "AZ900-038",
+      "status": "verified",
+      "type": "picklist",
+      "domain": "Cloud Deployment Models",
+      "difficulty": "easy",
+      "question": "An organization that hosts its infrastructure ________ no longer requires a datacenter.",
+      "options": [
+        "in a private cloud",
+        "in a hybrid cloud",
+        "in the public cloud",
+        "on a Hyper-V host"
+      ],
+      "answer": "in the public cloud",
+      "explanation": "A public cloud is hosted by a cloud provider such as Microsoft Azure. Because the infrastructure is managed externally, organizations can eliminate or significantly reduce the need for their own datacenter infrastructure."
+    },
+    {
+      "id": "AZ900-039",
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Cloud Concepts",
+      "difficulty": "easy",
+      "question": "What are two characteristics of the public cloud? Each correct answer presents a complete solution.",
+      "options": [
+        "Dedicated hardware",
+        "Unsecured connections",
+        "Limited storage",
+        "Metered pricing",
+        "Self-service management"
+      ],
+      "answers": [
+        "Metered pricing",
+        "Self-service management"
+      ],
+      "explanation": "Public cloud services use a pay-as-you-go pricing model (metered pricing) and allow customers to provision and manage resources through self-service portals. Hardware is shared, connections are secure, and storage is effectively unlimited."
+    },
+    {
+      "id": "AZ900-040",
+      "status": "verified",
+      "type": "picklist",
+      "domain": "Azure Cost Management",
+      "difficulty": "easy",
+      "question": "When planning to migrate a public website to Azure, you must plan to ________.",
+      "options": [
+        "deploy a VPN",
+        "pay monthly usage costs",
+        "pay to transfer all the website data to Azure",
+        "reduce the number of connections to the website"
+      ],
+      "answer": "pay monthly usage costs",
+      "explanation": "Azure uses a consumption-based pricing model. When a public website is hosted in Azure, organizations should expect ongoing monthly charges based on the resources consumed."
+    },
+    {
+      "id": "AZ900-041",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Services",
+      "difficulty": "easy",
+      "question": "Your company plans to migrate all its data and resources to Azure. The company's migration plan states that only Platform as a Service (PaaS) solutions must be used in Azure. You need to deploy an Azure environment that meets the company migration plan. Solution: You create an Azure App Service and Azure SQL Databases. Does this meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes",
+      "explanation": "Azure App Service and Azure SQL Database are both Platform as a Service (PaaS) offerings. Neither requires management of the underlying operating system or infrastructure."
+    },
+    {
+      "id": "AZ900-042",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Services",
+      "difficulty": "easy",
+      "question": "Your company plans to migrate all its data and resources to Azure. The company's migration plan states that only Platform as a Service (PaaS) solutions must be used in Azure. Solution: You create an Azure App Service and Azure Virtual Machines that have Microsoft SQL Server installed. Does this meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No",
+      "explanation": "Azure Virtual Machines are an Infrastructure as a Service (IaaS) offering. Because the solution includes IaaS resources, it does not satisfy the requirement to use only PaaS services."
+    },
+    {
+      "id": "AZ900-043",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Services",
+      "difficulty": "easy",
+      "question": "Your company plans to migrate all its data and resources to Azure. The company's migration plan states that only Platform as a Service (PaaS) solutions must be used in Azure. Solution: You create an Azure App Service and Azure Storage Accounts. Does this meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No",
+      "explanation": "The exam objective expects Azure Storage Accounts to be treated as containers that can support multiple storage services rather than a standalone PaaS application platform. Therefore the proposed solution does not strictly satisfy the requirement."
+    },
+    {
+      "id": "AZ900-044",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Azure Scalability",
+      "difficulty": "easy",
+      "question": "Your company hosts an accounting application named App1 that is used by all company customers. App1 has low usage during the first three weeks of each month and very high usage during the last week of each month. Which Azure benefit supports cost management for this usage pattern?",
+      "options": [
+        "High availability",
+        "High latency",
+        "Elasticity",
+        "Load balancing"
+      ],
+      "answer": "Elasticity",
+      "explanation": "Elasticity allows resources to automatically scale up during periods of high demand and scale down during periods of low demand, helping reduce costs."
+    },
+    {
+      "id": "AZ900-045",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Services",
+      "difficulty": "easy",
+      "question": "You plan to migrate a web application to Azure. The application is accessed by external users. You need to recommend a cloud deployment solution that minimizes the administrative effort required to manage the application. What should you recommend?",
+      "options": [
+        "Software as a Service (SaaS)",
+        "Platform as a Service (PaaS)",
+        "Infrastructure as a Service (IaaS)",
+        "Database as a Service (DaaS)"
+      ],
+      "answer": "Platform as a Service (PaaS)",
+      "explanation": "PaaS services such as Azure App Service remove the need to manage operating systems, patching, infrastructure, and scaling while still allowing applications to be deployed and managed."
+    },
+    {
+      "id": "AZ900-046",
+      "status": "verified",
+      "type": "dropdown-group",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "For each Azure service, select the appropriate cloud service model.",
+      "items": [
+        {
+          "label": "Azure virtual machines",
+          "options": [
+            "Infrastructure as a Service (IaaS)",
+            "Platform as a Service (PaaS)",
+            "Software as a Service (SaaS)"
+          ],
+          "answer": "Infrastructure as a Service (IaaS)"
+        },
+        {
+          "label": "Azure SQL databases",
+          "options": [
+            "Infrastructure as a Service (IaaS)",
+            "Platform as a Service (PaaS)",
+            "Software as a Service (SaaS)"
+          ],
+          "answer": "Platform as a Service (PaaS)"
+        }
+      ],
+      "explanation": {
+        "item1": "Azure Virtual Machines provide operating system and infrastructure control, which makes them an Infrastructure as a Service (IaaS) offering.",
+        "item2": "Azure SQL Database is a fully managed database platform where Microsoft handles patching, backups, updates, and availability, making it a Platform as a Service (PaaS) offering."
+      }
+    },
+    {
+      "id": "AZ900-047",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Deployment Models",
+      "difficulty": "easy",
+      "question": "You have an on-premises network that contains 100 servers. You need to recommend a solution that provides additional resources to your users. The solution must minimize capital expenditure (CapEx) and operational expenditure (OpEx) costs. What should you include in the recommendation?",
+      "options": [
+        "A complete migration to the public cloud",
+        "An additional datacenter",
+        "A private cloud",
+        "A hybrid cloud"
+      ],
+      "answer": "A hybrid cloud",
+      "explanation": "A hybrid cloud combines on-premises infrastructure with public cloud services. This approach allows organizations to continue using existing investments while scaling into Azure when additional capacity is required. As a result, capital expenditure is reduced because there is no need to purchase additional on-premises hardware, and operational costs can be optimized through pay-as-you-go cloud resources."
+    },
+    {
+      "id": "AZ900-048",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Cloud Deployment Models",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "To achieve a hybrid cloud model, a company must always migrate from a private cloud model.",
+          "answer": "No"
+        },
+        {
+          "statement": "A company can extend the capacity of its internal network by using the public cloud.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "In a public cloud model, only guest users at your company can access resources in the cloud.",
+          "answer": "No"
+        }
+      ],
+      "explanation": {
+        "row1": "A hybrid cloud can be created from a combination of public cloud and on-premises resources. It does not require starting from a private cloud.",
+        "row2": "Organizations commonly extend on-premises environments into Azure using VPNs, ExpressRoute, and additional cloud resources.",
+        "row3": "Public cloud resources can be accessed by employees, partners, administrators, service accounts, and external identities depending on Azure AD and RBAC configuration."
+      }
+    },
+    {
+      "id": "AZ900-049",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Deployment Models",
+      "difficulty": "easy",
+      "question": "You plan to migrate several servers from an on-premises network to Azure. What is an advantage of using a public cloud service for the servers over an on-premises network?",
+      "options": [
+        "The public cloud is owned by the public, not a private corporation",
+        "The public cloud is a crowd-sourcing solution that provides corporations with the ability to enhance the cloud",
+        "All public cloud resources can be freely accessed by every member of the public",
+        "The public cloud is a shared entity whereby multiple corporations each use a portion of the resources in the cloud"
+      ],
+      "answer": "The public cloud is a shared entity whereby multiple corporations each use a portion of the resources in the cloud",
+      "explanation": "Public cloud providers such as Microsoft Azure operate on a multi-tenant model where computing resources are shared among multiple customers. The cloud provider manages the underlying hardware, infrastructure, networking, and maintenance, allowing organizations to consume resources without purchasing and managing physical infrastructure."
+    },
+    {
+      "id": "AZ900-050",
+      "status": "verified",
+      "type": "picklist",
+      "domain": "Business Continuity",
+      "difficulty": "easy",
+      "question": "Azure Site Recovery provides ________ for virtual machines.",
+      "options": [
+        "fault tolerance",
+        "disaster recovery",
+        "elasticity",
+        "high availability"
+      ],
+      "answer": "disaster recovery",
+      "explanation": "Azure Site Recovery (ASR) is Microsoft's disaster recovery service. It helps protect and recover virtual machines, applications, and workloads during planned or unplanned outages by replicating systems to a secondary location and enabling failover when necessary."
+    },
+    {
+      "id": "AZ900-051",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Deployment Models",
+      "difficulty": "easy",
+      "question": "In which type of cloud model are all the hardware resources owned by a third-party and shared between multiple tenants?",
+      "options": [
+        "Private",
+        "Hybrid",
+        "Public"
+      ],
+      "answer": "Public",
+      "explanation": "In a public cloud model, the infrastructure is owned and managed by a cloud provider such as Microsoft Azure. Multiple customers share the underlying hardware resources while maintaining logical isolation of their workloads. This multi-tenant architecture allows organizations to consume resources without purchasing and maintaining physical infrastructure."
+    },
+    {
+      "id": "AZ900-052",
+      "status": "verified",
+      "type": "picklist",
+      "domain": "Cloud Deployment Models",
+      "difficulty": "easy",
+      "question": "An Azure web app that queries an on-premises Microsoft SQL Server is an example of a ________ cloud.",
+      "options": [
+        "hybrid",
+        "multi-vendor",
+        "private",
+        "public"
+      ],
+      "answer": "hybrid",
+      "explanation": "A hybrid cloud combines on-premises infrastructure with public cloud services. In this scenario, the Azure web application runs in the public cloud while the Microsoft SQL Server remains on-premises, making it a hybrid cloud solution."
+    },
+    {
+      "id": "AZ900-053",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Azure Cost Management",
+      "difficulty": "easy",
+      "question": "You have 1,000 virtual machines hosted on Hyper-V hosts in a datacenter. You plan to migrate all the virtual machines to an Azure pay-as-you-go subscription. You need to identify which expenditure model to use for the planned Azure solution. Which expenditure model should you identify?",
+      "options": [
+        "Operational",
+        "Elastic",
+        "Capital",
+        "Scalable"
+      ],
+      "answer": "Operational",
+      "explanation": "Azure pay-as-you-go subscriptions use an Operational Expenditure (OpEx) model. Organizations pay only for the resources they consume instead of purchasing and maintaining physical infrastructure upfront. Capital and Operational are valid expenditure models, whereas Elastic and Scalable are cloud characteristics rather than expenditure models."
+    },
+    {
+      "id": "AZ900-054",
+      "status": "verified",
+      "type": "dragdrop",
+      "domain": "Cloud Concepts",
+      "difficulty": "easy",
+      "question": "Match the Azure service benefit to the correct description.",
+      "items": [
+        "Fault tolerance",
+        "Disaster recovery",
+        "Dynamic scalability",
+        "Low latency"
+      ],
+      "targets": [
+        "A cloud service that remains available after a failure occurs",
+        "A cloud service that can be recovered after a failure occurs",
+        "A cloud service that performs quickly when demand increases",
+        "A cloud service that can be accessed quickly from the Internet"
+      ],
+      "answer": {
+        "Fault tolerance": "A cloud service that remains available after a failure occurs",
+        "Disaster recovery": "A cloud service that can be recovered after a failure occurs",
+        "Dynamic scalability": "A cloud service that performs quickly when demand increases",
+        "Low latency": "A cloud service that can be accessed quickly from the Internet"
+      },
+      "explanation": {
+        "Fault tolerance": "Fault tolerance allows a service to continue operating after one or more components fail.",
+        "Disaster recovery": "Disaster recovery focuses on restoring a service after a failure or outage.",
+        "Dynamic scalability": "Dynamic scalability automatically adds or removes resources as demand changes.",
+        "Low latency": "Low latency means requests are processed quickly with minimal response time."
+      }
+    },
+    {
+      "id": "AZ900-055",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Cloud Deployment Models",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "To implement a hybrid cloud model, a company must have an internal network.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "A company can extend the computing resources of its internal network by using a hybrid cloud.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "In a public cloud model, only guest users at your company can access resources in the cloud.",
+          "answer": "No"
+        }
+      ],
+      "explanation": {
+        "row1": "A hybrid cloud combines on-premises resources with public cloud services. Therefore an internal environment or network is required.",
+        "row2": "Hybrid cloud environments commonly extend on-premises capacity using cloud-based compute, storage, and networking resources.",
+        "row3": "Cloud resources can be accessed by any authorized identity through Azure Active Directory, not only guest users."
+      }
+    },
+    {
+      "id": "AZ900-056",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "A Platform as a Service (PaaS) solution provides full control of the operating systems that host applications.",
+          "answer": "No"
+        },
+        {
+          "statement": "A Platform as a Service (PaaS) solution provides additional memory to applications by changing pricing tiers.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "A Platform as a Service (PaaS) solution can automatically scale the number of instances.",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "In a PaaS solution, the cloud provider manages the operating system and infrastructure. Customers do not have full OS-level control.",
+        "row2": "Many PaaS services support scaling to higher pricing tiers, which increases available compute and memory resources.",
+        "row3": "PaaS platforms such as Azure App Service support automatic scaling based on demand and workload metrics."
+      }
+    },
+    {
+      "id": "AZ900-057",
+      "status": "verified",
+      "type": "multiple-select",
+      "domain": "Azure Virtual Machines",
+      "difficulty": "medium",
+      "question": "Your company has an on-premises network that contains multiple servers. The company plans to reduce the following administrative responsibilities: backing up application data, replacing failed server hardware, managing physical server security, updating server operating systems, and managing permissions to shared documents. The company plans to migrate servers to Azure Virtual Machines. Which two administrative responsibilities will be eliminated after the migration?",
+      "options": [
+        "Replacing failed server hardware",
+        "Backing up application data",
+        "Managing physical server security",
+        "Updating server operating systems",
+        "Managing permissions to shared documents"
+      ],
+      "answers": [
+        "Replacing failed server hardware",
+        "Managing physical server security"
+      ],
+      "explanation": "Azure Virtual Machines are an Infrastructure as a Service (IaaS) offering. Microsoft is responsible for the physical infrastructure, including hardware maintenance and datacenter security. Customers remain responsible for operating system updates, application backups, data protection, and permissions management inside the virtual machines."
+    },
+    {
+      "id": "AZ900-058",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Azure Cost Management",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "With a pay-as-you-go cloud model, costs are considered Capital Expenditure (CapEx).",
+          "answer": "No"
+        },
+        {
+          "statement": "Paying electricity costs for your own datacenter is considered Operational Expenditure (OpEx).",
+          "answer": "No"
+        },
+        {
+          "statement": "Deploying and owning your own datacenter is an example of Capital Expenditure (CapEx).",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "Pay-as-you-go cloud consumption is classified as Operational Expenditure (OpEx) because you pay for services as you consume them rather than purchasing infrastructure upfront.",
+        "row2": "The official exam interpretation treats datacenter ownership and associated infrastructure costs as part of Capital Expenditure (CapEx), not Operational Expenditure.",
+        "row3": "Building and deploying your own datacenter requires upfront investment in facilities, networking, cooling, storage, and servers, which is a classic example of CapEx."
+      }
+    },
+    {
+      "id": "AZ900-059",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "You plan to provision Infrastructure as a Service (IaaS) resources in Azure. Which resource is an example of IaaS?",
+      "options": [
+        "An Azure web app",
+        "An Azure virtual machine",
+        "An Azure Logic App",
+        "An Azure SQL Database"
+      ],
+      "answer": "An Azure virtual machine",
+      "explanation": "Azure Virtual Machines are an Infrastructure as a Service (IaaS) offering because customers manage the operating system, applications, and configuration. Azure Web Apps, Logic Apps, and Azure SQL Database are Platform as a Service (PaaS) offerings."
+    },
+    {
+      "id": "AZ900-060",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Deployment Models",
+      "difficulty": "easy",
+      "question": "To which cloud models can you deploy physical servers?",
+      "options": [
+        "Private cloud and hybrid cloud only",
+        "Private cloud only",
+        "Private cloud, hybrid cloud, and public cloud",
+        "Hybrid cloud only"
+      ],
+      "answer": "Private cloud and hybrid cloud only",
+      "explanation": "Physical servers can be deployed in an on-premises private cloud and as part of a hybrid cloud environment. In a public cloud, the physical infrastructure is owned and managed by the cloud provider, so customers do not deploy their own physical servers."
+    },
+    {
+      "id": "AZ900-061",
+      "status": "verified",
+      "type": "dragdrop",
+      "domain": "Cloud Deployment Models",
+      "difficulty": "easy",
+      "question": "Match each cloud model to the corresponding advantage.",
+      "items": [
+        "Public Cloud",
+        "Private Cloud",
+        "Hybrid Cloud"
+      ],
+      "targets": [
+        "No capital expenditure for hardware",
+        "Complete control over security",
+        "Choice of using public cloud and on-premises resources"
+      ],
+      "answer": {
+        "Public Cloud": "No capital expenditure for hardware",
+        "Private Cloud": "Complete control over security",
+        "Hybrid Cloud": "Choice of using public cloud and on-premises resources"
+      },
+      "explanation": {
+        "Public Cloud": "Public cloud services follow a pay-as-you-go model and eliminate the need to purchase physical hardware.",
+        "Private Cloud": "Private cloud infrastructure is controlled by the organization, providing maximum control over security.",
+        "Hybrid Cloud": "Hybrid cloud combines public cloud and on-premises resources, allowing workloads to run where most appropriate."
+      }
+    },
+    {
+      "id": "AZ900-062",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Cloud Deployment Models",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "You can extend a public cloud by adding physical servers.",
+          "answer": "No"
+        },
+        {
+          "statement": "A hybrid cloud contains both public cloud and on-premises resources.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "A private cloud must be disconnected from the Internet.",
+          "answer": "No"
+        }
+      ],
+      "explanation": {
+        "row1": "Customers cannot add physical servers to a public cloud provider's infrastructure.",
+        "row2": "Hybrid cloud environments combine public cloud resources with on-premises infrastructure.",
+        "row3": "Private clouds are often connected to the Internet while remaining under the organization's control."
+      }
+    },
+    {
+      "id": "AZ900-063",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Deployment Models",
+      "difficulty": "easy",
+      "question": "You have 50 virtual machines hosted on-premises and 50 virtual machines hosted in Azure. The on-premises virtual machines and the Azure virtual machines connect to each other. Which type of cloud model is this?",
+      "options": [
+        "Hybrid",
+        "Private",
+        "Public"
+      ],
+      "answer": "Hybrid",
+      "explanation": "A hybrid cloud combines on-premises infrastructure with public cloud resources and allows communication between both environments."
+    },
+    {
+      "id": "AZ900-064",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "For each of the following statements about Platform as a Service (PaaS), select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "A PaaS solution provides access to the operating system hosting the application.",
+          "answer": "No"
+        },
+        {
+          "statement": "A PaaS solution can provide additional memory by changing pricing tiers.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "A PaaS solution can automatically scale the number of instances.",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "PaaS abstracts operating system management from the customer.",
+        "row2": "Many Azure PaaS services allow scaling through pricing tiers.",
+        "row3": "PaaS services support autoscaling based on workload demand."
+      }
+    },
+    {
+      "id": "AZ900-065",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "Your company plans to migrate all its data and resources to Azure. The migration plan states that only Platform as a Service (PaaS) solutions must be used. Solution: You create Azure Virtual Machines, Azure SQL Databases, and Azure Storage Accounts. Does the solution meet the goal?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No",
+      "explanation": "Azure Virtual Machines are an Infrastructure as a Service (IaaS) offering. Because the solution includes IaaS resources, it does not meet the requirement to use only PaaS services."
+    },
+    {
+      "id": "AZ900-066",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "Your company plans to deploy several custom applications to Azure. The applications will provide invoicing services to customers. Each application requires several prerequisite applications and services to be installed. What should you recommend?",
+      "options": [
+        "Software as a Service (SaaS)",
+        "Platform as a Service (PaaS)",
+        "Infrastructure as a Service (IaaS)"
+      ],
+      "answer": "Infrastructure as a Service (IaaS)",
+      "explanation": "IaaS provides full control over virtual machines and allows installation of custom software, dependencies, and application stacks."
+    },
+    {
+      "id": "AZ900-067",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Azure Cost Management",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "Building a datacenter infrastructure is an example of Operational Expenditure (OpEx).",
+          "answer": "No"
+        },
+        {
+          "statement": "Paying employee salaries is an example of Operational Expenditure (OpEx).",
+          "answer": "Yes"
+        },
+        {
+          "statement": "Leasing software on a recurring basis is an example of Operational Expenditure (OpEx).",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "Building datacenter infrastructure requires upfront investment and is considered Capital Expenditure (CapEx).",
+        "row2": "Staff salaries are ongoing operational costs and therefore OpEx.",
+        "row3": "Recurring software subscriptions or leases are ongoing operational expenses and therefore OpEx."
+      }
+    },
+    {
+      "id": "AZ900-068",
+      "status": "verified",
+      "type": "picklist",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "Azure Cosmos DB is an example of a ______ offering.",
+      "options": [
+        "Platform as a Service (PaaS)",
+        "Infrastructure as a Service (IaaS)",
+        "Serverless",
+        "Software as a Service (SaaS)"
+      ],
+      "answer": "Platform as a Service (PaaS)",
+      "explanation": "Azure Cosmos DB is a fully managed database platform. Microsoft manages the underlying infrastructure, operating system, patching, availability, backups, and scalability. Customers focus on data, schemas, and application logic, making Azure Cosmos DB a Platform as a Service (PaaS) offering."
+    },
+    {
+      "id": "AZ900-069",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "With Software as a Service (SaaS), you must apply software updates.",
+          "answer": "No"
+        },
+        {
+          "statement": "With Infrastructure as a Service (IaaS), you must install the software that you want to use.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "Azure Backup is an example of Platform as a Service (PaaS).",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "In a SaaS model, the cloud provider manages software updates, patches, and maintenance.",
+        "row2": "IaaS provides virtualized infrastructure. Customers are responsible for installing and managing operating systems, applications, and software.",
+        "row3": "Azure Backup is a managed Azure service that eliminates the need to maintain backup infrastructure, fitting the PaaS service model used in Azure certification exams."
+      }
+    },
+    {
+      "id": "AZ900-070",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Azure Resource Manager",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "A resource group can contain resources from multiple Azure subscriptions.",
+          "answer": "No"
+        },
+        {
+          "statement": "An Azure resource can belong to multiple resource groups.",
+          "answer": "No"
+        },
+        {
+          "statement": "Resources from different Azure regions can exist in the same resource group.",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "A resource group belongs to a single Azure subscription.",
+        "row2": "Each Azure resource can belong to only one resource group at a time.",
+        "row3": "A resource group is a logical container and may contain resources located in different Azure regions."
+      }
+    },
+    {
+      "id": "AZ900-071",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "Microsoft SQL Server 2019 installed on an Azure virtual machine is an example of Platform as a Service (PaaS).",
+          "answer": "No"
+        },
+        {
+          "statement": "Azure SQL Database is an example of Platform as a Service (PaaS).",
+          "answer": "Yes"
+        },
+        {
+          "statement": "Azure Cosmos DB is an example of Software as a Service (SaaS).",
+          "answer": "No"
+        }
+      ],
+      "explanation": {
+        "row1": "SQL Server running inside an Azure Virtual Machine is an Infrastructure as a Service (IaaS) solution because the customer manages the operating system and SQL installation.",
+        "row2": "Azure SQL Database is a fully managed database platform where Microsoft manages the infrastructure and database engine.",
+        "row3": "Azure Cosmos DB is a Platform as a Service (PaaS) database offering, not a Software as a Service (SaaS) application."
+      }
+    },
+    {
+      "id": "AZ900-072",
+      "status": "verified",
+      "type": "picklist",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "A Microsoft SQL Server database that is hosted in the cloud and has software updates managed by Azure is an example of a ______ offering.",
+      "options": [
+        "Disaster Recovery as a Service (DRaaS)",
+        "Infrastructure as a Service (IaaS)",
+        "Platform as a Service (PaaS)",
+        "Software as a Service (SaaS)"
+      ],
+      "answer": "Platform as a Service (PaaS)",
+      "explanation": "When Azure manages patching, software updates, availability, backups, and the underlying infrastructure for a database service such as Azure SQL Database, the service is classified as Platform as a Service (PaaS). Customers focus on the data and application logic rather than managing servers or operating systems."
+    },
+    {
+      "id": "AZ900-073",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "Your company plans to migrate all its data and resources to Azure. The company's migration plan states that only Platform as a Service (PaaS) solutions must be used in Azure. You need to deploy an Azure environment that meets the company's migration plan. What should you create?",
+      "options": [
+        "Azure virtual machines, Azure SQL databases, and Azure Storage accounts",
+        "An Azure App Service and Azure virtual machines that have Microsoft SQL Server installed",
+        "An Azure App Service and Azure SQL databases",
+        "Azure Storage accounts and web servers in Azure virtual machines"
+      ],
+      "answer": "An Azure App Service and Azure SQL databases",
+      "explanation": "Azure App Service and Azure SQL Database are Platform as a Service (PaaS) offerings. The other options include Azure Virtual Machines, which are Infrastructure as a Service (IaaS)."
+    },
+    {
+      "id": "AZ900-074",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "What does a customer provide in a Software as a Service (SaaS) model?",
+      "options": [
+        "Application data",
+        "Data storage",
+        "Compute resources",
+        "Application software"
+      ],
+      "answer": "Application data",
+      "explanation": "In a SaaS model, the provider manages the application, infrastructure, operating system, and platform. The customer typically provides and manages the business data used by the application."
+    },
+    {
+      "id": "AZ900-075",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Cloud Service Models",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "Azure Files is an example of Infrastructure as a Service (IaaS).",
+          "answer": "No"
+        },
+        {
+          "statement": "A DNS server running on an Azure Virtual Machine is an example of Platform as a Service (PaaS).",
+          "answer": "No"
+        },
+        {
+          "statement": "Microsoft Intune is an example of Software as a Service (SaaS).",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "Azure Files is a managed Azure storage service and is typically categorized within Azure managed storage services rather than IaaS.",
+        "row2": "A DNS server hosted on an Azure Virtual Machine is an Infrastructure as a Service (IaaS) solution because the customer manages the VM.",
+        "row3": "Microsoft Intune is delivered as a cloud-based endpoint management service and is classified as SaaS."
+      }
+    },
+    {
+      "id": "AZ900-076",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Cloud Concepts",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "Cloud computing provides elastic scalability.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "Customers can minimize Capital Expenditure (CapEx) by using a public cloud.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "Cloud computing leverages virtualization to provide services to multiple customers simultaneously.",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "Elasticity allows resources to be increased or decreased automatically according to demand.",
+        "row2": "Public cloud services reduce the need for upfront investments in physical infrastructure.",
+        "row3": "Virtualization enables cloud providers to serve multiple tenants using shared physical hardware."
+      }
+    },
+    {
+      "id": "AZ900-077",
+      "status": "verified",
+      "type": "multiple",
+      "domain": "Cloud Adoption Framework",
+      "difficulty": "easy",
+      "question": "What is the first stage in the Microsoft Cloud Adoption Framework for Azure?",
+      "options": [
+        "Adopt the cloud",
+        "Make a plan",
+        "Ready your organization",
+        "Define your strategy"
+      ],
+      "answer": "Define your strategy",
+      "explanation": "The Microsoft Cloud Adoption Framework begins with the Strategy phase, where business motivations, outcomes, and cloud adoption goals are defined."
+    },
+    {
+      "id": "AZ900-078",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Cloud Deployment Models",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "Physical servers can be added directly to a public cloud environment.",
+          "answer": "No"
+        },
+        {
+          "statement": "A private cloud must be disconnected from the Internet.",
+          "answer": "No"
+        },
+        {
+          "statement": "A hybrid cloud combines public cloud resources and on-premises infrastructure.",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "Customers do not deploy physical servers into a public cloud provider's datacenters.",
+        "row2": "Private clouds are frequently connected to the Internet.",
+        "row3": "Hybrid cloud combines public cloud resources with on-premises environments."
+      }
+    },
+    {
+      "id": "AZ900-079",
+      "status": "verified",
+      "type": "matrix",
+      "domain": "Cloud Concepts",
+      "difficulty": "easy",
+      "question": "For each of the following statements, select Yes if the statement is true. Otherwise, select No.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "rows": [
+        {
+          "statement": "Cloud computing requires all workloads to run on physical servers owned by the customer.",
+          "answer": "No"
+        },
+        {
+          "statement": "Cloud computing is the delivery of computing services over the Internet.",
+          "answer": "Yes"
+        },
+        {
+          "statement": "Cloud computing enables flexible resource consumption and economies of scale.",
+          "answer": "Yes"
+        }
+      ],
+      "explanation": {
+        "row1": "Cloud resources are typically hosted and managed by a cloud provider.",
+        "row2": "Cloud computing delivers services such as compute, storage, networking, databases, and analytics over the Internet.",
+        "row3": "Cloud platforms provide scalability, elasticity, and cost efficiencies through shared infrastructure."
+      }
+    },
+    {
+      "id": "AZ900-080",
+      "status": "verified",
+      "type": "dragdrop",
+      "domain": "Cloud Concepts",
+      "difficulty": "easy",
+      "question": "Match the cloud computing benefit to the correct description.",
+      "items": [
+        "Scalability",
+        "Geo-distribution",
+        "Agility"
+      ],
+      "targets": [
+        "Resources can be provisioned dynamically to meet changing demands",
+        "Applications and data can be deployed to multiple regions",
+        "Applications can be developed, tested, and launched rapidly"
+      ],
+      "answer": {
+        "Scalability": "Resources can be provisioned dynamically to meet changing demands",
+        "Geo-distribution": "Applications and data can be deployed to multiple regions",
+        "Agility": "Applications can be developed, tested, and launched rapidly"
+      },
+      "explanation": {
+        "Scalability": "Scalability allows cloud resources to increase or decrease according to workload demand, either vertically or horizontally.",
+        "Geo-distribution": "Geo-distribution enables workloads and data to be deployed across multiple geographic regions, improving resilience and reducing latency.",
+        "Agility": "Agility allows organizations to provision infrastructure quickly, accelerating development, testing, deployment, and innovation cycles."
+      }
     }
   ]
 }

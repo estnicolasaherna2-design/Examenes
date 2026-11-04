@@ -1,0 +1,80 @@
+{
+  "caseStudies": [
+    {
+      "id": "CASE-CONTOSO",
+      "title": "Contoso, Ltd.",
+      "questionNumbers": [
+        "DP600-001",
+        "DP600-002",
+        "DP600-003",
+        "DP600-004",
+        "DP600-005",
+        "DP600-006",
+        "DP600-007",
+        "DP600-008"
+      ],
+      "fullText": {
+        "overview": "Contoso Ltd. is a US-based health supplements company. Contoso has two divisions named Sales and Research. The Sales division contains two departments named Online Sales and Retail Sales. The Research division assigns internally developed product lines to individual teams of researchers and analysts.",
+        "identityEnvironment": {
+          "tenant": "contoso.com",
+          "groups": [
+            "ResearchReviewersGroup1",
+            "ResearchReviewersGroup2"
+          ]
+        },
+        "dataEnvironment": {
+          "salesDivision": {
+            "capacity": "Microsoft Power BI Premium",
+            "factTable": "Orders",
+            "storageMode": "Import",
+            "orderIdDescription": "The OrderID value represents the sequence in which orders are created."
+          },
+          "researchDivision": {
+            "dataWarehouse": "On-premises third-party data warehousing product",
+            "fabricEnabled": true,
+            "storageAccounts": [
+              {
+                "name": "storage1",
+                "productLine": "Productline1",
+                "format": "delta"
+              },
+              {
+                "name": "storage2",
+                "productLine": "Productline2",
+                "format": "csv"
+              }
+            ]
+          }
+        },
+        "plannedChanges": [
+          "Enable support for Fabric in the Power BI Premium capacity used by the Sales division.",
+          "Make all the data for the Sales division and the Research division available in Fabric.",
+          "Create Productline1ws and Productline2ws workspaces.",
+          "Create Lakehouse1 in Productline1ws.",
+          "Create a shortcut named ResearchProduct that points to storage1."
+        ],
+        "dataAnalyticsRequirements": [
+          "All workspaces must support all Fabric experiences.",
+          "Research workspaces must use dedicated on-demand capacity with per-minute billing.",
+          "Research workspaces must be grouped logically to support OneLake data hub filtering.",
+          "ResearchReviewersGroup1 must access lakehouse, warehouse, and shortcut data through SQL endpoints.",
+          "ResearchReviewersGroup2 must access lakehouse data through Lakehouse Explorer.",
+          "Version control must support branching."
+        ],
+        "dataPreparationRequirements": [
+          "Research Productline1 data must be retrieved through Fabric notebooks.",
+          "All research data must be exposed as managed tables in Lakehouse Explorer."
+        ],
+        "semanticModelRequirements": [
+          "Minimize rows added during Orders refresh.",
+          "Research semantic models must use Direct Lake."
+        ],
+        "generalRequirements": [
+          "Follow the principle of least privilege.",
+          "Minimize implementation effort.",
+          "Minimize maintenance effort."
+        ]
+      }
+    }
+  ]
+}

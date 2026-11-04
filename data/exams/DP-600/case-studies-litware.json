@@ -1,0 +1,185 @@
+{
+  "id": "CASE-LITWARE",
+  "title": "Litware, Inc.",
+  "questionCount": 9,
+  "questionNumbers": [
+    "DP600-009",
+    "DP600-010",
+    "DP600-011",
+    "DP600-012",
+    "DP600-013",
+    "DP600-014",
+    "DP600-015",
+    "DP600-016",
+    "DP600-017",
+    "DP600-018"
+  ],
+  "instructions": {
+    "description": "This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case.",
+    "independentQuestions": true,
+    "reviewAllowedUntilNextSection": true
+  },
+  "overview": {
+    "company": "Litware, Inc.",
+    "description": "Litware is a manufacturing company that has offices throughout North America.",
+    "analyticsTeam": [
+      "Data Engineers",
+      "Analytics Engineers",
+      "Data Analysts",
+      "Data Scientists"
+    ]
+  },
+  "existingEnvironment": {
+    "fabricEnvironment": {
+      "description": "Litware has been using a Microsoft Power BI tenant for three years.",
+      "fabricEnabled": false
+    },
+    "availableData": {
+      "description": "Litware has data that must be analyzed as shown in the following table.",
+      "images": [
+        "images/case-litware-data-sources.png",
+        "images/case-litware-product-columns.png"
+      ],
+      "sources": [
+        {
+          "description": "Customer data",
+          "source": "Customer relationship management (CRM) system",
+          "size": "50 MB"
+        },
+        {
+          "description": "Product data",
+          "source": "Customer relationship management (CRM) system",
+          "size": "200 MB"
+        },
+        {
+          "description": "Customer satisfaction surveys",
+          "source": "SurveyMonkey",
+          "size": "500 GB"
+        }
+      ],
+      "productTable": {
+        "columns": [
+          {
+            "name": "ProductID",
+            "dataType": "Integer"
+          },
+          {
+            "name": "ProductName",
+            "dataType": "String"
+          },
+          {
+            "name": "ProductCategory",
+            "dataType": "String"
+          },
+          {
+            "name": "ListPrice",
+            "dataType": "Decimal"
+          }
+        ]
+      },
+      "customerSatisfactionTables": [
+        "Survey",
+        "Question",
+        "Response"
+      ],
+      "surveyBehavior": [
+        "One row is added to the Survey table.",
+        "One row is added to the Response table for each question in the survey.",
+        "The Question table contains the text of each survey question.",
+        "The third question in each survey response is an overall satisfaction score.",
+        "Customers can submit a survey after each purchase."
+      ]
+    },
+    "userProblems": [
+      "The analytics team has large volumes of data, some of which is semi-structured.",
+      "The team wants to use Fabric to create a new data store.",
+      "Product pricing logic is duplicated across multiple systems and is not always consistent."
+    ]
+  },
+  "requirements": {
+    "plannedChanges": {
+      "capacity": "Fabric Trial Capacity",
+      "workspaces": [
+        {
+          "name": "AnalyticsPOC",
+          "purpose": "Contains the data store, semantic models, reports, pipelines, dataflows and notebooks."
+        },
+        {
+          "name": "DataEngPOC",
+          "purpose": "Contains all pipelines, dataflows and notebooks used to populate OneLake."
+        },
+        {
+          "name": "DataSciPOC",
+          "purpose": "Contains notebooks and reports used by data scientists."
+        }
+      ],
+      "analyticsPOCArtifacts": [
+        "Data Store",
+        "Custom Semantic Model",
+        "Default Semantic Model",
+        "Interactive Reports"
+      ]
+    },
+    "technicalRequirements": {
+      "dataStore": [
+        "Read access from T-SQL",
+        "Read access from Python",
+        "Semi-structured data support",
+        "Unstructured data support",
+        "Row-level security (RLS)"
+      ],
+      "storage": [
+        "Parquet source files",
+        "Delta Lake compliance"
+      ],
+      "loadingPattern": {
+        "zones": [
+          "Raw",
+          "Cleansed",
+          "Dimensional"
+        ],
+        "rule": "Raw and cleansed zones must finish updating before dimensional model loading begins."
+      },
+      "dateDimension": {
+        "startYear": 2010,
+        "endYear": "Current Year",
+        "fiscalYear": "Calendar Year"
+      },
+      "pricingRules": {
+        "low": "ListPrice <= 50",
+        "medium": "ListPrice > 50 and <= 1000",
+        "high": "ListPrice > 1000"
+      }
+    },
+    "securityRequirements": {
+      "workspaceAdmins": [
+        "FabricAdmins"
+      ],
+      "requirements": [
+        "Only Fabric administrators and analytics team members can view PoC items.",
+        "Data engineers require read/write access only.",
+        "Analytics engineers require schema, semantic model and report management capabilities.",
+        "Data scientists require read-only access through Spark notebooks.",
+        "Data analysts require access only to dimensional model objects.",
+        "Date dimension must be available to all users.",
+        "Follow the principle of least privilege."
+      ],
+      "groups": [
+        "FabricAdmins",
+        "AnalyticsTeam",
+        "DataAnalysts",
+        "DataScientists",
+        "DataEngineers",
+        "AnalyticsEngineers"
+      ]
+    },
+    "reportRequirements": [
+      "Filter survey results by purchased product.",
+      "Calculate rolling 12-month overall satisfaction score.",
+      "Show data immediately after updates.",
+      "Include only the current and previous calendar year.",
+      "Respect source table-level security.",
+      "Minimize report query execution time."
+    ]
+  }
+}
