@@ -1,0 +1,20 @@
+{
+  "id": "DP-600",
+  "code": "DP-600",
+  "name": "Fabric Analytics Engineer Associate",
+  "description": "Certificación enfocada en diseño, modelado, visualización y análisis de datos utilizando Microsoft Fabric.",
+  "version": "1.0",
+  "language": "es",
+  "status": "active",
+  "level": "Associate",
+  "provider": "Microsoft",
+  "durationMinutes": 120,
+  "passingScore": 700,
+  "skillsMeasured": [
+    "Plan and implement analytics solutions",
+    "Prepare and serve data",
+    "Implement and manage semantic models",
+    "Explore and analyze data",
+    "Visualize and present data"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "examId": "DP-600",
+  "examName": "Fabric Analytics Engineer Associate",
+  "questions": [
+    {
+      "id": "DP600-001",
+      "domain": "Semantic Models",
+      "difficulty": "easy",
+      "type": "multiple",
+      "question": "¿Qué componente de Microsoft Fabric se utiliza para crear modelos semánticos reutilizables?",
+      "options": [
+        "Lakehouse",
+        "Warehouse",
+        "Semantic Model",
+        "Data Factory"
+      ],
+      "answer": "Semantic Model",
+      "explanation": "Los Semantic Models permiten centralizar métricas, relaciones y medidas para ser consumidas por Power BI y otros componentes."
+    },
+    {
+      "id": "DP600-002",
+      "domain": "Data Visualization",
+      "difficulty": "easy",
+      "type": "truefalse",
+      "question": "Power BI forma parte de Microsoft Fabric.",
+      "answer": true,
+      "explanation": "Power BI es una de las experiencias principales integradas dentro de Microsoft Fabric."
+    },
+    {
+      "id": "DP600-003",
+      "domain": "Data Preparation",
+      "difficulty": "medium",
+      "type": "picklist",
+      "question": "Seleccione el formato nativo utilizado por las tablas en un Lakehouse de Fabric.",
+      "options": [
+        "CSV",
+        "JSON",
+        "Delta Lake",
+        "Avro"
+      ],
+      "answer": "Delta Lake",
+      "explanation": "Las tablas de Lakehouse utilizan el formato Delta Lake para garantizar transacciones ACID y versionamiento."
+    },
+    {
+      "id": "DP600-004",
+      "domain": "Data Modeling",
+      "difficulty": "medium",
+      "type": "multiple",
+      "question": "¿Cuál es la mejor práctica para optimizar un modelo semántico en Power BI?",
+      "options": [
+        "Eliminar relaciones",
+        "Utilizar tablas de hechos y dimensiones",
+        "Duplicar columnas",
+        "Evitar medidas DAX"
+      ],
+      "answer": "Utilizar tablas de hechos y dimensiones",
+      "explanation": "El modelado en estrella mejora el rendimiento, la mantenibilidad y la compresión del modelo."
+    },
+    {
+      "id": "DP600-005",
+      "domain": "Data Analytics",
+      "difficulty": "medium",
+      "type": "multiple",
+      "multipleAnswers": true,
+      "question": "¿Cuáles de los siguientes elementos pueden utilizarse para explorar datos en Fabric?",
+      "options": [
+        "Power BI",
+        "Notebooks",
+        "Dataflows Gen2",
+        "Semantic Models"
+      ],
+      "answer": [
+        "Power BI",
+        "Notebooks",
+        "Semantic Models"
+      ],
+      "explanation": "Estas herramientas permiten consumir, analizar o explorar información dentro del ecosistema Fabric."
+    }
+  ]
+}
